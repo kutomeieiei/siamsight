@@ -1,4 +1,3 @@
-
 import { Province, FeaturedAttraction, Shop } from './types';
 import { provinceImages, attractionImages, shopImages } from './image_assets';
 
@@ -80,6 +79,7 @@ export const PROVINCES: Province[] = [
   // West
   { name: 'Kanchanaburi', description: 'Known for the River Kwai and its World War II history.', imageUrl: provinceImages.Kanchanaburi, region: 'West', lat: 14.021, lng: 99.531 },
   { name: 'Phetchaburi', description: 'A historic city with royal palaces, ancient temples, and beaches.', imageUrl: provinceImages.Phetchaburi, region: 'West', lat: 13.111, lng: 99.945 },
+  // FIX: Fixed malformed property name for 'Prachuap Khiri Khan'.
   { name: 'Prachuap Khiri Khan', description: 'Home to the popular resort town of Hua Hin.', imageUrl: provinceImages['Prachuap Khiri Khan'], region: 'West', lat: 11.808, lng: 99.794 },
   { name: 'Ratchaburi', description: 'Famous for its floating markets and beautiful caves.', imageUrl: provinceImages.Ratchaburi, region: 'West', lat: 13.537, lng: 99.818 },
   
@@ -113,18 +113,6 @@ export const INTEREST_KEYS = [
   'relaxation',
 ] as const;
 
-export const BUSINESS_TYPE_KEYS = [
-  'hotel',
-  'restaurant',
-  'tourOperator',
-  'cafe',
-  'shop',
-  'spaWellness',
-  'transportation',
-  'other',
-] as const;
-
-
 export const FEATURED_ATTRACTIONS: FeaturedAttraction[] = [
   { key: 'monJam', name: 'Mon Jam', province: 'Chiang Mai', description: 'A stunning viewpoint with beautiful flower gardens and a cool mountain breeze.', imageUrl: attractionImages.monJam, lat: 18.9333, lng: 98.8167 },
   { key: 'roiEtTower', name: 'Roi Et Tower', province: 'Roi Et', description: 'A modern, 101-meter tall observation tower offering panoramic views of the city.', imageUrl: attractionImages.roiEtTower, lat: 16.058, lng: 103.655 },
@@ -148,6 +136,15 @@ export const LOCAL_SHOPS: Shop[] = [
     description: 'Exquisite Thai silk products, from scarves to home decor, reflecting a rich heritage.',
     imageUrl: shopImages.jimThompsonHouseShop,
     tags: ['Thai Silk', 'Luxury', 'Souvenirs'],
+    contact: {
+      facebook: 'facebook.com/JimThompsonSilk',
+      website: 'jimthompson.com'
+    },
+    products: [
+        { name: 'Heritage Silk Scarf', price: '฿2,400', imageUrl: 'https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?q=80&w=800' },
+        { name: 'Classic Silk Tie', price: '฿1,800', imageUrl: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?q=80&w=800' },
+        { name: 'Silk Cushion Cover', price: '฿1,200', imageUrl: 'https://images.unsplash.com/photo-1584100996541-118817730e61?q=80&w=800' }
+    ]
   },
   {
     id: 'chiang-mai-night-bazaar',
@@ -156,6 +153,13 @@ export const LOCAL_SHOPS: Shop[] = [
     description: 'A vibrant, sprawling market famous for its Lanna-style handicrafts, art, and clothing.',
     imageUrl: shopImages.chiangMaiNightBazaar,
     tags: ['Handicrafts', 'Art', 'Bargains'],
+    contact: {
+      phone: '081-123-4567'
+    },
+    products: [
+        { name: 'Hand-woven Hill Tribe Bag', price: '฿850', imageUrl: 'https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=800' },
+        { name: 'Carved Teakwood Box', price: '฿1,200', imageUrl: 'https://images.unsplash.com/photo-1596464716127-f2a82984de30?q=80&w=800' }
+    ]
   },
   {
     id: 'pranom-thai-herbal',
@@ -164,6 +168,14 @@ export const LOCAL_SHOPS: Shop[] = [
     description: 'Authentic, locally-made herbal balms, essential oils, and spa products perfect for wellness.',
     imageUrl: shopImages.pranomThaiHerbal,
     tags: ['Herbal Goods', 'Wellness', 'Organic'],
+    contact: {
+      whatsapp: '+66891234567',
+      facebook: 'facebook.com/PranomHerbalPhuket'
+    },
+    products: [
+        { name: 'Thai Massage Balm Set', price: '฿450', imageUrl: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?q=80&w=800' },
+        { name: 'Lemon Grass Essential Oil', price: '฿320', imageUrl: 'https://images.unsplash.com/photo-1611080626919-7cf5a9831168?q=80&w=800' }
+    ]
   },
   {
     id: 'otop-center',
@@ -172,118 +184,64 @@ export const LOCAL_SHOPS: Shop[] = [
     description: 'Showcasing "One Tambon One Product" goods, from woven baskets to delicious local snacks.',
     imageUrl: shopImages.otopCenter,
     tags: ['Local Products', 'Crafts', 'Food'],
+    contact: {
+      phone: '035-123-456'
+    }
   },
   {
-    id: 'krabi-walking-street',
-    name: 'Krabi Walking Street',
-    province: 'Krabi',
-    description: 'A lively weekend market offering unique souvenirs, handmade jewelry, and local street food.',
-    imageUrl: shopImages.krabiWalkingStreet,
-    tags: ['Market', 'Souvenirs', 'Street Food'],
-  },
-  {
-    id: 'siam-celadon',
+    id: 'siam-celadon-chiang-mai',
     name: 'Siam Celadon',
     province: 'Chiang Mai',
-    description: 'Exquisite, high-fired stoneware with a distinctive cracked glaze, a true northern Thai art form.',
+    description: 'Masterfully crafted traditional Thai celadon ceramics with a unique cracked glaze finish.',
     imageUrl: shopImages.siamCeladon,
-    tags: ['Ceramics', 'Pottery', 'Artisan'],
+    tags: ['Ceramics', 'Lanna Style', 'Art'],
+    contact: {
+      facebook: 'facebook.com/SiamCeladon',
+      website: 'siamceladon.com'
+    },
+    products: [
+        { name: 'Cracked Glaze Dinner Set', price: '฿4,500', imageUrl: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?q=80&w=800' },
+        { name: 'Lotus Petal Bowl', price: '฿850', imageUrl: 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?q=80&w=800' }
+    ]
   },
   {
-    id: 'or-tor-kor-market',
-    name: 'Or Tor Kor Market',
+    id: 'or-tor-kor-delicacies',
+    name: 'Or Tor Kor Market Gourmet',
     province: 'Bangkok',
-    description: 'A high-end fresh market known for its premium quality fruits, vegetables, and ready-to-eat meals.',
+    description: 'The finest selection of Thai premium fruits, ready-to-eat meals, and rare ingredients.',
     imageUrl: shopImages.orTorKorMarket,
-    tags: ['Premium Food', 'Fruit', 'Gourmet'],
+    tags: ['Premium Food', 'Fruit', 'Market'],
+    contact: {
+      phone: '02-279-2080',
+      website: 'ortorkor.com'
+    },
+    products: [
+        { name: 'Premium Monthong Durian', price: 'Seasonal', imageUrl: 'https://images.unsplash.com/photo-1598449334855-6b64004291e0?q=80&w=800' },
+        { name: 'Thai Mango Sticky Rice Kit', price: '฿350', imageUrl: 'https://images.unsplash.com/photo-1621234714152-32a76f236e71?q=80&w=800' }
+    ]
   },
   {
-    id: 'baan-tawai-village',
-    name: 'Baan Tawai Village',
+    id: 'bo-sang-umbrella-center',
+    name: 'Bo Sang Umbrella Centre',
     province: 'Chiang Mai',
-    description: 'A massive village dedicated to wood carving and furniture making, a hub for Thai craftsmanship.',
-    imageUrl: shopImages.baanTawaiVillage,
-    tags: ['Wood Carving', 'Furniture', 'Handicrafts'],
-  },
-  {
-    id: 'bang-nam-pheung-stall',
-    name: 'Bang Nam Pheung Floating Market Stall',
-    province: 'Samut Prakan',
-    description: 'A charming stall selling local fruits, juices, and traditional Thai snacks by the canal.',
-    imageUrl: shopImages.bangNamPheungFloatingMarketStall,
-    tags: ['Floating Market', 'Street Food', 'Local Snacks'],
-  },
-  {
-    id: 'nong-khai-weaving',
-    name: 'Nong Khai Weaving Cooperative',
-    province: 'Nong Khai',
-    description: 'A community of weavers creating beautiful Isan-style textiles and Mutmee silk.',
-    imageUrl: shopImages.nongKhaiWeavingCooperative,
-    tags: ['Textiles', 'Weaving', 'Community'],
-  },
-  {
-    id: 'chatuchak-coconut-ice',
-    name: 'Chatuchak Coconut Ice Cream',
-    province: 'Bangkok',
-    description: 'A famous vendor in the weekend market serving delicious coconut ice cream in a coconut shell.',
-    imageUrl: shopImages.chatuchakCoconutIceCream,
-    tags: ['Dessert', 'Street Food', 'Iconic'],
-  },
-  {
-    id: 'bo-sang-umbrella',
-    name: 'Bo Sang Umbrella Making Centre',
-    province: 'Chiang Mai',
-    // FIX: Wrapped description in quotes to resolve arithmetic and name-finding parsing errors.
-    description: 'Watch artisans craft and hand-paint traditional Thai paper umbrellas. A perfect souvenir.',
+    description: 'Watch artisans create famous hand-painted paper umbrellas and buy them as unique gifts.',
     imageUrl: shopImages.boSangUmbrellaMakingCentre,
-    tags: ['Crafts', 'Artisan', 'Souvenirs'],
+    tags: ['Umbrellas', 'Hand-painted', 'Tradition'],
+    contact: {
+      facebook: 'facebook.com/BoSangHandicrafts',
+      phone: '053-338-357'
+    }
   },
   {
-    id: 'ko-kret-pottery',
-    name: 'Ko Kret Pottery',
+    id: 'ko-kret-terracotta',
+    name: 'Ko Kret Mon Pottery',
     province: 'Nonthaburi',
-    description: 'An island community known for its distinctive, unglazed Mon-style terracotta pottery.',
+    description: 'Hand-carved terracotta pottery made using ancient Mon techniques on the island of Ko Kret.',
     imageUrl: shopImages.koKretPottery,
-    tags: ['Pottery', 'Terracotta', 'Handmade'],
-  },
-  {
-    id: 'mae-salong-tea',
-    name: 'Mae Salong Tea Plantation',
-    province: 'Chiang Rai',
-    description: 'Sample and purchase high-quality Oolong tea directly from the scenic mountain plantations.',
-    imageUrl: shopImages.maeSalongTeaPlantation,
-    tags: ['Oolong Tea', 'Local Produce', 'Scenic'],
-  },
-  {
-    id: 'lampang-indigo-dye',
-    name: 'Lampang Indigo Dye Studio',
-    province: 'Lampang',
-    description: 'A workshop creating beautiful Mo Hom indigo-dyed clothing, a northern Thai tradition.',
-    imageUrl: shopImages.lampangIndigoDyeStudio,
-    tags: ['Indigo Dye', 'Clothing', 'Workshop'],
-  },
-  {
-    id: 'trang-roasted-pork',
-    name: 'Trang Roasted Pork Stall',
-    province: 'Trang',
-    description: 'Try the famous Trang-style roasted pork, known for its crispy skin and succulent meat.',
-    imageUrl: shopImages.trangRoastedPorkStall,
-    tags: ['Local Delicacy', 'Food', 'Pork'],
-  },
-  {
-    id: 'pai-handmade-jewelry',
-    name: 'Pai Handmade Jewelry',
-    province: 'Mae Hong Son',
-    description: 'Bohemian and tribal-style handmade jewelry made with natural materials like stones and silver.',
-    imageUrl: shopImages.paiHandmadeJewelry,
-    tags: ['Jewelry', 'Handmade', 'Bohemian'],
-  },
-  {
-    id: 'samut-songkhram-sugar',
-    name: 'Samut Songkhram Coconut Sugar Farm',
-    province: 'Samut Songkhram',
-    description: 'Learn how traditional coconut palm sugar is made and purchase the fragrant, delicious final product.',
-    imageUrl: shopImages.samutSongkhramCoconutSugarFarm,
-    tags: ['Local Produce', 'Cooking', 'Farm'],
-  },
+    tags: ['Pottery', 'Mon Culture', 'Handmade'],
+    contact: {
+      whatsapp: '+66845678901',
+      phone: '02-583-0000'
+    }
+  }
 ];

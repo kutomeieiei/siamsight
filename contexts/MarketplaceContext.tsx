@@ -4,15 +4,15 @@ import { Shop } from '../types';
 import { LOCAL_SHOPS } from '../constants';
 import { useAuth } from './AuthContext';
 
+// Define the full context type including modal state and shop manipulation methods
 interface MarketplaceContextType {
     shops: Shop[];
-    addShop: (shopData: Omit<Shop, 'id' | 'province'>) => void;
-    updateShop: (shopData: Omit<Shop, 'id' | 'province'>) => void;
     isModalOpen: boolean;
     shopToEdit: Shop | null;
-    openModalToAdd: () => void;
-    openModalToEdit: (shop: Shop) => void;
+    openModal: (shop?: Shop) => void;
     closeModal: () => void;
+    addShop: (shopData: Omit<Shop, 'id' | 'province'>) => void;
+    updateShop: (shopData: Omit<Shop, 'id' | 'province'>) => void;
 }
 
 const MarketplaceContext = createContext<MarketplaceContextType | undefined>(undefined);
@@ -25,6 +25,7 @@ export const MarketplaceProvider: React.FC<{ children: ReactNode }> = ({ childre
     const [shopToEdit, setShopToEdit] = useState<Shop | null>(null);
     const { user } = useAuth();
 
+    // Load initial shop data from localStorage or fallback to constants
     useEffect(() => {
         try {
             const storedShops = localStorage.getItem(SHOPS_STORAGE_KEY);
@@ -41,52 +42,62 @@ export const MarketplaceProvider: React.FC<{ children: ReactNode }> = ({ childre
         }
     }, []);
 
-    const persistShops = (updatedShops: Shop[]) => {
-        localStorage.setItem(SHOPS_STORAGE_KEY, JSON.stringify(updatedShops));
+    // Persist shop list to localStorage
+    const saveShops = (updatedShops: Shop[]) => {
         setShops(updatedShops);
+        localStorage.setItem(SHOPS_STORAGE_KEY, JSON.stringify(updatedShops));
     };
 
-    const addShop = (newShopData: Omit<Shop, 'id' | 'province'>) => {
-        if (user?.accountType !== 'business') return;
-        
-        const newShop: Shop = {
-            id: user.businessName, // Use businessName as stable unique ID
-            province: user.province,
-            ...newShopData
-        };
-
-        const updatedShops = [newShop, ...shops];
-        persistShops(updatedShops);
-    };
-
-    const updateShop = (updatedShopData: Omit<Shop, 'id' | 'province'>) => {
-        if (user?.accountType !== 'business') return;
-        
-        const updatedShops = shops.map(shop => 
-            shop.id === user.businessName 
-                ? { ...shop, ...updatedShopData } 
-                : shop
-        );
-        persistShops(updatedShops);
-    };
-
-    const openModalToAdd = () => {
-        setShopToEdit(null);
+    // Open modal for adding (no shop passed) or editing (shop passed)
+    const openModal = (shop?: Shop) => {
+        setShopToEdit(shop || null);
         setIsModalOpen(true);
     };
 
-    const openModalToEdit = (shop: Shop) => {
-        setShopToEdit(shop);
-        setIsModalOpen(true);
-    };
-
+    // Close modal and reset editing state
     const closeModal = () => {
         setIsModalOpen(false);
         setShopToEdit(null);
     };
 
+    // Business logic for adding a new shop based on current authenticated business user
+    const addShop = (shopData: Omit<Shop, 'id' | 'province'>) => {
+        if (!user || user.accountType !== 'business') return;
+        
+        const newShop: Shop = {
+            ...shopData,
+            id: user.businessName, // Simplified ID mapping for the mock environment
+            province: user.province,
+        };
+        
+        // Prevent multiple shops for the same business identifier in this mock
+        if (shops.some(s => s.id === newShop.id)) {
+            throw new Error('You already have a shop registered. Please edit your existing shop.');
+        }
+
+        saveShops([...shops, newShop]);
+    };
+
+    // Business logic for updating an existing shop's details
+    const updateShop = (shopData: Omit<Shop, 'id' | 'province'>) => {
+        if (!shopToEdit) return;
+        
+        const updatedShops = shops.map(s => 
+            s.id === shopToEdit.id ? { ...s, ...shopData } : s
+        );
+        saveShops(updatedShops);
+    };
+
     return (
-        <MarketplaceContext.Provider value={{ shops, addShop, updateShop, isModalOpen, shopToEdit, openModalToAdd, openModalToEdit, closeModal }}>
+        <MarketplaceContext.Provider value={{ 
+            shops, 
+            isModalOpen, 
+            shopToEdit, 
+            openModal, 
+            closeModal, 
+            addShop, 
+            updateShop 
+        }}>
             {children}
         </MarketplaceContext.Provider>
     );

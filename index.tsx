@@ -3,8 +3,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { AuthProvider } from './contexts/AuthContext';
-import { MarketplaceProvider } from './contexts/MarketplaceContext';
 import { LanguageProvider } from './contexts/LanguageContext';
+import { CommunityProvider } from './contexts/CommunityContext';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -16,9 +16,9 @@ root.render(
   <React.StrictMode>
     <LanguageProvider>
       <AuthProvider>
-        <MarketplaceProvider>
+        <CommunityProvider>
           <App />
-        </MarketplaceProvider>
+        </CommunityProvider>
       </AuthProvider>
     </LanguageProvider>
   </React.StrictMode>

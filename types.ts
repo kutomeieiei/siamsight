@@ -1,28 +1,21 @@
-
 export enum View {
   EXPLORE = 'EXPLORE',
   ITINERARY = 'ITINERARY',
   CHAT = 'CHAT',
-  ACCOUNT = 'ACCOUNT',
+  COMMUNITY = 'COMMUNITY',
   MARKETPLACE = 'MARKETPLACE',
+  ACCOUNT = 'ACCOUNT',
+  LEARNING = 'LEARNING',
 }
 
 export type Locale = 'en' | 'th';
 
-export interface PersonalUser {
-  accountType: 'personal';
+export interface User {
+  accountType: 'personal' | 'business';
   username: string;
+  businessName?: string;
+  province?: string;
 }
-
-export interface BusinessUser {
-  accountType: 'business';
-  businessName: string;
-  province: string;
-  businessType: string;
-}
-
-export type User = PersonalUser | BusinessUser;
-
 
 export interface Province {
   name: string;
@@ -57,27 +50,63 @@ export interface ItineraryDay {
   food_suggestion: string;
 }
 
+export interface ItineraryCostBreakdown {
+  accommodation: number;
+  food: number;
+  transport: number;
+  activities: number;
+}
+
+export interface ItineraryResult {
+  itinerary: ItineraryDay[];
+  total_estimated_cost: number;
+  currency: string;
+  cost_breakdown: ItineraryCostBreakdown;
+  sources: GroundingChunk[];
+  feasibility_warning?: string;
+}
+
 export interface ChatMessage {
   sender: 'user' | 'ai';
   text: string;
 }
 
-export interface GroundingSource {
-  uri?: string;
-  title?: string;
+export interface CommunityMessage {
+  id: string;
+  senderName: string;
+  senderType: 'personal' | 'business';
+  senderProvince?: string;
+  text: string;
+  timestamp: number;
 }
 
 export interface GroundingChunk {
-  web?: GroundingSource;
+  web?: {
+    uri?: string;
+    title?: string;
+  };
+}
+
+export interface Product {
+  name: string;
+  price?: string;
+  imageUrl: string;
 }
 
 export interface Shop {
-  id: string; // Unique ID (e.g. owner's business name)
-  name: string; // Display name of the shop
+  id: string;
+  name: string;
   province: string;
   description: string;
   imageUrl: string;
   tags: string[];
+  contact?: {
+    facebook?: string;
+    whatsapp?: string;
+    phone?: string;
+    website?: string;
+  };
+  products?: Product[];
 }
 
 export interface UserUpload {

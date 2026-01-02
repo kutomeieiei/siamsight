@@ -1,3 +1,4 @@
+
 /**
  * Centralized Image Asset Management
  * 
@@ -130,6 +131,14 @@ export const shopImages = {
   trangRoastedPorkStall: 'https://images.unsplash.com/photo-1599227333276-3d7edc214ea8?q=80&w=1920&auto=format&fit=crop',
   paiHandmadeJewelry: 'https://images.unsplash.com/photo-1611652033959-8a52998270c1?q=80&w=1920&auto=format&fit=crop',
   samutSongkhramCoconutSugarFarm: 'https://images.unsplash.com/photo-1590524434241-b3b3cf897a3a?q=80&w=1920&auto=format&fit=crop',
+};
+
+export const learningImages = {
+  silk: 'https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?q=80&w=1920&auto=format&fit=crop',
+  ceramics: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?q=80&w=1920&auto=format&fit=crop',
+  teak: 'https://images.unsplash.com/photo-1596464716127-f2a82984de30?q=80&w=1920&auto=format&fit=crop',
+  silverware: 'https://images.unsplash.com/photo-1615484477778-ca3b77940c25?q=80&w=1920&auto=format&fit=crop',
+  wickerwork: 'https://images.unsplash.com/photo-1590650153855-d9e808231d41?q=80&w=1920&auto=format&fit=crop',
 };
 
 export const userUploadImages = {

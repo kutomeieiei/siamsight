@@ -1,13 +1,18 @@
 
 import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
-import { User, PersonalUser, BusinessUser } from '../types';
+import { User } from '../types';
 
-type SignupData = (Omit<PersonalUser, 'accountType'> & { password: string }) | (Omit<BusinessUser, 'accountType'> & { password: string });
+interface SignupData {
+  username: string;
+  password?: string;
+  province?: string;
+}
 
 interface AuthContextType {
   user: User | null;
   login: (identifier: string, pass: string) => Promise<void>;
-  signup: (data: SignupData, accountType: 'personal' | 'business') => Promise<void>;
+  signup: (data: SignupData) => Promise<void>;
+  updateUser: (data: Partial<User>) => void;
   logout: () => void;
   isAuthenticated: boolean;
 }
@@ -21,7 +26,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [user, setUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Initialize: Load session from "Server" (LocalStorage)
   useEffect(() => {
     try {
       const sessionUser = localStorage.getItem(SESSION_KEY);
@@ -36,7 +40,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }, []);
 
   const login = async (identifier: string, pass: string): Promise<void> => {
-    // Simulate server latency
     await new Promise(resolve => setTimeout(resolve, 800));
 
     const usersStr = localStorage.getItem(USERS_STORAGE_KEY);
@@ -54,30 +57,44 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   };
   
-  const signup = async (data: SignupData, accountType: 'personal' | 'business'): Promise<void> => {
+  const signup = async (data: SignupData): Promise<void> => {
     await new Promise(resolve => setTimeout(resolve, 1000));
 
     const usersStr = localStorage.getItem(USERS_STORAGE_KEY);
     const users = usersStr ? JSON.parse(usersStr) : {};
     
-    const identifier = accountType === 'personal'
-      ? (data as any).username
-      : (data as any).businessName;
+    const identifier = data.username;
 
     if (users[identifier]) {
       throw new Error('This name is already registered in our system.');
     }
     
-    const newUserProfile = { ...data, accountType };
+    const newUserProfile = { ...data, accountType: 'personal' };
     users[identifier] = newUserProfile;
 
     localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
     
-    // Auto-login after signup
     const { password, ...userProfile } = newUserProfile;
     setUser(userProfile as User);
     setIsAuthenticated(true);
     localStorage.setItem(SESSION_KEY, JSON.stringify(userProfile));
+  };
+
+  const updateUser = (data: Partial<User>) => {
+    if (!user) return;
+    const updatedUser = { ...user, ...data };
+    setUser(updatedUser);
+    localStorage.setItem(SESSION_KEY, JSON.stringify(updatedUser));
+
+    // Update in permanent store too
+    const usersStr = localStorage.getItem(USERS_STORAGE_KEY);
+    if (usersStr) {
+      const users = JSON.parse(usersStr);
+      if (users[user.username]) {
+        users[user.username] = { ...users[user.username], ...data };
+        localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
+      }
+    }
   };
   
   const logout = () => {
@@ -87,7 +104,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
   
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout, isAuthenticated }}>
+    <AuthContext.Provider value={{ user, login, signup, updateUser, logout, isAuthenticated }}>
       {children}
     </AuthContext.Provider>
   );
