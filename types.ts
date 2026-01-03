@@ -1,3 +1,4 @@
+
 export enum View {
   EXPLORE = 'EXPLORE',
   ITINERARY = 'ITINERARY',
@@ -69,6 +70,7 @@ export interface ItineraryResult {
 export interface ChatMessage {
   sender: 'user' | 'ai';
   text: string;
+  sources?: GroundingChunk[];
 }
 
 export interface CommunityMessage {

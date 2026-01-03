@@ -1,6 +1,7 @@
+
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { Chat } from '@google/genai';
-import { ChatMessage } from '../types';
+import { Chat, GenerateContentResponse } from '@google/genai';
+import { ChatMessage, GroundingChunk } from '../types';
 import { startLearningSession } from '../services/geminiService';
 import LoadingSpinner from './LoadingSpinner';
 import { useTranslation } from '../contexts/LanguageContext';
@@ -100,17 +101,31 @@ const LearningView: React.FC = () => {
     if (!textOverride) setUserInput('');
     setIsLoading(true);
 
-    setMessages(prev => [...prev, { sender: 'ai', text: '' }]);
+    setMessages(prev => [...prev, { sender: 'ai', text: '', sources: [] }]);
 
     try {
       const stream = await chat.sendMessageStream({ message: textToSend });
       for await (const chunk of stream) {
-        const chunkText = chunk.text;
+        const c = chunk as GenerateContentResponse;
+        const chunkText = c.text;
+        const groundingMetadata = c.candidates?.[0]?.groundingMetadata;
+        const chunks: GroundingChunk[] = groundingMetadata?.groundingChunks || [];
+
         setMessages(prev => {
           const newMessages = [...prev];
           const lastMessage = newMessages[newMessages.length - 1];
           if (lastMessage && lastMessage.sender === 'ai') {
             lastMessage.text += chunkText;
+            if (chunks.length > 0) {
+              const currentSources = lastMessage.sources || [];
+              const newSources = [...currentSources];
+              chunks.forEach(chunk => {
+                if (chunk.web && chunk.web.uri && !newSources.some(s => s.web?.uri === chunk.web?.uri)) {
+                  newSources.push(chunk);
+                }
+              });
+              lastMessage.sources = newSources;
+            }
           }
           return newMessages;
         });
@@ -227,25 +242,48 @@ const LearningView: React.FC = () => {
           className="h-[450px] p-6 space-y-6 overflow-y-auto bg-slate-950/20 scrollbar-hide"
         >
           {messages.map((msg, index) => (
-            <div key={index} className={`flex items-start gap-3 ${msg.sender === 'user' ? 'flex-row-reverse' : ''}`}>
-              {msg.sender === 'ai' && <KruAvatar />}
-              <div
-                className={`max-w-[80%] p-4 rounded-3xl ${
-                  msg.sender === 'user'
-                    ? 'bg-yellow-600 text-white rounded-tr-none shadow-lg shadow-yellow-600/10'
-                    : 'bg-slate-800 text-slate-200 rounded-tl-none border border-slate-700'
-                }`}
-              >
-                {msg.text === '' ? (
-                  <div className="flex gap-1.5 p-1">
-                    <div className="w-2 h-2 bg-slate-500 rounded-full animate-bounce"></div>
-                    <div className="w-2 h-2 bg-slate-500 rounded-full animate-bounce [animation-delay:0.2s]"></div>
-                    <div className="w-2 h-2 bg-slate-500 rounded-full animate-bounce [animation-delay:0.4s]"></div>
-                  </div>
-                ) : (
-                  <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.text}</p>
-                )}
+            <div key={index} className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}>
+              <div className={`flex items-start gap-3 ${msg.sender === 'user' ? 'flex-row-reverse' : ''}`}>
+                {msg.sender === 'ai' && <KruAvatar />}
+                <div
+                  className={`max-w-[80%] p-4 rounded-3xl ${
+                    msg.sender === 'user'
+                      ? 'bg-yellow-600 text-white rounded-tr-none shadow-lg shadow-yellow-600/10'
+                      : 'bg-slate-800 text-slate-200 rounded-tl-none border border-slate-700'
+                  }`}
+                >
+                  {msg.text === '' ? (
+                    <div className="flex gap-1.5 p-1">
+                      <div className="w-2 h-2 bg-slate-500 rounded-full animate-bounce"></div>
+                      <div className="w-2 h-2 bg-slate-500 rounded-full animate-bounce [animation-delay:0.2s]"></div>
+                      <div className="w-2 h-2 bg-slate-500 rounded-full animate-bounce [animation-delay:0.4s]"></div>
+                    </div>
+                  ) : (
+                    <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.text}</p>
+                  )}
+                </div>
               </div>
+              {msg.sender === 'ai' && msg.sources && msg.sources.length > 0 && (
+                <div className="mt-2 ml-14 space-y-1">
+                  <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">{t('itineraryDisplay.sources')}:</p>
+                  <div className="flex flex-wrap gap-2">
+                    {msg.sources.map((source, idx) => (
+                      source.web && source.web.uri && (
+                        <a 
+                          key={idx}
+                          href={source.web.uri}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[10px] text-yellow-400 hover:underline bg-slate-800/80 px-2 py-1 rounded-md border border-slate-700 truncate max-w-[150px]"
+                          title={source.web.title || source.web.uri}
+                        >
+                          {source.web.title || source.web.uri}
+                        </a>
+                      )
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           ))}
         </div>
