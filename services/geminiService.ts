@@ -3,8 +3,6 @@ import { GoogleGenAI, Chat } from "@google/genai";
 import { ItineraryDay, ItineraryResult, GroundingChunk, Locale } from "../types";
 import { translations } from '../translations';
 
-// Note: Using process.env.API_KEY directly inside function calls for compliance with SDK guidelines.
-
 export const generateItinerary = async (
   duration: number, 
   interests: string[], 
@@ -13,13 +11,14 @@ export const generateItinerary = async (
   shopNames?: string[]
 ): Promise<ItineraryResult> => {
   // Initialize AI client right before use
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
   
   const tPrompt = (key: string, replacements?: { [key: string]: string | number }) => {
-    let text = translations[locale].prompts[key] || key;
+    const localePrompts = translations[locale].prompts as Record<string, string>;
+    let text = localePrompts[key] || key;
     if (replacements) {
-        Object.entries(replacements).forEach(([key, value]) => {
-            text = text.replace(`{{${key}}}`, String(value));
+        Object.entries(replacements).forEach(([k, v]) => {
+            text = text.replace(`{{${k}}}`, String(v));
         });
     }
     return text;
@@ -55,6 +54,10 @@ export const generateItinerary = async (
     const sources: GroundingChunk[] = groundingMetadata?.groundingChunks || [];
     
     const text = response.text;
+    if (!text) {
+      throw new Error("The AI planner returned an empty response.");
+    }
+
     const jsonMatch = text.match(/```json\n([\s\S]*?)\n```/);
     
     let parsedJson;
@@ -96,8 +99,7 @@ export const generateItinerary = async (
 };
 
 export const startChatSession = (locale: Locale): Chat => {
-  // Initialize AI client right before use
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
   const systemInstruction = translations[locale].prompts.chatbotSystem;
   
   const chat = ai.chats.create({
@@ -111,8 +113,7 @@ export const startChatSession = (locale: Locale): Chat => {
 };
 
 export const startLearningSession = (locale: Locale): Chat => {
-  // Initialize AI client right before use
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
   const systemInstruction = translations[locale].prompts.learningSystem;
   
   const chat = ai.chats.create({

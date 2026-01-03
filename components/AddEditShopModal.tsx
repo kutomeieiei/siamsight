@@ -28,16 +28,16 @@ const AddEditShopModal: React.FC = () => {
 
   useEffect(() => {
     if (shopToEdit) {
-      setName(shopToEdit.name);
-      setDescription(shopToEdit.description);
-      setImageUrl(shopToEdit.imageUrl);
-      setTags(shopToEdit.tags.join(', '));
+      setName(shopToEdit.name || '');
+      setDescription(shopToEdit.description || '');
+      setImageUrl(shopToEdit.imageUrl || '');
+      setTags(shopToEdit.tags?.join(', ') || '');
       setFacebook(shopToEdit.contact?.facebook || '');
       setWhatsapp(shopToEdit.contact?.whatsapp || '');
       setPhone(shopToEdit.contact?.phone || '');
       setWebsite(shopToEdit.contact?.website || '');
     } else if (user?.accountType === 'business') {
-      setName(user.businessName);
+      setName(user.businessName || '');
       setDescription('');
       setImageUrl('');
       setTags('');
@@ -89,7 +89,7 @@ const AddEditShopModal: React.FC = () => {
 
   if (!isModalOpen || user?.accountType !== 'business') return null;
   
-  const currentProvince = shopToEdit?.province || user.province;
+  const currentProvince = (shopToEdit?.province || user.province) || '';
 
   return (
     <div className="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in overflow-y-auto">

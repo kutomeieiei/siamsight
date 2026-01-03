@@ -66,8 +66,8 @@ export const MarketplaceProvider: React.FC<{ children: ReactNode }> = ({ childre
         
         const newShop: Shop = {
             ...shopData,
-            id: user.businessName, // Simplified ID mapping for the mock environment
-            province: user.province,
+            id: user.businessName || user.username, // Fallback to username if business name is missing
+            province: user.province || '',
         };
         
         // Prevent multiple shops for the same business identifier in this mock
