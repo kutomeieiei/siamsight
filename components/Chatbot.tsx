@@ -22,10 +22,10 @@ const Chatbot: React.FC = () => {
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const { t, locale } = useTranslation();
 
-  // Re-initialize chat when locale changes
+  // Reset messages on locale change, but don't start the AI session yet
   useEffect(() => {
     setMessages([{ sender: 'ai', text: t('chatbot.initialMessage') }]);
-    setChat(startChatSession(locale));
+    setChat(null); // Clear previous session so it re-initializes lazily on next send
   }, [locale, t]);
 
   useEffect(() => {
@@ -35,18 +35,25 @@ const Chatbot: React.FC = () => {
   }, [messages]);
 
   const handleSend = useCallback(async () => {
-    if (!userInput.trim() || !chat || isLoading) return;
+    if (!userInput.trim() || isLoading) return;
+
+    let currentChat = chat;
+    
+    // Lazy initialization: Create the session ONLY when the user sends the first message
+    if (!currentChat) {
+      currentChat = startChatSession(locale);
+      setChat(currentChat);
+    }
 
     const userMessage: ChatMessage = { sender: 'user', text: userInput };
     setMessages(prev => [...prev, userMessage]);
     setUserInput('');
     setIsLoading(true);
 
-    // Add a placeholder for the AI response
     setMessages(prev => [...prev, { sender: 'ai', text: '', sources: [] }]);
 
     try {
-      const stream = await chat.sendMessageStream({ message: userInput });
+      const stream = await currentChat.sendMessageStream({ message: userInput });
 
       for await (const chunk of stream) {
         const c = chunk as GenerateContentResponse;
@@ -75,10 +82,8 @@ const Chatbot: React.FC = () => {
       }
     } catch (error: any) {
       console.error("Chat error:", error);
+      let errorText = "Sorry, I'm having trouble connecting right now.";
       
-      let errorText = "Sorry, I'm having trouble connecting right now. Please try again later.";
-      
-      // Check for 429 Quota Exceeded error
       if (error?.message?.includes('429') || error?.message?.toLowerCase().includes('quota')) {
           errorText = t('chatbot.quotaError');
       }
@@ -94,7 +99,7 @@ const Chatbot: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [userInput, chat, isLoading, t]);
+  }, [userInput, chat, isLoading, t, locale]);
   
   return (
     <div className="flex flex-col h-[calc(100vh-240px)] max-w-2xl mx-auto bg-slate-900/50 rounded-2xl shadow-2xl overflow-hidden border border-slate-800 animate-fade-in">

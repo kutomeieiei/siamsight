@@ -33,7 +33,6 @@ const CraftCard: React.FC<{
       />
       <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent"></div>
       
-      {/* Province Tag */}
       <div className="absolute top-4 left-4 flex items-center gap-1.5 bg-yellow-500 text-slate-900 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest shadow-xl border border-yellow-400/20">
         <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
           <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
@@ -68,12 +67,11 @@ const LearningView: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
-  // List of craft keys available in translations
   const craftKeys = ['silk', 'ceramics', 'teak', 'silverware', 'wickerwork'];
 
   useEffect(() => {
     setMessages([{ sender: 'ai', text: t('learning.initialMessage') }]);
-    setChat(startLearningSession(locale));
+    setChat(null); // Lazy init on send
   }, [locale, t]);
 
   useEffect(() => {
@@ -94,7 +92,13 @@ const LearningView: React.FC = () => {
 
   const handleSend = useCallback(async (textOverride?: string) => {
     const textToSend = textOverride || userInput;
-    if (!textToSend.trim() || !chat || isLoading) return;
+    if (!textToSend.trim() || isLoading) return;
+
+    let currentChat = chat;
+    if (!currentChat) {
+      currentChat = startLearningSession(locale);
+      setChat(currentChat);
+    }
 
     const userMessage: ChatMessage = { sender: 'user', text: textToSend };
     setMessages(prev => [...prev, userMessage]);
@@ -104,7 +108,7 @@ const LearningView: React.FC = () => {
     setMessages(prev => [...prev, { sender: 'ai', text: '', sources: [] }]);
 
     try {
-      const stream = await chat.sendMessageStream({ message: textToSend });
+      const stream = await currentChat.sendMessageStream({ message: textToSend });
       for await (const chunk of stream) {
         const c = chunk as GenerateContentResponse;
         const chunkText = c.text;
@@ -132,10 +136,7 @@ const LearningView: React.FC = () => {
       }
     } catch (error: any) {
       console.error("Learning Chat error:", error);
-      
-      let errorText = "Error connecting to Kru Siam. Please try again.";
-      
-      // Check for 429 Quota Exceeded error
+      let errorText = "Error connecting to Kru Siam.";
       if (error?.message?.includes('429') || error?.message?.toLowerCase().includes('quota')) {
           errorText = t('learning.quotaError');
       }
@@ -151,7 +152,7 @@ const LearningView: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [userInput, chat, isLoading, t]);
+  }, [userInput, chat, isLoading, t, locale]);
 
   const handleQuickAsk = (productName: string) => {
     const question = locale === 'th' 
@@ -159,7 +160,6 @@ const LearningView: React.FC = () => {
         : `Can you tell me more about ${productName}?`;
     handleSend(question);
     
-    // Scroll to chat section
     const chatSection = document.getElementById('kru-siam-chat');
     if (chatSection) {
       chatSection.scrollIntoView({ behavior: 'smooth' });
@@ -174,7 +174,6 @@ const LearningView: React.FC = () => {
         <p className="text-slate-400 max-w-2xl mx-auto text-lg">{t('learning.subtitle')}</p>
       </div>
 
-      {/* Craft Search Bar */}
       <div className="max-w-2xl mx-auto relative group">
         <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
           <svg className="h-5 w-5 text-slate-500 group-focus-within:text-yellow-500 transition-colors" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -188,52 +187,29 @@ const LearningView: React.FC = () => {
           placeholder={t('learning.searchPlaceholder')}
           className="w-full pl-12 pr-4 py-4 bg-slate-900/50 border-2 border-slate-700 rounded-2xl focus:ring-4 focus:ring-yellow-500/10 focus:border-yellow-500 focus:outline-none text-slate-100 placeholder-slate-500 transition-all shadow-xl"
         />
-        {searchQuery && (
-          <button 
-            onClick={() => setSearchQuery('')}
-            className="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-500 hover:text-white transition-colors"
-          >
-            <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-            </svg>
-          </button>
-        )}
       </div>
 
-      {/* Craft Gallery Section */}
       <section>
         <h3 className="text-2xl font-bold text-white mb-8 flex items-center gap-3">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
           {t('learning.galleryTitle')}
         </h3>
         
-        {filteredCrafts.length === 0 ? (
-          <div className="py-20 text-center bg-slate-900/30 rounded-3xl border-2 border-dashed border-slate-800 animate-fade-in">
-            <div className="w-16 h-16 bg-slate-800/50 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-600">
-               <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 9.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-               </svg>
-            </div>
-            <p className="text-slate-400 font-medium">{t('learning.noResults')}</p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate-fade-in">
-            {filteredCrafts.map(key => (
-              <CraftCard 
-                key={key}
-                title={t(`learning.crafts.${key}.title`)} 
-                desc={t(`learning.crafts.${key}.desc`)}
-                province={t(`learning.crafts.${key}.province`)}
-                imageUrl={(learningImages as any)[key]}
-                onAsk={handleQuickAsk}
-                askText={t('learning.askKru')}
-              />
-            ))}
-          </div>
-        )}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate-fade-in">
+          {filteredCrafts.map(key => (
+            <CraftCard 
+              key={key}
+              title={t(`learning.crafts.${key}.title`)} 
+              desc={t(`learning.crafts.${key}.desc`)}
+              province={t(`learning.crafts.${key}.province`)}
+              imageUrl={(learningImages as any)[key]}
+              onAsk={handleQuickAsk}
+              askText={t('learning.askKru')}
+            />
+          ))}
+        </div>
       </section>
 
-      {/* Kru Siam Chat Section */}
       <section id="kru-siam-chat" className="bg-slate-900/80 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl shadow-black/40 scroll-mt-24 transition-all hover:border-yellow-500/10">
         <div className="p-6 border-b border-slate-800 bg-slate-800/20">
           <div className="flex items-center gap-4">
@@ -271,27 +247,6 @@ const LearningView: React.FC = () => {
                   )}
                 </div>
               </div>
-              {msg.sender === 'ai' && msg.sources && msg.sources.length > 0 && (
-                <div className="mt-2 ml-14 space-y-1">
-                  <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">{t('itineraryDisplay.sources')}:</p>
-                  <div className="flex flex-wrap gap-2">
-                    {msg.sources.map((source, idx) => (
-                      source.web && source.web.uri && (
-                        <a 
-                          key={idx}
-                          href={source.web.uri}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-[10px] text-yellow-400 hover:underline bg-slate-800/80 px-2 py-1 rounded-md border border-slate-700 truncate max-w-[150px]"
-                          title={source.web.title || source.web.uri}
-                        >
-                          {source.web.title || source.web.uri}
-                        </a>
-                      )
-                    ))}
-                  </div>
-                </div>
-              )}
             </div>
           ))}
         </div>
@@ -321,16 +276,6 @@ const LearningView: React.FC = () => {
           </div>
         </div>
       </section>
-      
-      <style>{`
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-        .scrollbar-hide {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `}</style>
     </div>
   );
 };

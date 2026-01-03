@@ -10,7 +10,6 @@ export const generateItinerary = async (
   locale: Locale,
   shopNames?: string[]
 ): Promise<ItineraryResult> => {
-  // Initialize AI client right before use
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
   
   const tPrompt = (key: string, replacements?: { [key: string]: string | number }) => {
@@ -42,7 +41,6 @@ export const generateItinerary = async (
   });
 
   try {
-    // Switching to gemini-3-flash-preview to avoid strict rate limits of Pro models
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
       contents: prompt,
@@ -66,22 +64,16 @@ export const generateItinerary = async (
       try {
         parsedJson = JSON.parse(jsonMatch[1]);
       } catch (e) {
-        console.error("Failed to parse JSON from model response:", e);
-        throw new Error("The AI planner returned an invalid format. Please try again.");
+        throw new Error("The AI planner returned an invalid format.");
       }
     } else {
       try {
         parsedJson = JSON.parse(text);
       } catch (e) {
-        console.error("Could not find or parse JSON in the model response:", text);
-        throw new Error("The AI planner gave an unexpected response. Please try generating again.");
+        throw new Error("The AI planner gave an unexpected response.");
       }
     }
 
-    if (!parsedJson || !parsedJson.itinerary) {
-      throw new Error("Itinerary data not found in the model's response.");
-    }
-    
     return { 
       itinerary: parsedJson.itinerary, 
       total_estimated_cost: parsedJson.total_estimated_cost || 0,
@@ -91,21 +83,14 @@ export const generateItinerary = async (
       feasibility_warning: parsedJson.feasibility_warning || undefined
     };
   } catch (error: any) {
-    console.error("Error generating itinerary:", error);
-    
-    // Specific handling for Quota/Rate Limit errors
     if (error?.message?.includes('429') || error?.message?.toLowerCase().includes('quota')) {
       throw new Error(
         locale === 'th' 
-          ? "ขณะนี้มีผู้ใช้งานจำนวนมากเกินขีดจำกัดโควตาฟรีของ Google Gemini AI กรุณารอสักครู่ (ประมาณ 1 นาที) แล้วลองใหม่อีกครั้ง" 
-          : "The AI is currently receiving too many requests (Gemini Free Tier Quota). Please wait about 60 seconds and try generating your itinerary again."
+          ? "โควตาฟรีชั่วคราวเต็มแล้ว (429) กรุณารอ 60 วินาทีแล้วลองใหม่" 
+          : "Free quota exceeded (429). Please wait 60 seconds and try again."
       );
     }
-
-    if (error instanceof Error) {
-        throw error;
-    }
-    throw new Error("Failed to generate itinerary. The AI planner might be temporarily unavailable. Please try again later.");
+    throw error;
   }
 };
 
@@ -113,26 +98,24 @@ export const startChatSession = (locale: Locale): Chat => {
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
   const systemInstruction = translations[locale].prompts.chatbotSystem;
   
-  const chat = ai.chats.create({
-    model: 'gemini-3-flash-preview',
+  return ai.chats.create({
+    model: 'gemini-flash-lite-latest', // Higher RPM model for chat
     config: {
       systemInstruction: systemInstruction,
       tools: [{googleSearch: {}}]
     }
   });
-  return chat;
 };
 
 export const startLearningSession = (locale: Locale): Chat => {
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
   const systemInstruction = translations[locale].prompts.learningSystem;
   
-  const chat = ai.chats.create({
-    model: 'gemini-3-flash-preview',
+  return ai.chats.create({
+    model: 'gemini-flash-lite-latest', // Higher RPM model for learning
     config: {
       systemInstruction: systemInstruction,
       tools: [{googleSearch: {}}]
     }
   });
-  return chat;
 };
