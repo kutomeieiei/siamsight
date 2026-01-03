@@ -130,20 +130,28 @@ const LearningView: React.FC = () => {
           return newMessages;
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Learning Chat error:", error);
+      
+      let errorText = "Error connecting to Kru Siam. Please try again.";
+      
+      // Check for 429 Quota Exceeded error
+      if (error?.message?.includes('429') || error?.message?.toLowerCase().includes('quota')) {
+          errorText = t('learning.quotaError');
+      }
+
       setMessages(prev => {
           const newMessages = [...prev];
           const lastMessage = newMessages[newMessages.length - 1];
           if (lastMessage && lastMessage.sender === 'ai') {
-              lastMessage.text = "Error connecting to Kru Siam. Please try again.";
+              lastMessage.text = errorText;
           }
           return newMessages;
       });
     } finally {
       setIsLoading(false);
     }
-  }, [userInput, chat, isLoading]);
+  }, [userInput, chat, isLoading, t]);
 
   const handleQuickAsk = (productName: string) => {
     const question = locale === 'th' 

@@ -42,8 +42,9 @@ export const generateItinerary = async (
   });
 
   try {
+    // Switching to gemini-3-flash-preview to avoid strict rate limits of Pro models
     const response = await ai.models.generateContent({
-      model: "gemini-3-pro-preview",
+      model: "gemini-3-flash-preview",
       contents: prompt,
       config: {
         tools: [{googleSearch: {}}],
@@ -89,8 +90,18 @@ export const generateItinerary = async (
       sources,
       feasibility_warning: parsedJson.feasibility_warning || undefined
     };
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error generating itinerary:", error);
+    
+    // Specific handling for Quota/Rate Limit errors
+    if (error?.message?.includes('429') || error?.message?.toLowerCase().includes('quota')) {
+      throw new Error(
+        locale === 'th' 
+          ? "ขณะนี้มีผู้ใช้งานจำนวนมากเกินขีดจำกัดโควตาฟรีของ Google Gemini AI กรุณารอสักครู่ (ประมาณ 1 นาที) แล้วลองใหม่อีกครั้ง" 
+          : "The AI is currently receiving too many requests (Gemini Free Tier Quota). Please wait about 60 seconds and try generating your itinerary again."
+      );
+    }
+
     if (error instanceof Error) {
         throw error;
     }

@@ -9,7 +9,7 @@ import { useTranslation } from '../contexts/LanguageContext';
 const AiAvatar = () => (
   <div className="w-8 h-8 rounded-full bg-purple-800 flex items-center justify-center flex-shrink-0 text-pink-300">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
-      <path d="M12,2.25a1,1,0,0,0-1,1V5.62a8.5,8.5,0,0,0-4.23,3.2,1,1,0,0,0-.23,1.1,10.19,10.19,0,0,0,2.2,4.3,1,1,0,0,0,.9,.55H10a1,1,0,0,1,0,2H8.88A3,3,0,0,0,6,19.82a1,1,0,0,0,1,1.13,4.36,4.36,0,0,0,4-2.1,4.36,4.36,0,0,0,4,2.1,1,1,0,0,0,1-1.13A3,3,0,0,0,15.12,18H14a1,1,0,0,1,0-2h1.12a1,1,0,0,0,.9,.55,10.19,10.19,0,0,0,2.2-4.3,1,1,0,0,0-.23-1.1A8.5,8.5,0,0,0,13,5.62V3.25A1,1,0,0,0,12,2.25Z" />
+      <path d="M12,2.25a1,1,0,0,0-1,1V5.62a8.5,8.5,0,0,0-4.23,3.2,1,1,0,0,0-.23,1.1,10.19,10.19,0,0,0,2.2,4.3,1,1,0,0,0,.9,.55H10a1,1,0,0,1,0,2H8.88A3,3,0,0,0,6,19.82a1,1,0,0,0,1,1.13,4.36,4.36,0,0,0,4-2.1,4.36,4.36,0,0,0,4-2.1,1,1,0,0,0,1-1.13A3,3,0,0,0,15.12,18H14a1,1,0,0,1,0-2h1.12a1,1,0,0,0,.9,.55,10.19,10.19,0,0,0,2.2-4.3,1,1,0,0,0-.23-1.1A8.5,8.5,0,0,0,13,5.62V3.25A1,1,0,0,0,12,2.25Z" />
     </svg>
   </div>
 );
@@ -73,20 +73,28 @@ const Chatbot: React.FC = () => {
           return newMessages;
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Chat error:", error);
+      
+      let errorText = "Sorry, I'm having trouble connecting right now. Please try again later.";
+      
+      // Check for 429 Quota Exceeded error
+      if (error?.message?.includes('429') || error?.message?.toLowerCase().includes('quota')) {
+          errorText = t('chatbot.quotaError');
+      }
+
       setMessages(prev => {
           const newMessages = [...prev];
           const lastMessage = newMessages[newMessages.length - 1];
           if (lastMessage && lastMessage.sender === 'ai') {
-              lastMessage.text = "Sorry, I'm having trouble connecting right now. Please try again later.";
+              lastMessage.text = errorText;
           }
           return newMessages;
       });
     } finally {
       setIsLoading(false);
     }
-  }, [userInput, chat, isLoading]);
+  }, [userInput, chat, isLoading, t]);
   
   return (
     <div className="flex flex-col h-[calc(100vh-240px)] max-w-2xl mx-auto bg-slate-900/50 rounded-2xl shadow-2xl overflow-hidden border border-slate-800 animate-fade-in">
