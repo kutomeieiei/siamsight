@@ -42,7 +42,8 @@ export const generateItinerary = async (
 
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
+      // Switched to gemini-flash-lite-latest for maximum free-tier headroom
+      model: "gemini-flash-lite-latest", 
       contents: prompt,
       config: {
         tools: [{googleSearch: {}}],
@@ -99,7 +100,7 @@ export const startChatSession = (locale: Locale): Chat => {
   const systemInstruction = translations[locale].prompts.chatbotSystem;
   
   return ai.chats.create({
-    model: 'gemini-flash-lite-latest', // Higher RPM model for chat
+    model: 'gemini-flash-lite-latest', // Consistent use of Lite for high availability
     config: {
       systemInstruction: systemInstruction,
       tools: [{googleSearch: {}}]
@@ -112,7 +113,7 @@ export const startLearningSession = (locale: Locale): Chat => {
   const systemInstruction = translations[locale].prompts.learningSystem;
   
   return ai.chats.create({
-    model: 'gemini-flash-lite-latest', // Higher RPM model for learning
+    model: 'gemini-flash-lite-latest', // Consistent use of Lite for high availability
     config: {
       systemInstruction: systemInstruction,
       tools: [{googleSearch: {}}]
