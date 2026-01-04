@@ -1,3 +1,4 @@
+
 /**
  * ==============================================================================
  * SIAM SIGHT: GLOBAL IMAGE CONFIGURATION
@@ -11,14 +12,25 @@
 
 /**
  * Robust Google Drive Link Resolver.
+ * Uses the /thumbnail endpoint which is the most reliable way to hotlink 
+ * Google Drive images in production (avoids virus scan warnings and CORS issues).
  */
 const resolveDriveUrl = (url: string): string => {
   if (!url || typeof url !== 'string') return url;
+  
+  // Handle Google Drive links
   if (url.includes('drive.google.com')) {
+    // Extract ID from various formats: /d/ID/view, id=ID, etc.
     const match = url.match(/\/d\/(.+?)([\/?]|$)/) || url.match(/id=(.+?)(&|$)/);
     const id = match ? match[1] : null;
-    return id ? `https://drive.google.com/thumbnail?id=${id}&sz=w1600` : url;
+    
+    /**
+     * Using the thumbnail endpoint is much more reliable for <img> tags.
+     * sz=w1200 requests a high-resolution version (up to 1600px supported).
+     */
+    return id ? `https://drive.google.com/thumbnail?id=${id}&sz=w1200` : url;
   }
+  
   return url;
 };
 

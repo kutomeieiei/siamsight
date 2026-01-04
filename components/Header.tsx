@@ -8,11 +8,11 @@ import { useBranding } from '../contexts/BrandingContext';
 const HeaderIcon = () => {
   const { logoUrl } = useBranding();
   return (
-    <div className="h-12 md:h-16 flex items-center justify-start overflow-hidden">
+    <div className="h-14 md:h-20 flex items-center justify-start overflow-hidden">
       <img 
         src={logoUrl} 
         alt="App Logo" 
-        className="h-full w-auto object-contain max-w-[200px] md:max-w-[280px] transition-all duration-500" 
+        className="h-full w-auto object-contain max-w-[240px] md:max-w-[320px] transition-all duration-500" 
       />
     </div>
   );
@@ -55,7 +55,7 @@ const Header: React.FC = () => {
   
   return (
     <header className="bg-slate-950/90 backdrop-blur-xl sticky top-0 z-50 border-b border-slate-800">
-      <div className="container mx-auto px-4 py-2 md:py-3 flex items-center justify-between">
+      <div className="container mx-auto px-4 py-2.5 md:py-4 flex items-center justify-between">
         <div className="flex items-center">
           <HeaderIcon />
         </div>
