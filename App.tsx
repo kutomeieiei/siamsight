@@ -14,6 +14,12 @@ import ProvinceDetailView from './components/ProvinceDetailView';
 import AttractionDetailView from './components/AttractionDetailView';
 import ShopDetailView from './components/ShopDetailView';
 
+// Standard views get internal padding
+// Moved outside of App to fix children typing issues and follow React best practices
+const ViewContainer: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <div className="container mx-auto px-4 py-8">{children}</div>
+);
+
 const App: React.FC = () => {
   const [activeView, setActiveView] = useState<View>(View.EXPLORE);
   const [selectedProvince, setSelectedProvince] = useState<Province | null>(null);
@@ -45,7 +51,6 @@ const App: React.FC = () => {
   };
 
   const renderContent = () => {
-    // Detail views take precedence over the main navigation views
     if (selectedProvince) {
       return <ProvinceDetailView province={selectedProvince} onBack={handleBackToExplore} />;
     }
@@ -53,45 +58,56 @@ const App: React.FC = () => {
       return <AttractionDetailView attraction={selectedAttraction} onBack={handleBackToExplore} />;
     }
     if (selectedShop) {
-      return <ShopDetailView shop={selectedShop} onBack={() => setSelectedShop(null)} />;
+      return (
+        <ShopDetailView 
+          shop={selectedShop} 
+          onBack={() => setSelectedShop(null)} 
+          setActiveView={setActiveView}
+        />
+      );
     }
 
     switch (activeView) {
       case View.EXPLORE:
         return (
-          <ExploreView 
-            onSelectProvince={handleSelectProvince} 
-            onSelectAttraction={handleSelectAttraction} 
-          />
+          <ViewContainer>
+            <ExploreView 
+              onSelectProvince={handleSelectProvince} 
+              onSelectAttraction={handleSelectAttraction} 
+            />
+          </ViewContainer>
         );
       case View.ITINERARY:
-        return <ItineraryPlanner />;
+        return <ViewContainer><ItineraryPlanner /></ViewContainer>;
       case View.MARKETPLACE:
-        return <MarketplaceView onSelectShop={handleSelectShop} />;
+        return <ViewContainer><MarketplaceView onSelectShop={handleSelectShop} setActiveView={setActiveView} /></ViewContainer>;
       case View.LEARNING:
-        return <LearningView />;
+        return <ViewContainer><LearningView /></ViewContainer>;
       case View.COMMUNITY:
-        return <CommunityView />;
+        return <CommunityView setActiveView={setActiveView} />; // Community handles its own padding/fullscreen
       case View.CHAT:
-        return <Chatbot />;
+        return <Chatbot />; // Chatbot handles its own padding/fullscreen
       case View.ACCOUNT:
-        return <AccountView setActiveView={setActiveView} />;
+        return <ViewContainer><AccountView setActiveView={setActiveView} /></ViewContainer>;
       default:
-        return <ExploreView onSelectProvince={handleSelectProvince} onSelectAttraction={handleSelectAttraction} />;
+        return (
+          <ViewContainer>
+            <ExploreView onSelectProvince={handleSelectProvince} onSelectAttraction={handleSelectAttraction} />
+          </ViewContainer>
+        );
     }
   };
 
   return (
     <div className="min-h-screen flex flex-col pb-24">
       <Header />
-      <main className="container mx-auto px-4 py-8 flex-1">
+      <main className="flex-1">
         {renderContent()}
       </main>
       <FooterNav 
         activeView={activeView} 
         setActiveView={(view) => {
           setActiveView(view);
-          // Reset detail views when switching main tabs
           setSelectedProvince(null);
           setSelectedAttraction(null);
           setSelectedShop(null);

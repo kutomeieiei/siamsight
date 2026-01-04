@@ -1,10 +1,10 @@
-
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { AuthProvider } from './contexts/AuthContext';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { CommunityProvider } from './contexts/CommunityContext';
+import { BrandingProvider } from './contexts/BrandingContext';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -15,11 +15,13 @@ const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
     <LanguageProvider>
-      <AuthProvider>
-        <CommunityProvider>
-          <App />
-        </CommunityProvider>
-      </AuthProvider>
+      <BrandingProvider>
+        <AuthProvider>
+          <CommunityProvider>
+            <App />
+          </CommunityProvider>
+        </AuthProvider>
+      </BrandingProvider>
     </LanguageProvider>
   </React.StrictMode>
 );

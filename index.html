@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,7 +9,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sarabun:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
       tailwind.config = {
         theme: {
@@ -37,29 +38,38 @@
     </script>
     <style>
       body {
-        background-color: #160f29; /* Deep Purple */
-        /* Subtle Thai-inspired pattern layered with the gradient */
-        background-image: 
-          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath d='M50 0 L60 10 L50 20 L40 10 Z M0 50 L10 40 L20 50 L10 60 Z M100 50 L90 40 L80 50 L90 60 Z M50 100 L60 90 L50 80 L40 90 Z' fill='rgba(252, 211, 77, 0.02)'/%3E%3Cpath d='M25 25 L35 15 L45 25 L35 35 Z M75 25 L65 15 L55 25 L65 35 Z M25 75 L35 65 L45 75 L35 85 Z M75 75 L65 65 L55 75 L65 85 Z' fill='rgba(252, 211, 77, 0.015)'/%3E%3C/svg%3E"),
-          radial-gradient(ellipse at top, #4a2c5a, #160f29 80%);
+        background-color: #020617; /* Solid Slate 950 */
+        /* Thai "Pra-jam-yam" Pattern SVG */
+        background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23eab308' fill-opacity='0.04'%3E%3Cpath d='M60 10c2 15 15 25 30 30-15 5-25 18-30 30-5-12-15-25-30-30 15-5 28-15 30-30z'/%3E%3Ccircle cx='60' cy='40' r='3'/%3E%3Cpath d='M10 70c1 10 10 15 20 18-10 3-15 10-18 20-3-10-10-17-20-20 10-3 17-10 18-18z'/%3E%3Cpath d='M110 70c1 10 10 15 20 18-10 3-15 10-18 20-3-10-10-17-20-20 10-3 17-10 18-18z'/%3E%3Cpath d='M60 90c1 8 8 12 15 15-7 3-12 7-15 15-3-8-8-12-15-15 7-3 12-7 15-15z'/%3E%3C/g%3E%3C/svg%3E");
         background-attachment: fixed;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
       }
-      /* Custom scrollbar for a modern look */
+      /* Extreme contrast scrollbar */
       ::-webkit-scrollbar {
-        width: 8px;
+        width: 10px;
       }
       ::-webkit-scrollbar-track {
-        background: #1e1b2e;
+        background: #020617;
       }
       ::-webkit-scrollbar-thumb {
-        background: #583d7a;
-        border-radius: 4px;
+        background: #eab308; /* Yellow 500 */
+        border-radius: 5px;
+        border: 2px solid #020617;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #8561c5;
+        background: #facc15;
       }
       .font-thai {
         font-family: 'Sarabun', sans-serif;
+      }
+      
+      /* Thai Glassmorphism Container */
+      .thai-glass {
+        background: rgba(15, 23, 42, 0.75);
+        backdrop-filter: blur(16px);
+        border: 1px solid rgba(234, 179, 8, 0.15);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
       }
     </style>
   <script type="importmap">

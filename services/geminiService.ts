@@ -1,4 +1,3 @@
-
 import { GoogleGenAI, Chat } from "@google/genai";
 import { ItineraryDay, ItineraryResult, GroundingChunk, Locale } from "../types";
 import { translations } from '../translations';
@@ -10,7 +9,8 @@ export const generateItinerary = async (
   locale: Locale,
   shopNames?: string[]
 ): Promise<ItineraryResult> => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+  // Always use process.env.API_KEY directly for initialization as per guidelines
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
   const tPrompt = (key: string, replacements?: { [key: string]: string | number }) => {
     const localePrompts = translations[locale].prompts as Record<string, string>;
@@ -96,7 +96,8 @@ export const generateItinerary = async (
 };
 
 export const startChatSession = (locale: Locale): Chat => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+  // Always use process.env.API_KEY directly for initialization
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   const systemInstruction = translations[locale].prompts.chatbotSystem;
   
   return ai.chats.create({
@@ -109,7 +110,8 @@ export const startChatSession = (locale: Locale): Chat => {
 };
 
 export const startLearningSession = (locale: Locale): Chat => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+  // Always use process.env.API_KEY directly for initialization
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   const systemInstruction = translations[locale].prompts.learningSystem;
   
   return ai.chats.create({

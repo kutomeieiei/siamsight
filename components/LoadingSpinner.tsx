@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 interface LoadingSpinnerProps {
@@ -6,7 +7,7 @@ interface LoadingSpinnerProps {
 
 const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ size = 8 }) => {
   return (
-    <div className={`w-${size} h-${size} border-2 border-purple-800 border-t-yellow-400 border-solid rounded-full animate-spin`}></div>
+    <div className={`w-${size} h-${size} border-2 border-slate-700 border-t-yellow-500 border-solid rounded-full animate-spin`}></div>
   );
 };
 

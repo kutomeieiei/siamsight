@@ -1,3 +1,4 @@
+
 import { Province, FeaturedAttraction, Shop } from './types';
 import { provinceImages, attractionImages, shopImages } from './image_assets';
 
@@ -79,7 +80,6 @@ export const PROVINCES: Province[] = [
   // West
   { name: 'Kanchanaburi', description: 'Known for the River Kwai and its World War II history.', imageUrl: provinceImages.Kanchanaburi, region: 'West', lat: 14.021, lng: 99.531 },
   { name: 'Phetchaburi', description: 'A historic city with royal palaces, ancient temples, and beaches.', imageUrl: provinceImages.Phetchaburi, region: 'West', lat: 13.111, lng: 99.945 },
-  // FIX: Fixed malformed property name for 'Prachuap Khiri Khan'.
   { name: 'Prachuap Khiri Khan', description: 'Home to the popular resort town of Hua Hin.', imageUrl: provinceImages['Prachuap Khiri Khan'], region: 'West', lat: 11.808, lng: 99.794 },
   { name: 'Ratchaburi', description: 'Famous for its floating markets and beautiful caves.', imageUrl: provinceImages.Ratchaburi, region: 'West', lat: 13.537, lng: 99.818 },
   
@@ -101,7 +101,6 @@ export const REGION_KEYS = [
   'West',
   'East'
 ] as const;
-
 
 export const INTEREST_KEYS = [
   'culture',
@@ -136,14 +135,33 @@ export const LOCAL_SHOPS: Shop[] = [
     description: 'Exquisite Thai silk products, from scarves to home decor, reflecting a rich heritage.',
     imageUrl: shopImages.jimThompsonHouseShop,
     tags: ['Thai Silk', 'Luxury', 'Souvenirs'],
+    likeCount: 0,
     contact: {
       facebook: 'facebook.com/JimThompsonSilk',
       website: 'jimthompson.com'
     },
     products: [
-        { name: 'Heritage Silk Scarf', price: '฿2,400', imageUrl: 'https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?q=80&w=800' },
-        { name: 'Classic Silk Tie', price: '฿1,800', imageUrl: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?q=80&w=800' },
-        { name: 'Silk Cushion Cover', price: '฿1,200', imageUrl: 'https://images.unsplash.com/photo-1584100996541-118817730e61?q=80&w=800' }
+        { 
+          name: 'Heritage Silk Scarf', 
+          price: '฿2,400', 
+          description: 'A masterpiece of traditional Thai weaving. This scarf features an intricate heritage pattern, hand-woven from the finest locally sourced silk. Durable, luxurious, and timeless.',
+          imageUrl: 'https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?q=80&w=800',
+          likeCount: 0
+        },
+        { 
+          name: 'Classic Silk Tie', 
+          price: '฿1,800', 
+          description: 'Elevate your formal attire with this 100% Thai silk tie. Hand-crafted with a focus on vibrant color and a smooth finish that resists wrinkling.',
+          imageUrl: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?q=80&w=800',
+          likeCount: 0
+        },
+        { 
+          name: 'Silk Cushion Cover', 
+          price: '฿1,200', 
+          description: 'Bring the luxury of the Jim Thompson house into your own home. These cushion covers feature traditional motifs and a hidden zipper for a clean look.',
+          imageUrl: 'https://images.unsplash.com/photo-1584100996541-118817730e61?q=80&w=800',
+          likeCount: 0
+        }
     ]
   },
   {
@@ -153,12 +171,25 @@ export const LOCAL_SHOPS: Shop[] = [
     description: 'A vibrant, sprawling market famous for its Lanna-style handicrafts, art, and clothing.',
     imageUrl: shopImages.chiangMaiNightBazaar,
     tags: ['Handicrafts', 'Art', 'Bargains'],
+    likeCount: 0,
     contact: {
       phone: '081-123-4567'
     },
     products: [
-        { name: 'Hand-woven Hill Tribe Bag', price: '฿850', imageUrl: 'https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=800' },
-        { name: 'Carved Teakwood Box', price: '฿1,200', imageUrl: 'https://images.unsplash.com/photo-1596464716127-f2a82984de30?q=80&w=800' }
+        { 
+          name: 'Hand-woven Hill Tribe Bag', 
+          price: '฿850', 
+          description: 'Unique shoulder bag created by Hmong artisans using traditional cross-stitch and indigo dyes. Each pattern tells a story of the high mountain villages.',
+          imageUrl: 'https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=800',
+          likeCount: 0
+        },
+        { 
+          name: 'Carved Teakwood Box', 
+          price: '฿1,200', 
+          description: 'Made from sustainable Thai teak, these boxes are hand-carved with floral Lanna motifs. Perfect for jewelry or small keepsakes.',
+          imageUrl: 'https://images.unsplash.com/photo-1596464716127-f2a82984de30?q=80&w=800',
+          likeCount: 0
+        }
     ]
   },
   {
@@ -168,13 +199,26 @@ export const LOCAL_SHOPS: Shop[] = [
     description: 'Authentic, locally-made herbal balms, essential oils, and spa products perfect for wellness.',
     imageUrl: shopImages.pranomThaiHerbal,
     tags: ['Herbal Goods', 'Wellness', 'Organic'],
+    likeCount: 0,
     contact: {
       whatsapp: '+66891234567',
       facebook: 'facebook.com/PranomHerbalPhuket'
     },
     products: [
-        { name: 'Thai Massage Balm Set', price: '฿450', imageUrl: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?q=80&w=800' },
-        { name: 'Lemon Grass Essential Oil', price: '฿320', imageUrl: 'https://images.unsplash.com/photo-1611080626919-7cf5a9831168?q=80&w=800' }
+        { 
+          name: 'Thai Massage Balm Set', 
+          price: '฿450', 
+          description: 'A set of three organic balms: Ginger (for muscle pain), Lemongrass (for energy), and Lavender (for sleep). Used by professional Thai massage therapists.',
+          imageUrl: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?q=80&w=800',
+          likeCount: 0
+        },
+        { 
+          name: 'Lemon Grass Essential Oil', 
+          price: '฿320', 
+          description: 'Pure, concentrated lemongrass oil steam-distilled in Phuket. Perfect for aromatherapy or as a natural insect repellent.',
+          imageUrl: 'https://images.unsplash.com/photo-1611080626919-7cf5a9831168?q=80&w=800',
+          likeCount: 0
+        }
     ]
   },
   {
@@ -184,6 +228,7 @@ export const LOCAL_SHOPS: Shop[] = [
     description: 'Showcasing "One Tambon One Product" goods, from woven baskets to delicious local snacks.',
     imageUrl: shopImages.otopCenter,
     tags: ['Local Products', 'Crafts', 'Food'],
+    likeCount: 0,
     contact: {
       phone: '035-123-456'
     }
@@ -195,13 +240,26 @@ export const LOCAL_SHOPS: Shop[] = [
     description: 'Masterfully crafted traditional Thai celadon ceramics with a unique cracked glaze finish.',
     imageUrl: shopImages.siamCeladon,
     tags: ['Ceramics', 'Lanna Style', 'Art'],
+    likeCount: 0,
     contact: {
       facebook: 'facebook.com/SiamCeladon',
       website: 'siamceladon.com'
     },
     products: [
-        { name: 'Cracked Glaze Dinner Set', price: '฿4,500', imageUrl: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?q=80&w=800' },
-        { name: 'Lotus Petal Bowl', price: '฿850', imageUrl: 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?q=80&w=800' }
+        { 
+          name: 'Cracked Glaze Dinner Set', 
+          price: '฿4,500', 
+          description: 'A 4-piece set including a dinner plate, side plate, bowl, and mug. Features the signature Lanna green color and high-durability finish.',
+          imageUrl: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?q=80&w=800',
+          likeCount: 0
+        },
+        { 
+          name: 'Lotus Petal Bowl', 
+          price: '฿850', 
+          description: 'A beautiful decorative bowl shaped like a lotus flower. Each petal is hand-carved before the final glaze is applied.',
+          imageUrl: 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?q=80&w=800',
+          likeCount: 0
+        }
     ]
   },
   {
@@ -211,13 +269,26 @@ export const LOCAL_SHOPS: Shop[] = [
     description: 'The finest selection of Thai premium fruits, ready-to-eat meals, and rare ingredients.',
     imageUrl: shopImages.orTorKorMarket,
     tags: ['Premium Food', 'Fruit', 'Market'],
+    likeCount: 0,
     contact: {
       phone: '02-279-2080',
       website: 'ortorkor.com'
     },
     products: [
-        { name: 'Premium Monthong Durian', price: 'Seasonal', imageUrl: 'https://images.unsplash.com/photo-1598449334855-6b64004291e0?q=80&w=800' },
-        { name: 'Thai Mango Sticky Rice Kit', price: '฿350', imageUrl: 'https://images.unsplash.com/photo-1621234714152-32a76f236e71?q=80&w=800' }
+        { 
+          name: 'Premium Monthong Durian', 
+          price: 'Seasonal', 
+          description: 'Selected from the best orchards in Rayong. Each segment is checked for perfect ripeness and texture. Only the "Grade A" fruit makes it to our market.',
+          imageUrl: 'https://images.unsplash.com/photo-1598449334855-6b64004291e0?q=80&w=800',
+          likeCount: 0
+        },
+        { 
+          name: 'Thai Mango Sticky Rice Kit', 
+          price: '฿350', 
+          description: 'Everything you need to make the perfect dessert: Thai glutinous rice, coconut cream, palm sugar, and dried mung beans. Mangos included in-store.',
+          imageUrl: 'https://images.unsplash.com/photo-1621234714152-32a76f236e71?q=80&w=800',
+          likeCount: 0
+        }
     ]
   },
   {
@@ -227,6 +298,7 @@ export const LOCAL_SHOPS: Shop[] = [
     description: 'Watch artisans create famous hand-painted paper umbrellas and buy them as unique gifts.',
     imageUrl: shopImages.boSangUmbrellaMakingCentre,
     tags: ['Umbrellas', 'Hand-painted', 'Tradition'],
+    likeCount: 0,
     contact: {
       facebook: 'facebook.com/BoSangHandicrafts',
       phone: '053-338-357'
@@ -239,6 +311,7 @@ export const LOCAL_SHOPS: Shop[] = [
     description: 'Hand-carved terracotta pottery made using ancient Mon techniques on the island of Ko Kret.',
     imageUrl: shopImages.koKretPottery,
     tags: ['Pottery', 'Mon Culture', 'Handmade'],
+    likeCount: 0,
     contact: {
       whatsapp: '+66845678901',
       phone: '02-583-0000'

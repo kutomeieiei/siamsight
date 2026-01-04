@@ -11,8 +11,8 @@ interface MarketplaceContextType {
     shopToEdit: Shop | null;
     openModal: (shop?: Shop) => void;
     closeModal: () => void;
-    addShop: (shopData: Omit<Shop, 'id' | 'province'>) => void;
-    updateShop: (shopData: Omit<Shop, 'id' | 'province'>) => void;
+    addShop: (shopData: Omit<Shop, 'id' | 'province' | 'likeCount'>) => void;
+    updateShop: (shopData: Omit<Shop, 'id' | 'province' | 'likeCount'>) => void;
 }
 
 const MarketplaceContext = createContext<MarketplaceContextType | undefined>(undefined);
@@ -61,13 +61,14 @@ export const MarketplaceProvider: React.FC<{ children: ReactNode }> = ({ childre
     };
 
     // Business logic for adding a new shop based on current authenticated business user
-    const addShop = (shopData: Omit<Shop, 'id' | 'province'>) => {
+    const addShop = (shopData: Omit<Shop, 'id' | 'province' | 'likeCount'>) => {
         if (!user || user.accountType !== 'business') return;
         
         const newShop: Shop = {
             ...shopData,
             id: user.businessName || user.username, // Fallback to username if business name is missing
             province: user.province || '',
+            likeCount: 0, // CRITICAL: Initialize new shops with zero likes as per request
         };
         
         // Prevent multiple shops for the same business identifier in this mock
@@ -79,7 +80,7 @@ export const MarketplaceProvider: React.FC<{ children: ReactNode }> = ({ childre
     };
 
     // Business logic for updating an existing shop's details
-    const updateShop = (shopData: Omit<Shop, 'id' | 'province'>) => {
+    const updateShop = (shopData: Omit<Shop, 'id' | 'province' | 'likeCount'>) => {
         if (!shopToEdit) return;
         
         const updatedShops = shops.map(s => 

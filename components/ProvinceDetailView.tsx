@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Province, FeaturedAttraction } from '../types';
 import { FEATURED_ATTRACTIONS } from '../constants';
@@ -18,51 +19,54 @@ const ProvinceDetailView: React.FC<ProvinceDetailViewProps> = ({ province, onBac
   const translatedProvinceName = t(`provinces.${province.name}`);
 
   return (
-    <div className="animate-fade-in-up">
-      {/* Back Button */}
-      <button
-        onClick={onBack}
-        className="inline-flex items-center gap-2 text-slate-300 hover:text-yellow-400 transition-colors mb-6 group"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 transition-transform group-hover:-translate-x-1" viewBox="0 0 20 20" fill="currentColor">
-          <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
-        </svg>
-        <span>{t('detailView.backButton')}</span>
-      </button>
-
-      {/* Hero Section */}
-      <div className="relative w-full h-80 bg-slate-800 rounded-2xl overflow-hidden shadow-2xl shadow-purple-900/20 mb-8">
+    <div className="animate-fade-in pb-32">
+      <div className="relative w-full h-[40vh] md:h-[60vh] bg-slate-900 overflow-hidden shadow-2xl">
         <img
           src={province.imageUrl}
           alt={province.name}
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-        <div className="absolute bottom-0 left-0 p-8 text-white">
-          <h1 className="text-5xl font-extrabold tracking-tight">{translatedProvinceName}</h1>
-          <span className="bg-purple-900/50 text-purple-300 text-sm font-medium px-3 py-1 rounded-full border border-purple-800 mt-2 inline-block">
-            {t('detailView.region', { region: t(`regions.${province.region}`) })}
+        <div className="absolute inset-0 bg-slate-950/60"></div>
+        
+        <button
+          onClick={onBack}
+          className="absolute top-6 left-6 md:top-8 md:left-8 z-10 p-3 md:p-4 bg-slate-900 hover:bg-yellow-600 text-yellow-500 hover:text-slate-950 rounded-2xl backdrop-blur-md transition-all border-2 border-slate-700 active:scale-90"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 md:h-7 md:w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+
+        <div className="absolute bottom-0 left-0 p-8 md:p-16 w-full">
+          <span className="bg-yellow-500 text-slate-950 text-[10px] md:text-xs font-black px-4 md:px-5 py-1.5 md:py-2 rounded-xl uppercase tracking-widest mb-4 md:mb-6 inline-block shadow-2xl border-2 border-yellow-400/30">
+            {t(`regions.${province.region}`)}
           </span>
+          <h1 className="text-3xl md:text-8xl font-black text-white tracking-tighter uppercase leading-tight drop-shadow-2xl">{translatedProvinceName}</h1>
         </div>
       </div>
 
-      {/* Description */}
-      <div className="bg-slate-900/50 p-6 rounded-2xl border border-slate-800 mb-8">
-        <h2 className="text-2xl font-bold text-yellow-300 mb-3">{t('detailView.about', { name: translatedProvinceName })}</h2>
-        <p className="text-slate-300 leading-relaxed">{province.description}</p>
-      </div>
+      <div className="container mx-auto px-6 md:px-10 mt-12 md:mt-16">
+        <div className="max-w-4xl mb-16 md:mb-24">
+          <h2 className="text-[10px] md:text-[11px] font-black text-slate-600 uppercase tracking-[0.4em] mb-4 md:mb-6">{t('detailView.about', { name: translatedProvinceName })}</h2>
+          <p className="text-xl md:text-3xl text-slate-200 leading-relaxed font-black uppercase tracking-tight">
+            {province.description}
+          </p>
+        </div>
 
-      {/* Featured Attractions Section */}
-      {relatedAttractions.length > 0 && (
-        <div>
-          <h2 className="text-3xl font-bold text-white mb-6">{t('detailView.featuredAttractions', { name: translatedProvinceName })}</h2>
-          <div className="space-y-4">
-            {relatedAttractions.map((attraction) => (
-              <AttractionListCard key={attraction.name} attraction={attraction} />
-            ))}
+        {relatedAttractions.length > 0 && (
+          <div className="mb-24">
+            <div className="flex items-center gap-4 md:gap-6 mb-10 md:mb-12">
+               <div className="h-1.5 md:h-2 w-12 md:w-16 bg-yellow-600 rounded-full"></div>
+               <h2 className="text-2xl md:text-4xl font-black text-white tracking-tight uppercase">{t('detailView.featuredAttractions', { name: '' })}</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+              {relatedAttractions.map((attraction) => (
+                <AttractionListCard key={attraction.name} attraction={attraction} />
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { ItineraryResult, Shop } from '../types';
 import { INTEREST_KEYS, PROVINCES, LOCAL_SHOPS } from '../constants';
@@ -102,19 +103,16 @@ const ItineraryPlanner: React.FC = () => {
     return selectedShopIds.map(id => LOCAL_SHOPS.find(s => s.id === id)).filter(Boolean) as Shop[];
   }, [selectedShopIds]);
 
-  const showLocalWarning = selectedShopIds.length > 0 && (selectedShopIds.length / duration > 1.5);
-
   return (
     <div className="animate-fade-in pb-12">
-      <div className="text-center">
-        <h2 className="text-3xl md:text-4xl font-extrabold mb-2 bg-gradient-to-r from-pink-300 to-yellow-300 text-transparent bg-clip-text">{t('itineraryPlanner.title')}</h2>
-        <p className="text-slate-400 mb-8">{t('itineraryPlanner.subtitle')}</p>
+      <div className="text-center px-4 mt-6 md:mt-0">
+        <h2 className="text-2xl md:text-5xl font-black mb-3 text-white tracking-tighter uppercase">{t('itineraryPlanner.title')}</h2>
+        <p className="text-slate-400 mb-10 text-sm md:text-lg">{t('itineraryPlanner.subtitle')}</p>
       </div>
       
-      <div className="max-w-2xl mx-auto bg-slate-900/50 p-6 md:p-8 rounded-3xl shadow-2xl border border-slate-800 backdrop-blur-md">
-        {/* Province Selection */}
-        <div className="mb-6">
-          <label htmlFor="itinerary-province" className="block text-slate-300 font-bold mb-3 text-sm uppercase tracking-wider">
+      <div className="max-w-2xl mx-auto thai-glass p-6 md:p-10 rounded-3xl shadow-2xl border border-yellow-500/10 mx-4 md:mx-auto">
+        <div className="mb-8">
+          <label htmlFor="itinerary-province" className="block text-slate-500 font-black mb-4 text-[10px] md:text-xs uppercase tracking-[0.2em]">
             {t('itineraryPlanner.provinceLabel')}
           </label>
           <select 
@@ -122,9 +120,9 @@ const ItineraryPlanner: React.FC = () => {
             value={selectedProvince} 
             onChange={(e) => {
               setSelectedProvince(e.target.value);
-              setSelectedShopIds([]); // Reset shops when province changes
+              setSelectedShopIds([]); 
             }}
-            className="w-full p-4 bg-slate-800 border border-slate-700 rounded-2xl focus:ring-2 focus:ring-purple-500 focus:outline-none text-white appearance-none cursor-pointer transition-all"
+            className="w-full p-4 md:p-5 bg-slate-800 border-2 border-slate-700 rounded-2xl focus:border-yellow-600 focus:outline-none text-white appearance-none cursor-pointer transition-all font-black text-sm md:text-base"
           >
             <option value="">{t('itineraryPlanner.anywhere')}</option>
             {sortedProvinces.map(p => (
@@ -133,9 +131,8 @@ const ItineraryPlanner: React.FC = () => {
           </select>
         </div>
 
-        {/* Shop Search & Selection */}
-        <div className="mb-8 relative" ref={dropdownRef}>
-          <label className="block text-slate-300 font-bold mb-3 text-sm uppercase tracking-wider">
+        <div className="mb-10 relative" ref={dropdownRef}>
+          <label className="block text-slate-500 font-black mb-4 text-[10px] md:text-xs uppercase tracking-[0.2em]">
             {t('itineraryPlanner.shopLabel')}
           </label>
           
@@ -149,54 +146,47 @@ const ItineraryPlanner: React.FC = () => {
               }}
               onFocus={() => setIsShopDropdownOpen(true)}
               placeholder={t('itineraryPlanner.shopSearchPlaceholder')}
-              className="w-full p-4 bg-slate-800 border border-slate-700 rounded-2xl focus:ring-2 focus:ring-pink-500 focus:outline-none text-white placeholder-slate-500 transition-all"
+              className="w-full p-4 md:p-5 bg-slate-800 border-2 border-slate-700 rounded-2xl focus:border-yellow-600 focus:outline-none text-white placeholder-slate-600 transition-all font-black text-sm md:text-base"
             />
-            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-            </div>
           </div>
 
-          {/* Results Dropdown */}
           {isShopDropdownOpen && (shopSearchQuery || (selectedProvince && filteredShopResults.length > 0)) && (
-            <div className="absolute z-30 w-full mt-2 bg-slate-800 border border-slate-700 rounded-2xl shadow-2xl overflow-hidden max-h-60 overflow-y-auto">
+            <div className="absolute z-30 w-full mt-2 bg-slate-800 border-2 border-slate-700 rounded-2xl shadow-2xl overflow-hidden max-h-60 overflow-y-auto">
               {filteredShopResults.length > 0 ? (
                 filteredShopResults.map(shop => (
                   <button
                     key={shop.id}
                     onClick={() => addShop(shop.id)}
-                    className="w-full px-5 py-3 text-left hover:bg-pink-600/20 hover:text-pink-300 transition-colors flex items-center justify-between border-b border-slate-700 last:border-0"
+                    className="w-full px-5 md:px-6 py-3.5 md:py-4 text-left hover:bg-slate-700 transition-colors flex items-center justify-between border-b border-slate-700 last:border-0"
                   >
                     <div>
-                      <div className="font-bold text-white text-sm">{shop.name}</div>
-                      <div className="text-[10px] text-slate-500 font-medium uppercase tracking-tighter">{t(`provinces.${shop.province}`)}</div>
+                      <div className="font-black text-white text-xs md:text-sm">{shop.name}</div>
+                      <div className="text-[9px] md:text-[10px] text-yellow-500 font-black uppercase tracking-widest mt-1">{t(`provinces.${shop.province}`)}</div>
                     </div>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 4v16m8-8H4" />
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 md:h-5 md:w-5 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
                     </svg>
                   </button>
                 ))
               ) : (
-                <div className="p-4 text-slate-500 text-sm italic">{t('marketplace.noResultsMessage')}</div>
+                <div className="p-5 text-slate-500 text-xs italic font-bold">{t('marketplace.noResultsMessage')}</div>
               )}
             </div>
           )}
 
-          {/* Selected Shops Chips */}
           {selectedShopsData.length > 0 && (
-            <div className="mt-4">
-              <span className="block text-slate-500 text-[10px] font-black uppercase tracking-widest mb-2">{t('itineraryPlanner.selectedShopsLabel')}</span>
+            <div className="mt-6">
+              <span className="block text-slate-600 text-[9px] md:text-[10px] font-black uppercase tracking-widest mb-3">{t('itineraryPlanner.selectedShopsLabel')}</span>
               <div className="flex flex-wrap gap-2">
                 {selectedShopsData.map(shop => (
                   <div 
                     key={shop.id}
-                    className="bg-pink-600/20 text-pink-300 border border-pink-500/30 px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-2 animate-fade-in"
+                    className="bg-yellow-900/40 text-yellow-400 border-2 border-yellow-800 px-3 py-1.5 md:px-4 md:py-2 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-widest flex items-center gap-2 md:gap-3 animate-fade-in"
                   >
                     <span>{shop.name}</span>
-                    <button onClick={() => removeShop(shop.id)} className="text-pink-400 hover:text-white">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    <button onClick={() => removeShop(shop.id)} className="text-yellow-500 hover:text-white transition-colors">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 md:h-5 md:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                       </svg>
                     </button>
                   </div>
@@ -206,22 +196,9 @@ const ItineraryPlanner: React.FC = () => {
           )}
         </div>
 
-        {/* Local Feasibility Warning */}
-        {showLocalWarning && (
-            <div className="mb-6 p-4 bg-yellow-900/30 border border-yellow-700/50 rounded-2xl animate-pulse flex items-start gap-3">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-yellow-500 mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                </svg>
-                <p className="text-yellow-400 text-sm font-medium leading-relaxed">
-                    {t('itineraryPlanner.localWarning', { count: selectedShopIds.length, days: duration })}
-                </p>
-            </div>
-        )}
-
-        {/* Duration */}
-        <div className="mb-8">
-          <label htmlFor="duration" className="block text-slate-300 font-bold mb-3 text-sm uppercase tracking-wider">
-            {t('itineraryPlanner.durationLabel')}: <span className="text-yellow-400 font-black text-lg">{t('itineraryPlanner.days', { count: duration })}</span>
+        <div className="mb-10">
+          <label htmlFor="duration" className="block text-slate-500 font-black mb-4 text-[10px] md:text-xs uppercase tracking-[0.2em]">
+            {t('itineraryPlanner.durationLabel')}: <span className="text-yellow-400 text-lg md:text-xl ml-2 font-black tracking-tight">{t('itineraryPlanner.days', { count: duration })}</span>
           </label>
           <input
             id="duration"
@@ -230,22 +207,21 @@ const ItineraryPlanner: React.FC = () => {
             max="21"
             value={duration}
             onChange={(e) => setDuration(Number(e.target.value))}
-            className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-yellow-500"
+            className="w-full h-2.5 md:h-3 bg-slate-800 rounded-full appearance-none cursor-pointer accent-yellow-500"
           />
         </div>
 
-        {/* Interests */}
-        <div className="mb-8">
-          <h3 className="block text-slate-300 font-bold mb-3 text-sm uppercase tracking-wider">{t('itineraryPlanner.interestsLabel')}</h3>
-          <div className="flex flex-wrap gap-2">
+        <div className="mb-10">
+          <h3 className="block text-slate-500 font-black mb-4 text-[10px] md:text-xs uppercase tracking-[0.2em]">{t('itineraryPlanner.interestsLabel')}</h3>
+          <div className="flex flex-wrap gap-2 md:gap-3">
             {INTEREST_KEYS.map((interest) => (
               <button
                 key={interest}
                 onClick={() => handleInterestToggle(interest)}
-                className={`px-4 py-2 text-xs rounded-full transition-all duration-200 border-2 font-bold ${
+                className={`px-4 py-2.5 md:px-6 md:py-3 text-[10px] md:text-xs rounded-xl transition-all duration-200 border-2 font-black uppercase tracking-widest ${
                   selectedInterests.includes(interest)
-                    ? 'bg-purple-600 text-white border-purple-600 shadow-lg shadow-purple-600/20'
-                    : 'bg-slate-800 text-slate-400 border-slate-700 hover:border-yellow-500 hover:text-white'
+                    ? 'bg-yellow-600 text-slate-950 border-yellow-400 shadow-xl'
+                    : 'bg-slate-800 text-slate-500 border-slate-700 hover:border-slate-500'
                 }`}
               >
                 {t(`interests.${interest}`)}
@@ -254,24 +230,21 @@ const ItineraryPlanner: React.FC = () => {
           </div>
         </div>
 
-        {error && <p className="text-red-400 text-center mb-4 text-sm font-bold bg-red-400/10 p-3 rounded-xl border border-red-400/20">{error}</p>}
+        {error && <p className="text-red-400 text-center mb-6 text-xs md:text-sm font-black bg-red-950/20 p-4 rounded-xl border-2 border-red-900">{error}</p>}
 
         <button
           onClick={handleSubmit}
           disabled={isLoading}
-          className="w-full bg-gradient-to-r from-pink-500 via-purple-600 to-yellow-500 text-white font-black py-4 rounded-2xl hover:shadow-2xl hover:shadow-yellow-500/20 transition-all duration-300 disabled:bg-slate-600 disabled:cursor-not-allowed flex items-center justify-center text-lg transform hover:scale-[1.02] active:scale-95 disabled:transform-none"
+          className="w-full bg-yellow-500 text-slate-950 font-black py-4 md:py-5 rounded-2xl shadow-2xl transition-all disabled:bg-slate-800 disabled:text-slate-600 flex items-center justify-center text-base md:text-lg uppercase tracking-[0.2em] active:scale-95"
         >
           {isLoading ? <LoadingSpinner /> : t('itineraryPlanner.generateButton')}
         </button>
       </div>
       
       {isLoading && (
-         <div className="text-center mt-12 animate-fade-in">
-            <div className="flex justify-center mb-4">
-                <LoadingSpinner size={12} />
-            </div>
-            <p className="text-white text-xl font-black mb-1">{t('itineraryPlanner.loadingMessage')}</p>
-            <p className="text-slate-400 text-sm max-w-xs mx-auto">{t('itineraryPlanner.loadingSubMessage')}</p>
+         <div className="text-center mt-10 md:mt-12 animate-fade-in px-4">
+            <p className="text-yellow-500 text-xl md:text-2xl font-black mb-2 tracking-tight uppercase">{t('itineraryPlanner.loadingMessage')}</p>
+            <p className="text-slate-500 text-[10px] md:text-sm font-black uppercase tracking-widest">{t('itineraryPlanner.loadingSubMessage')}</p>
          </div>
       )}
 

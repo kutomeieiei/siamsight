@@ -1,93 +1,125 @@
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import ShopCard from './ShopCard';
 import { LOCAL_SHOPS } from '../constants';
 import { useTranslation } from '../contexts/LanguageContext';
-import { Shop } from '../types';
+import { useAuth } from '../contexts/AuthContext';
+import { Shop, View } from '../types';
 
 interface MarketplaceViewProps {
   onSelectShop: (shop: Shop) => void;
+  setActiveView: (view: View) => void;
 }
 
-const MarketplaceView: React.FC<MarketplaceViewProps> = ({ onSelectShop }) => {
+const STORAGE_KEY = 'siam-sight-liked-shops';
+
+const MarketplaceView: React.FC<MarketplaceViewProps> = ({ onSelectShop, setActiveView }) => {
   const { t } = useTranslation();
+  const { isAuthenticated } = useAuth();
   const [provinceQuery, setProvinceQuery] = useState('');
+  const [showLikedOnly, setShowLikedOnly] = useState(false);
+  const [likedShopIds, setLikedShopIds] = useState<string[]>([]);
+  const [showAuthPrompt, setShowAuthPrompt] = useState(false);
+
+  useEffect(() => {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      try { setLikedShopIds(JSON.parse(stored)); } catch (e) { console.error(e); }
+    }
+  }, []);
+
+  const toggleLike = (shopId: string) => {
+    if (!isAuthenticated) {
+      setShowAuthPrompt(true);
+      return;
+    }
+    setLikedShopIds(prev => {
+      const next = prev.includes(shopId) ? prev.filter(id => id !== shopId) : [...prev, shopId];
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+      return next;
+    });
+  };
 
   const filteredShops = useMemo(() => {
-    if (!provinceQuery.trim()) return LOCAL_SHOPS;
-    
-    const lowerQuery = provinceQuery.toLowerCase();
-    return LOCAL_SHOPS.filter(shop => {
-      const translatedProvince = t(`provinces.${shop.province}`).toLowerCase();
-      const originalProvince = shop.province.toLowerCase();
-      return translatedProvince.includes(lowerQuery) || originalProvince.includes(lowerQuery);
-    });
-  }, [provinceQuery, t]);
+    let list = [...LOCAL_SHOPS];
+    if (showLikedOnly) list = list.filter(shop => likedShopIds.includes(shop.id));
+    if (provinceQuery.trim()) {
+      const lowerQuery = provinceQuery.toLowerCase();
+      list = list.filter(shop => t(`provinces.${shop.province}`).toLowerCase().includes(lowerQuery));
+    }
+    return list;
+  }, [provinceQuery, showLikedOnly, likedShopIds, t]);
 
   return (
-    <div className="animate-fade-in pb-20 max-w-[1600px] mx-auto">
-      <div className="text-center mb-10">
-        <h2 className="text-4xl font-extrabold text-white mb-2">
+    <div className="animate-fade-in pb-32 max-w-[1400px] mx-auto px-4">
+      <div className="text-center mb-10 md:mb-16 mt-6 md:mt-0">
+        <h2 className="text-3xl md:text-7xl font-black text-yellow-500 mb-4 tracking-tighter uppercase">
           {t('marketplace.title')}
         </h2>
-        <div className="h-1.5 w-24 bg-pink-500 mx-auto rounded-full mb-4"></div>
-        <p className="text-slate-400 max-w-lg mx-auto">{t('marketplace.subtitle')}</p>
+        <p className="text-slate-500 max-w-xl mx-auto text-sm md:text-lg uppercase tracking-[0.2em] font-black">"{t('marketplace.subtitle')}"</p>
       </div>
 
-      {/* Search Bar */}
-      <div className="flex justify-center mb-12 max-w-2xl mx-auto">
-        <div className="relative flex-grow w-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12 md:mb-16 max-w-3xl mx-auto">
+        <div className="relative group">
           <input
             type="text"
             value={provinceQuery}
             onChange={(e) => setProvinceQuery(e.target.value)}
             placeholder={t('marketplace.searchPlaceholder')}
-            className="w-full p-4 pl-12 text-lg bg-slate-900/50 border-2 border-slate-700 rounded-full focus:ring-4 focus:ring-pink-500/20 focus:border-pink-500 focus:outline-none text-slate-100 transition-all duration-300"
+            className="w-full p-4 md:p-6 pl-12 md:pl-14 bg-slate-900 border-2 border-slate-800 rounded-2xl focus:border-yellow-600 focus:outline-none text-slate-100 font-black transition-all shadow-xl uppercase tracking-widest text-xs md:text-base"
           />
-          <svg className="absolute left-4 top-1/2 transform -translate-y-1/2 h-6 w-6 text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          <svg className="absolute left-4 md:left-5 top-1/2 -translate-y-1/2 h-5 w-5 md:h-6 md:w-6 text-yellow-600 group-focus-within:text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
-          {provinceQuery && (
-            <button 
-                onClick={() => setProvinceQuery('')}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-slate-500 hover:text-white"
-            >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-          )}
         </div>
+
+        <button 
+            onClick={() => setShowLikedOnly(!showLikedOnly)}
+            className={`w-full py-4 md:py-6 px-6 md:px-8 rounded-2xl font-black text-[10px] md:text-xs uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-3 md:gap-4 border-2 shadow-xl active:scale-95 ${
+                showLikedOnly 
+                ? 'bg-yellow-600 border-yellow-400 text-slate-950' 
+                : 'bg-slate-900 border-slate-800 text-slate-500 hover:border-yellow-600'
+            }`}
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+            </svg>
+            {t('marketplace.favorites')} ({likedShopIds.length})
+        </button>
       </div>
       
       {filteredShops.length === 0 ? (
-        <div className="py-20 text-center flex flex-col items-center">
-            <div className="w-20 h-20 bg-slate-800/50 rounded-full flex items-center justify-center mb-4 text-slate-600">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-            </div>
-            <p className="text-slate-400 text-lg">{t('marketplace.noResultsMessage')}</p>
+        <div className="py-24 md:py-32 text-center bg-slate-950/40 rounded-3xl border-2 border-slate-900 shadow-inner">
+            <p className="text-slate-600 text-xl md:text-2xl font-black uppercase tracking-[0.3em]">{t('marketplace.noResultsMessage')}</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {filteredShops.map((shop) => (
-            <ShopCard 
-              key={shop.id} 
-              shop={shop} 
-              onSelect={onSelectShop}
-            />
+            <ShopCard key={shop.id} shop={shop} onSelect={onSelectShop} isLiked={likedShopIds.includes(shop.id)} onToggleLike={() => toggleLike(shop.id)} />
           ))}
         </div>
       )}
 
-      {/* Merchant Contact Footer */}
-      <div className="mt-20 py-8 border-t border-slate-800 text-center">
-        <p className="text-pink-400/70 text-sm font-medium italic tracking-wide max-w-lg mx-auto px-4">
-          {t('marketplace.merchantContact')}
-        </p>
+      <div className="mt-16 md:mt-24 text-center">
+          <p className="text-[10px] md:text-xs text-slate-600 font-black uppercase tracking-[0.3em] max-w-md mx-auto leading-relaxed">{t('marketplace.merchantContact')}</p>
       </div>
+
+      {showAuthPrompt && (
+        <div className="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-slate-950/95 backdrop-blur-xl animate-fade-in">
+          <div className="bg-slate-900 border-2 border-yellow-600 w-full max-w-md p-8 md:p-10 rounded-3xl shadow-2xl animate-fade-in-up">
+            <h3 className="text-2xl md:text-3xl font-black text-white text-center mb-4 uppercase tracking-tighter">{t('marketplace.authModalTitle')}</h3>
+            <p className="text-slate-500 text-center mb-8 md:mb-10 font-black uppercase tracking-[0.2em] text-[10px]">"{t('marketplace.authModalDesc')}"</p>
+            <div className="space-y-4">
+              <button onClick={() => setActiveView(View.ACCOUNT)} className="w-full py-4 md:py-5 bg-yellow-600 text-slate-950 font-black rounded-xl shadow-xl active:scale-95 transition-all border-2 border-yellow-400 uppercase tracking-widest text-[10px] md:text-xs">
+                {t('marketplace.authModalLogin')}
+              </button>
+              <button onClick={() => setShowAuthPrompt(false)} className="w-full py-3 md:py-4 text-slate-600 font-black uppercase tracking-widest text-[9px] md:text-[10px] hover:text-yellow-500 transition-colors">
+                {t('marketplace.authModalCancel')}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

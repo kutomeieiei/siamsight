@@ -92,7 +92,9 @@ export interface GroundingChunk {
 export interface Product {
   name: string;
   price?: string;
+  description?: string;
   imageUrl: string;
+  likeCount?: number;
 }
 
 export interface Shop {
@@ -102,6 +104,7 @@ export interface Shop {
   description: string;
   imageUrl: string;
   tags: string[];
+  likeCount: number;
   contact?: {
     facebook?: string;
     whatsapp?: string;
