@@ -115,7 +115,7 @@ export const INITIAL_SHOPS: Shop[] = [
     descriptionTh: 'ร้านเครื่องเขียนครบวงจรในขอนแก่น จำหน่ายอุปกรณ์สำนักงานและเครื่องเขียนนักเรียนคุณภาพดี',
     imageUrl: 'https://lh3.googleusercontent.com/gps-cs-s/AG0ilSy-DxeAC4lyElhokri0bXRhLOj113MfwIZovF-JcSKU0IfgOS_Go2uplWBB9OOOolut5fFnO4bLaMz3y_IqaeOdMB7CysLeUpy_97VyxYKNHkjWjd9Ro7r_mktphsjtu2J5OeLecVZIj4G0=w408-h544-k-no',
     tags: ['Stationery', 'Office Supplies'],
-    likeCount: 3,
+    likeCount: 5,
     contact: {
       phone: '043-202-662'
     },
