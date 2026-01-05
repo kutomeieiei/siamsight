@@ -106,4 +106,50 @@ export const INITIAL_SHOPS: Shop[] = [
       }
     ]
   },
+  {
+    id: 'top-stationery',
+    nameEn: 'Top Stationery',
+    nameTh: 'ท็อปเครื่องเขียน',
+    province: 'Khon Kaen',
+    descriptionEn: 'A comprehensive stationery store in Khon Kaen providing high-quality office supplies and school equipment.',
+    descriptionTh: 'ร้านเครื่องเขียนครบวงจรในขอนแก่น จำหน่ายอุปกรณ์สำนักงานและเครื่องเขียนนักเรียนคุณภาพดี',
+    imageUrl: 'https://lh3.googleusercontent.com/gps-cs-s/AG0ilSy-DxeAC4lyElhokri0bXRhLOj113MfwIZovF-JcSKU0IfgOS_Go2uplWBB9OOOolut5fFnO4bLaMz3y_IqaeOdMB7CysLeUpy_97VyxYKNHkjWjd9Ro7r_mktphsjtu2J5OeLecVZIj4G0=w408-h544-k-no',
+    tags: ['Stationery', 'Office Supplies'],
+    likeCount: 3,
+    contact: {
+      phone: '043-202-662'
+    },
+    products: []
+  },
+  {
+    id: 'thai-rung',
+    nameEn: 'Thai Rung',
+    nameTh: 'ร้านไทยรุ่ง',
+    province: 'Khon Kaen',
+    descriptionEn: 'A reliable local store specializing in various tools and hardware for all your needs.',
+    descriptionTh: 'ร้านขายอุปกรณ์เครื่องมือและฮาร์ดแวร์ท้องถิ่นที่เชื่อถือได้ พร้อมบริการที่ครอบคลุมทุกความต้องการ',
+    imageUrl: 'https://scontent.fbkk12-5.fna.fbcdn.net/v/t39.30808-1/304756369_459990652853397_1886838849083454809_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=107&ccb=1-7&_nc_sid=2d3e12&_nc_eui2=AeE00x1bxNAD2QTYW0PRyYJ8M0DtnWFnEZAzQO2dYWcRkOj7dZJPAIqS2T9LN3yrau1V9UgVzRANJfKmv4A3Sba-&_nc_ohc=xCCxCms-Sf0Q7kNvwHAMPht&_nc_oc=AdkprZatd6GvLGg1gyM1PthNUMjwQKOol-e-HTkqe8PFdns1D1-NfvIyKn-0m1lops__KLESsWVByyyv10_dVZxE&_nc_zt=24&_nc_ht=scontent.fbkk12-5.fna&_nc_gid=409DunZ80jw-208fxUkLmw&oh=00_AfqQIks8buDvv09wTr0IQkYJ00rEgtF259duXSNmjGskSw&oe=69613BD2',
+    tags: ['Hardware', 'Tools'],
+    likeCount: 4,
+    contact: {
+      facebook: 'https://www.facebook.com/thairungkk/',
+      phone: '043-227-986'
+    },
+    products: []
+  },
+  {
+    id: 'ava-minimart',
+    nameEn: 'Ava Minimart',
+    nameTh: 'ร้านเอวามินิมาร์ท',
+    province: 'Khon Kaen',
+    descriptionEn: 'A convenient local minimart in Khon Kaen offering a wide range of daily essentials and snacks.',
+    descriptionTh: 'ร้านมินิมาร์ทท้องถิ่นในขอนแก่น จำหน่ายสินค้าอุปโภคบริโภคที่จำเป็นและขนมขบเคี้ยวหลากหลาย',
+    imageUrl: 'https://lh3.googleusercontent.com/p/AF1QipOcj45BhB1jRCp5dWwMZCzX0slbfM3IDDky9X5Z=w408-h543-k-no',
+    tags: ['Minimart', 'Convenience Store'],
+    likeCount: 4,
+    contact: {
+      phone: '087-951-0441'
+    },
+    products: []
+  }
 ];
