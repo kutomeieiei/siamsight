@@ -90,18 +90,22 @@ export interface GroundingChunk {
 }
 
 export interface Product {
-  name: string;
+  nameEn: string;
+  nameTh: string;
   price?: string;
-  description?: string;
+  descriptionEn?: string;
+  descriptionTh?: string;
   imageUrl: string;
   likeCount?: number;
 }
 
 export interface Shop {
   id: string;
-  name: string;
+  nameEn: string;
+  nameTh: string;
   province: string;
-  description: string;
+  descriptionEn: string;
+  descriptionTh: string;
   imageUrl: string;
   tags: string[];
   likeCount: number;
@@ -119,4 +123,6 @@ export interface UserUpload {
   title: string;
   province: string;
   description: string;
+  // Added isUserUploaded property to support distinguishing user-added content in UI
+  isUserUploaded?: boolean;
 }

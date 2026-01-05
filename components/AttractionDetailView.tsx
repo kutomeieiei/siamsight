@@ -32,17 +32,17 @@ const AttractionDetailView: React.FC<AttractionDetailViewProps> = ({ attraction,
         </button>
 
         <div className="absolute bottom-0 left-0 p-10 md:p-16 w-full">
-          <span className="bg-yellow-600 text-slate-950 text-xs font-black px-5 py-2 rounded-xl uppercase tracking-widest mb-6 inline-block shadow-2xl">
+          <span className="bg-yellow-600 text-slate-950 text-xs font-black px-5 py-2 rounded-xl tracking-tight mb-6 inline-block shadow-2xl">
             {t(`provinces.${attraction.province}`)}
           </span>
-          <h1 className="text-5xl md:text-8xl font-black text-white tracking-tighter uppercase leading-tight drop-shadow-2xl">{translatedAttractionName}</h1>
+          <h1 className="text-5xl md:text-8xl font-black text-white tracking-tighter leading-tight drop-shadow-2xl">{translatedAttractionName}</h1>
         </div>
       </div>
 
       <div className="container mx-auto px-10 mt-16">
         <div className="max-w-4xl">
-          <h2 className="text-[11px] font-black text-slate-600 uppercase tracking-[0.4em] mb-6">{t('detailView.about', { name: '' })}</h2>
-          <p className="text-2xl md:text-3xl text-slate-200 leading-relaxed font-black uppercase tracking-tight">
+          <h2 className="text-[11px] font-black text-slate-600 tracking-tight mb-6">{t('detailView.about', { name: '' })}</h2>
+          <p className="text-2xl md:text-3xl text-slate-200 leading-relaxed font-black tracking-tight">
             {t(`featuredAttractions.descriptions.${attraction.key}`)}
           </p>
         </div>

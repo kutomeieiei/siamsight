@@ -15,7 +15,6 @@ import AttractionDetailView from './components/AttractionDetailView';
 import ShopDetailView from './components/ShopDetailView';
 
 // Standard views get internal padding
-// Moved outside of App to fix children typing issues and follow React best practices
 const ViewContainer: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <div className="container mx-auto px-4 py-8">{children}</div>
 );
@@ -52,7 +51,13 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     if (selectedProvince) {
-      return <ProvinceDetailView province={selectedProvince} onBack={handleBackToExplore} />;
+      return (
+        <ProvinceDetailView 
+          province={selectedProvince} 
+          onBack={handleBackToExplore} 
+          onSelectAttraction={handleSelectAttraction}
+        />
+      );
     }
     if (selectedAttraction) {
       return <AttractionDetailView attraction={selectedAttraction} onBack={handleBackToExplore} />;
@@ -84,9 +89,9 @@ const App: React.FC = () => {
       case View.LEARNING:
         return <ViewContainer><LearningView /></ViewContainer>;
       case View.COMMUNITY:
-        return <CommunityView setActiveView={setActiveView} />; // Community handles its own padding/fullscreen
+        return <CommunityView setActiveView={setActiveView} />;
       case View.CHAT:
-        return <Chatbot />; // Chatbot handles its own padding/fullscreen
+        return <Chatbot />;
       case View.ACCOUNT:
         return <ViewContainer><AccountView setActiveView={setActiveView} /></ViewContainer>;
       default:

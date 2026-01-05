@@ -10,8 +10,10 @@ const AddEditShopModal: React.FC = () => {
   const { user } = useAuth();
   const { t } = useTranslation();
 
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
+  const [nameEn, setNameEn] = useState('');
+  const [nameTh, setNameTh] = useState('');
+  const [descriptionEn, setDescriptionEn] = useState('');
+  const [descriptionTh, setDescriptionTh] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [tags, setTags] = useState('');
   
@@ -27,8 +29,10 @@ const AddEditShopModal: React.FC = () => {
 
   useEffect(() => {
     if (shopToEdit) {
-      setName(shopToEdit.name || '');
-      setDescription(shopToEdit.description || '');
+      setNameEn(shopToEdit.nameEn || '');
+      setNameTh(shopToEdit.nameTh || '');
+      setDescriptionEn(shopToEdit.descriptionEn || '');
+      setDescriptionTh(shopToEdit.descriptionTh || '');
       setImageUrl(shopToEdit.imageUrl || '');
       setTags(shopToEdit.tags?.join(', ') || '');
       setFacebook(shopToEdit.contact?.facebook || '');
@@ -36,8 +40,10 @@ const AddEditShopModal: React.FC = () => {
       setPhone(shopToEdit.contact?.phone || '');
       setWebsite(shopToEdit.contact?.website || '');
     } else if (user?.accountType === 'business') {
-      setName(user.businessName || '');
-      setDescription('');
+      setNameEn(user.businessName || '');
+      setNameTh('');
+      setDescriptionEn('');
+      setDescriptionTh('');
       setImageUrl('');
       setTags('');
       setFacebook('');
@@ -50,7 +56,7 @@ const AddEditShopModal: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !description || !imageUrl) {
+    if (!nameEn || !nameTh || !descriptionEn || !descriptionTh || !imageUrl) {
         setError(t('addEditShop.errorRequiredFields'));
         return;
     }
@@ -58,8 +64,10 @@ const AddEditShopModal: React.FC = () => {
     setError('');
 
     const shopData = {
-        name,
-        description,
+        nameEn,
+        nameTh,
+        descriptionEn,
+        descriptionTh,
         imageUrl,
         tags: tags.split(',').map(tag => tag.trim()).filter(Boolean),
         contact: {
@@ -99,32 +107,53 @@ const AddEditShopModal: React.FC = () => {
           </svg>
         </button>
         
-        <h2 className="text-3xl font-black text-yellow-500 mb-10 uppercase tracking-tighter">{isEditMode ? t('addEditShop.editTitle') : t('addEditShop.addTitle')}</h2>
+        <h2 className="text-3xl font-black text-yellow-500 mb-10 tracking-tighter">{isEditMode ? t('addEditShop.editTitle') : t('addEditShop.addTitle')}</h2>
         
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label htmlFor="shopName" className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">{t('addEditShop.nameLabel')}</label>
-            <input 
-              id="shopName" type="text" value={name} onChange={(e) => setName(e.target.value)} required
-              className="w-full p-4 bg-slate-800 border-2 border-slate-700 rounded-xl focus:border-yellow-600 outline-none text-white font-black uppercase tracking-widest text-xs" 
-              placeholder={t('addEditShop.namePlaceholder')}
-            />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <label htmlFor="shopNameEn" className="block text-[10px] font-black text-slate-500 tracking-tight mb-2">Shop name (English)</label>
+                <input 
+                id="shopNameEn" type="text" value={nameEn} onChange={(e) => setNameEn(e.target.value)} required
+                className="w-full p-4 bg-slate-800 border-2 border-slate-700 rounded-xl focus:border-yellow-600 outline-none text-white font-black tracking-tight text-xs" 
+                placeholder="e.g. Lanna Crafts"
+                />
+            </div>
+            <div>
+                <label htmlFor="shopNameTh" className="block text-[10px] font-black text-slate-500 tracking-tight mb-2">Shop name (Thai)</label>
+                <input 
+                id="shopNameTh" type="text" value={nameTh} onChange={(e) => setNameTh(e.target.value)} required
+                className="w-full p-4 bg-slate-800 border-2 border-slate-700 rounded-xl focus:border-yellow-600 outline-none text-white font-black tracking-tight text-xs" 
+                placeholder="เช่น หัตถกรรมล้านนา"
+                />
+            </div>
           </div>
           <div>
-            <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">{t('account.provinceLabel')}</label>
-            <input type="text" value={t(`provinces.${currentProvince}`)} disabled className="w-full p-4 bg-slate-950 border-2 border-slate-800 rounded-xl text-slate-600 font-black uppercase tracking-widest text-xs cursor-not-allowed" />
+            <label className="block text-[10px] font-black text-slate-500 tracking-tight mb-2">{t('account.provinceLabel')}</label>
+            <input type="text" value={t(`provinces.${currentProvince}`)} disabled className="w-full p-4 bg-slate-950 border-2 border-slate-800 rounded-xl text-slate-600 font-black tracking-tight text-xs cursor-not-allowed" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <label htmlFor="descriptionEn" className="block text-[10px] font-black text-slate-500 tracking-tight mb-2">Description (English)</label>
+                <textarea
+                id="descriptionEn" value={descriptionEn} onChange={(e) => setDescriptionEn(e.target.value)} required
+                className="w-full p-4 bg-slate-800 border-2 border-slate-700 rounded-xl focus:border-yellow-600 outline-none text-white font-black tracking-tight text-xs"
+                rows={3}
+                placeholder="Describe your shop in English..."
+                />
+            </div>
+            <div>
+                <label htmlFor="descriptionTh" className="block text-[10px] font-black text-slate-500 tracking-tight mb-2">Description (Thai)</label>
+                <textarea
+                id="descriptionTh" value={descriptionTh} onChange={(e) => setDescriptionTh(e.target.value)} required
+                className="w-full p-4 bg-slate-800 border-2 border-slate-700 rounded-xl focus:border-yellow-600 outline-none text-white font-black tracking-tight text-xs"
+                rows={3}
+                placeholder="อธิบายร้านค้าเป็นภาษาไทย..."
+                />
+            </div>
           </div>
           <div>
-            <label htmlFor="description" className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">{t('addEditShop.descriptionLabel')}</label>
-            <textarea
-              id="description" value={description} onChange={(e) => setDescription(e.target.value)} required
-              className="w-full p-4 bg-slate-800 border-2 border-slate-700 rounded-xl focus:border-yellow-600 outline-none text-white font-black uppercase tracking-widest text-xs"
-              rows={3}
-              placeholder={t('addEditShop.descriptionPlaceholder')}
-            />
-          </div>
-          <div>
-            <label htmlFor="imageUrl" className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">{t('addEditShop.imageUrlLabel')}</label>
+            <label htmlFor="imageUrl" className="block text-[10px] font-black text-slate-500 tracking-tight mb-2">{t('addEditShop.imageUrlLabel')}</label>
             <input
               id="imageUrl" type="url" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} required
               className="w-full p-4 bg-slate-800 border-2 border-slate-700 rounded-xl focus:border-yellow-600 outline-none text-white font-black text-xs"
@@ -133,27 +162,27 @@ const AddEditShopModal: React.FC = () => {
           </div>
 
           <div className="border-t-2 border-slate-800 pt-8 mt-4">
-             <h3 className="text-xs font-black text-yellow-600 uppercase tracking-[0.3em] mb-6">Digital Presence</h3>
+             <h3 className="text-xs font-black text-yellow-600 tracking-tight mb-6">Digital Presence</h3>
              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                <div>
-                  <label htmlFor="facebook" className="block text-[10px] font-black text-slate-600 uppercase mb-2">Facebook</label>
+                  <label htmlFor="facebook" className="block text-[10px] font-black text-slate-600 mb-2">Facebook</label>
                   <input id="facebook" type="text" value={facebook} onChange={(e) => setFacebook(e.target.value)}
                     className="w-full p-4 bg-slate-800 border-2 border-slate-700 rounded-xl text-xs text-white" />
                </div>
                <div>
-                  <label htmlFor="phone" className="block text-[10px] font-black text-slate-600 uppercase mb-2">Phone</label>
+                  <label htmlFor="phone" className="block text-[10px] font-black text-slate-600 mb-2">Phone</label>
                   <input id="phone" type="text" value={phone} onChange={(e) => setPhone(e.target.value)}
                     className="w-full p-4 bg-slate-800 border-2 border-slate-700 rounded-xl text-xs text-white" />
                </div>
              </div>
           </div>
 
-          {error && <p className="text-red-500 text-xs text-center font-black uppercase tracking-widest bg-red-950/20 p-4 rounded-xl border-2 border-red-900">{error}</p>}
+          {error && <p className="text-red-500 text-xs text-center font-black tracking-tight bg-red-950/20 p-4 rounded-xl border-2 border-red-900">{error}</p>}
           
           <div className="pt-6">
             <button
               type="submit" disabled={isLoading}
-              className="w-full py-5 bg-yellow-600 text-slate-950 font-black rounded-2xl shadow-2xl active:scale-95 transition-all border-2 border-yellow-400 uppercase tracking-widest text-xs"
+              className="w-full py-5 bg-yellow-600 text-slate-950 font-black rounded-2xl shadow-2xl active:scale-95 transition-all border-2 border-yellow-400 tracking-tight text-xs"
             >
               {isLoading ? <LoadingSpinner size={6} /> : (isEditMode ? t('addEditShop.saveButton') : t('addEditShop.createButton'))}
             </button>

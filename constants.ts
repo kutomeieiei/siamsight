@@ -1,6 +1,10 @@
 
 import { Province, FeaturedAttraction, Shop } from './types';
 import { provinceImages, attractionImages, shopImages } from './image_assets';
+import { INITIAL_SHOPS } from './marketplace_config';
+
+// Export LOCAL_SHOPS so it can be used by the ItineraryPlanner
+export const LOCAL_SHOPS: Shop[] = INITIAL_SHOPS;
 
 export const PROVINCES: Province[] = [
   // Central
@@ -113,208 +117,90 @@ export const INTEREST_KEYS = [
 ] as const;
 
 export const FEATURED_ATTRACTIONS: FeaturedAttraction[] = [
-  { key: 'monJam', name: 'Mon Jam', province: 'Chiang Mai', description: 'A stunning viewpoint with beautiful flower gardens and a cool mountain breeze.', imageUrl: attractionImages.monJam, lat: 18.9333, lng: 98.8167 },
-  { key: 'roiEtTower', name: 'Roi Et Tower', province: 'Roi Et', description: 'A modern, 101-meter tall observation tower offering panoramic views of the city.', imageUrl: attractionImages.roiEtTower, lat: 16.058, lng: 103.655 },
-  { key: 'grandPalace', name: 'The Grand Palace', province: 'Bangkok', description: 'A complex of stunning buildings that served as the official residence of the Kings of Siam.', imageUrl: attractionImages.grandPalace, lat: 13.749, lng: 100.492 },
-  { key: 'mayaBay', name: 'Maya Bay', province: 'Krabi', description: 'A breathtakingly beautiful bay, famous for its turquoise water and white sand beach.', imageUrl: attractionImages.mayaBay, lat: 7.678, lng: 98.765 },
-  { key: 'sukhothaiHistoricalPark', name: 'Sukhothai Historical Park', province: 'Sukhothai', description: 'The ruins of the first capital of Siam, a UNESCO World Heritage site.', imageUrl: attractionImages.sukhothaiHistoricalPark, lat: 17.017, lng: 99.704 },
-  { key: 'whiteTemple', name: 'White Temple (Wat Rong Khun)', province: 'Chiang Rai', description: 'A unique, contemporary, and unconventional Buddhist temple designed in white.', imageUrl: attractionImages.whiteTemple, lat: 19.824, lng: 99.763 },
-  { key: 'phanomRung', name: 'Phanom Rung', province: 'Buriram', description: 'A magnificent Khmer temple complex set on the rim of an extinct volcano.', imageUrl: attractionImages.phanomRung, lat: 14.532, lng: 102.939 },
-  { key: 'doiInthanon', name: 'Doi Inthanon National Park', province: 'Chiang Mai', description: 'Home to the highest peak in Thailand, with beautiful pagodas and lush nature trails.', imageUrl: attractionImages.doiInthanon, lat: 18.588, lng: 98.487 },
-  { key: 'jamesBondIsland', name: 'James Bond Island (Khao Phing Kan)', province: 'Phang Nga', description: 'Famous for its needle-like limestone karst that featured in a James Bond movie.', imageUrl: attractionImages.jamesBondIsland, lat: 8.274, lng: 98.500 },
-  { key: 'erawanFalls', name: 'Erawan Falls', province: 'Kanchanaburi', description: 'A stunning seven-tiered waterfall with emerald green ponds in a lush national park.', imageUrl: attractionImages.erawanFalls, lat: 14.368, lng: 99.145 },
-  { key: 'redLotusSea', name: 'Red Lotus Sea (Talay Bua Daeng)', province: 'Udon Thani', description: 'A spectacular lake where thousands of red lotus flowers bloom from December to February.', imageUrl: attractionImages.redLotusSea, lat: 17.183, lng: 103.050 },
-  { key: 'railayBeach', name: 'Railay Beach', province: 'Krabi', description: 'A pristine beach accessible only by boat, framed by towering limestone cliffs.', imageUrl: attractionImages.railayBeach, lat: 8.012, lng: 98.837 },
-];
+  // 77 LANDMARKS MAPPED TO EVERY PROVINCE
+  { key: 'grandPalace', name: 'The Grand Palace', province: 'Bangkok', description: 'Official residence of the Kings of Siam.', imageUrl: attractionImages.grandPalace, lat: 13.749, lng: 100.492 },
+  { key: 'watMahathat', name: 'Wat Mahathat', province: 'Ayutthaya', description: 'Ancient ruins famous for the Buddha head in tree roots.', imageUrl: attractionImages.watMahathat, lat: 14.357, lng: 100.567 },
+  { key: 'watMuang', name: 'Wat Muang', province: 'Ang Thong', description: 'Home to the tallest gold Buddha statue in Thailand.', imageUrl: attractionImages.watMuang, lat: 14.591, lng: 100.418 },
+  { key: 'chaiNatBirdPark', name: 'Chai Nat Bird Park', province: 'Chai Nat', description: 'Largest bird park in Asia featuring over 100 species.', imageUrl: attractionImages.chaiNatBirdPark, lat: 15.200, lng: 100.125 },
+  { key: 'phraPrangSamYod', name: 'Phra Prang Sam Yod', province: 'Lopburi', description: 'Ancient Khmer three-tower temple, now a monkey sanctuary.', imageUrl: attractionImages.phraPrangSamYod, lat: 14.803, lng: 100.613 },
+  { key: 'sarikaFalls', name: 'Sarika Waterfall', province: 'Nakhon Nayok', description: 'Stunning nine-tiered waterfall in a lush forest.', imageUrl: attractionImages.sarikaFalls, lat: 14.316, lng: 101.258 },
+  { key: 'phraPathomChedi', name: 'Phra Pathom Chedi', province: 'Nakhon Pathom', description: 'The world\'s tallest stupa, a primary Buddhist landmark.', imageUrl: attractionImages.phraPathomChedi, lat: 13.820, lng: 100.060 },
+  { key: 'kohKret', name: 'Koh Kret', province: 'Nonthaburi', description: 'Riverside island famous for Mon pottery and culture.', imageUrl: attractionImages.kohKret, lat: 13.912, lng: 100.485 },
+  { key: 'dreamWorld', name: 'Dream World', province: 'Pathum Thani', description: 'Thailand\'s premier family amusement and theme park.', imageUrl: attractionImages.dreamWorld, lat: 14.001, lng: 100.675 },
+  { key: 'ancientCity', name: 'The Ancient City', province: 'Samut Prakan', description: 'The world\'s largest outdoor museum with scaled Thai replicas.', imageUrl: attractionImages.ancientCity, lat: 13.538, lng: 100.623 },
+  { key: 'watChongLom', name: 'Wat Chong Lom', province: 'Samut Sakhon', description: 'Historic temple offering beautiful views of the river estuary.', imageUrl: attractionImages.watChongLom, lat: 13.541, lng: 100.274 },
+  { key: 'maeklongMarket', name: 'Railway Market', province: 'Samut Songkhram', description: 'Unique market where stalls retract for passing trains.', imageUrl: attractionImages.maeklongMarket, lat: 13.411, lng: 100.001 },
+  { key: 'watPhraPhutthabat', name: 'Wat Phra Phutthabat', province: 'Saraburi', description: 'Sacred temple housing the "Footprint of the Buddha".', imageUrl: attractionImages.watPhraPhutthabat, lat: 14.718, lng: 100.789 },
+  { key: 'bangRachan', name: 'Bang Rachan Memorial', province: 'Sing Buri', description: 'Park honoring historic heroes of the Ayutthaya period.', imageUrl: attractionImages.bangRachan, lat: 14.802, lng: 100.315 },
+  { key: 'dragonMuseum', name: 'Dragon Descendants Museum', province: 'Suphan Buri', description: 'Magnificent museum inside a giant dragon statue.', imageUrl: attractionImages.dragonMuseum, lat: 14.478, lng: 100.126 },
 
-export const LOCAL_SHOPS: Shop[] = [
-  {
-    id: 'jim-thompson-house-shop',
-    name: 'Jim Thompson House Shop',
-    province: 'Bangkok',
-    description: 'Exquisite Thai silk products, from scarves to home decor, reflecting a rich heritage.',
-    imageUrl: shopImages.jimThompsonHouseShop,
-    tags: ['Thai Silk', 'Luxury', 'Souvenirs'],
-    likeCount: 0,
-    contact: {
-      facebook: 'facebook.com/JimThompsonSilk',
-      website: 'jimthompson.com'
-    },
-    products: [
-        { 
-          name: 'Heritage Silk Scarf', 
-          price: '฿2,400', 
-          description: 'A masterpiece of traditional Thai weaving. This scarf features an intricate heritage pattern, hand-woven from the finest locally sourced silk. Durable, luxurious, and timeless.',
-          imageUrl: 'https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?q=80&w=800',
-          likeCount: 0
-        },
-        { 
-          name: 'Classic Silk Tie', 
-          price: '฿1,800', 
-          description: 'Elevate your formal attire with this 100% Thai silk tie. Hand-crafted with a focus on vibrant color and a smooth finish that resists wrinkling.',
-          imageUrl: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?q=80&w=800',
-          likeCount: 0
-        },
-        { 
-          name: 'Silk Cushion Cover', 
-          price: '฿1,200', 
-          description: 'Bring the luxury of the Jim Thompson house into your own home. These cushion covers feature traditional motifs and a hidden zipper for a clean look.',
-          imageUrl: 'https://images.unsplash.com/photo-1584100996541-118817730e61?q=80&w=800',
-          likeCount: 0
-        }
-    ]
-  },
-  {
-    id: 'chiang-mai-night-bazaar',
-    name: 'Chiang Mai Night Bazaar',
-    province: 'Chiang Mai',
-    description: 'A vibrant, sprawling market famous for its Lanna-style handicrafts, art, and clothing.',
-    imageUrl: shopImages.chiangMaiNightBazaar,
-    tags: ['Handicrafts', 'Art', 'Bargains'],
-    likeCount: 0,
-    contact: {
-      phone: '081-123-4567'
-    },
-    products: [
-        { 
-          name: 'Hand-woven Hill Tribe Bag', 
-          price: '฿850', 
-          description: 'Unique shoulder bag created by Hmong artisans using traditional cross-stitch and indigo dyes. Each pattern tells a story of the high mountain villages.',
-          imageUrl: 'https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=800',
-          likeCount: 0
-        },
-        { 
-          name: 'Carved Teakwood Box', 
-          price: '฿1,200', 
-          description: 'Made from sustainable Thai teak, these boxes are hand-carved with floral Lanna motifs. Perfect for jewelry or small keepsakes.',
-          imageUrl: 'https://images.unsplash.com/photo-1596464716127-f2a82984de30?q=80&w=800',
-          likeCount: 0
-        }
-    ]
-  },
-  {
-    id: 'pranom-thai-herbal',
-    name: 'Pranom Thai Herbal',
-    province: 'Phuket',
-    description: 'Authentic, locally-made herbal balms, essential oils, and spa products perfect for wellness.',
-    imageUrl: shopImages.pranomThaiHerbal,
-    tags: ['Herbal Goods', 'Wellness', 'Organic'],
-    likeCount: 0,
-    contact: {
-      whatsapp: '+66891234567',
-      facebook: 'facebook.com/PranomHerbalPhuket'
-    },
-    products: [
-        { 
-          name: 'Thai Massage Balm Set', 
-          price: '฿450', 
-          description: 'A set of three organic balms: Ginger (for muscle pain), Lemongrass (for energy), and Lavender (for sleep). Used by professional Thai massage therapists.',
-          imageUrl: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?q=80&w=800',
-          likeCount: 0
-        },
-        { 
-          name: 'Lemon Grass Essential Oil', 
-          price: '฿320', 
-          description: 'Pure, concentrated lemongrass oil steam-distilled in Phuket. Perfect for aromatherapy or as a natural insect repellent.',
-          imageUrl: 'https://images.unsplash.com/photo-1611080626919-7cf5a9831168?q=80&w=800',
-          likeCount: 0
-        }
-    ]
-  },
-  {
-    id: 'otop-center',
-    name: 'OTOP Center',
-    province: 'Ayutthaya',
-    description: 'Showcasing "One Tambon One Product" goods, from woven baskets to delicious local snacks.',
-    imageUrl: shopImages.otopCenter,
-    tags: ['Local Products', 'Crafts', 'Food'],
-    likeCount: 0,
-    contact: {
-      phone: '035-123-456'
-    }
-  },
-  {
-    id: 'siam-celadon-chiang-mai',
-    name: 'Siam Celadon',
-    province: 'Chiang Mai',
-    description: 'Masterfully crafted traditional Thai celadon ceramics with a unique cracked glaze finish.',
-    imageUrl: shopImages.siamCeladon,
-    tags: ['Ceramics', 'Lanna Style', 'Art'],
-    likeCount: 0,
-    contact: {
-      facebook: 'facebook.com/SiamCeladon',
-      website: 'siamceladon.com'
-    },
-    products: [
-        { 
-          name: 'Cracked Glaze Dinner Set', 
-          price: '฿4,500', 
-          description: 'A 4-piece set including a dinner plate, side plate, bowl, and mug. Features the signature Lanna green color and high-durability finish.',
-          imageUrl: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?q=80&w=800',
-          likeCount: 0
-        },
-        { 
-          name: 'Lotus Petal Bowl', 
-          price: '฿850', 
-          description: 'A beautiful decorative bowl shaped like a lotus flower. Each petal is hand-carved before the final glaze is applied.',
-          imageUrl: 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?q=80&w=800',
-          likeCount: 0
-        }
-    ]
-  },
-  {
-    id: 'or-tor-kor-delicacies',
-    name: 'Or Tor Kor Market Gourmet',
-    province: 'Bangkok',
-    description: 'The finest selection of Thai premium fruits, ready-to-eat meals, and rare ingredients.',
-    imageUrl: shopImages.orTorKorMarket,
-    tags: ['Premium Food', 'Fruit', 'Market'],
-    likeCount: 0,
-    contact: {
-      phone: '02-279-2080',
-      website: 'ortorkor.com'
-    },
-    products: [
-        { 
-          name: 'Premium Monthong Durian', 
-          price: 'Seasonal', 
-          description: 'Selected from the best orchards in Rayong. Each segment is checked for perfect ripeness and texture. Only the "Grade A" fruit makes it to our market.',
-          imageUrl: 'https://images.unsplash.com/photo-1598449334855-6b64004291e0?q=80&w=800',
-          likeCount: 0
-        },
-        { 
-          name: 'Thai Mango Sticky Rice Kit', 
-          price: '฿350', 
-          description: 'Everything you need to make the perfect dessert: Thai glutinous rice, coconut cream, palm sugar, and dried mung beans. Mangos included in-store.',
-          imageUrl: 'https://images.unsplash.com/photo-1621234714152-32a76f236e71?q=80&w=800',
-          likeCount: 0
-        }
-    ]
-  },
-  {
-    id: 'bo-sang-umbrella-center',
-    name: 'Bo Sang Umbrella Centre',
-    province: 'Chiang Mai',
-    description: 'Watch artisans create famous hand-painted paper umbrellas and buy them as unique gifts.',
-    imageUrl: shopImages.boSangUmbrellaMakingCentre,
-    tags: ['Umbrellas', 'Hand-painted', 'Tradition'],
-    likeCount: 0,
-    contact: {
-      facebook: 'facebook.com/BoSangHandicrafts',
-      phone: '053-338-357'
-    }
-  },
-  {
-    id: 'ko-kret-terracotta',
-    name: 'Ko Kret Mon Pottery',
-    province: 'Nonthaburi',
-    description: 'Hand-carved terracotta pottery made using ancient Mon techniques on the island of Ko Kret.',
-    imageUrl: shopImages.koKretPottery,
-    tags: ['Pottery', 'Mon Culture', 'Handmade'],
-    likeCount: 0,
-    contact: {
-      whatsapp: '+66845678901',
-      phone: '02-583-0000'
-    }
-  }
+  // North
+  { key: 'doiInthanon', name: 'Doi Inthanon', province: 'Chiang Mai', description: 'Highest peak in Thailand with twin pagodas.', imageUrl: attractionImages.doiInthanon, lat: 18.588, lng: 98.487 },
+  { key: 'whiteTemple', name: 'White Temple', province: 'Chiang Rai', description: 'Contemporary Buddhist art masterpiece.', imageUrl: attractionImages.whiteTemple, lat: 19.824, lng: 99.763 },
+  { key: 'kamphaengPhetPark', name: 'Historical Park', province: 'Kamphaeng Phet', description: 'UNESCO ancient ruins and temples.', imageUrl: attractionImages.kamphaengPhetPark, lat: 16.485, lng: 99.522 },
+  { key: 'lampangLuang', name: 'Wat Phra That Lampang Luang', province: 'Lampang', description: 'Oldest wooden Lanna-style temple.', imageUrl: attractionImages.lampangLuang, lat: 18.216, lng: 99.387 },
+  { key: 'watHariphunchai', name: 'Wat Hariphunchai', province: 'Lamphun', description: 'Legendary golden pagoda from the Mon era.', imageUrl: attractionImages.watHariphunchai, lat: 18.577, lng: 99.009 },
+  { key: 'banRakThai', name: 'Ban Rak Thai', province: 'Mae Hong Son', description: 'Scenic Chinese village in the mist.', imageUrl: attractionImages.banRakThai, lat: 19.585, lng: 97.942 },
+  { key: 'buengBoraphet', name: 'Bueng Boraphet', province: 'Nakhon Sawan', description: 'Largest freshwater lake in Thailand.', imageUrl: attractionImages.buengBoraphet, lat: 15.712, lng: 100.145 },
+  { key: 'watPhumin', name: 'Wat Phumin', province: 'Nan', description: 'Iconic temple with the "Whispering Love" mural.', imageUrl: attractionImages.watPhumin, lat: 18.775, lng: 100.771 },
+  { key: 'kwanPhayao', name: 'Kwan Phayao', province: 'Phayao', description: 'Tranquil lake with spectacular sunset views.', imageUrl: attractionImages.kwanPhayao, lat: 19.163, lng: 99.904 },
+  { key: 'phaSornKaew', name: 'Wat PhaSornKaew', province: 'Phetchabun', description: 'Stunning mosaic temple in the mountains.', imageUrl: attractionImages.phaSornKaew, lat: 16.788, lng: 101.050 },
+  { key: 'watThaLuang', name: 'Wat Tha Luang', province: 'Phichit', description: 'Sacred temple housing Luang Phor Phet.', imageUrl: attractionImages.watThaLuang, lat: 16.442, lng: 100.352 },
+  { key: 'phraPhutthaChinnarat', name: 'Wat Mahathat', province: 'Phitsanulok', description: 'Home to the most beautiful Buddha in Thailand.', imageUrl: attractionImages.phraPhutthaChinnarat, lat: 16.822, lng: 100.259 },
+  { key: 'phraThatChaeHaeng', name: 'Wat Phra That Chae Haeng', province: 'Phrae', description: 'Historic white pagoda representing the year of the rabbit.', imageUrl: attractionImages.phraThatChaeHaeng, lat: 18.150, lng: 100.130 },
+  { key: 'sukhothaiHistoricalPark', name: 'Historical Park', province: 'Sukhothai', description: 'Cradle of Thai civilization UNESCO site.', imageUrl: attractionImages.sukhothaiHistoricalPark, lat: 17.017, lng: 99.704 },
+  { key: 'bhumibolDam', name: 'Bhumibol Dam', province: 'Tak', description: 'Massive concrete dam with scenic reservoir views.', imageUrl: attractionImages.bhumibolDam, lat: 17.243, lng: 98.973 },
+  { key: 'watThaSung', name: 'Wat Tha Sung', province: 'Uthai Thani', description: 'Dazzling crystal temple interior.', imageUrl: attractionImages.watThaSung, lat: 15.378, lng: 100.031 },
+  { key: 'sirikitDam', name: 'Sirikit Dam', province: 'Uttaradit', description: 'Largest earth-filled dam in the kingdom.', imageUrl: attractionImages.sirikitDam, lat: 17.765, lng: 100.562 },
+
+  // Northeast
+  { key: 'putthaUtthayan', name: 'Puttha Utthayan', province: 'Amnat Charoen', description: 'Park with a giant golden sitting Buddha.', imageUrl: attractionImages.putthaUtthayan, lat: 15.862, lng: 104.629 },
+  { key: 'hinSamWan', name: 'Three Whale Rocks', province: 'Bueng Kan', description: 'Rocks looking like a whale family in the forest.', imageUrl: attractionImages.hinSamWan, lat: 18.355, lng: 103.655 },
+  { key: 'phanomRung', name: 'Phanom Rung', province: 'Buriram', description: 'Khmer sanctuary atop an extinct volcano.', imageUrl: attractionImages.phanomRung, lat: 14.532, lng: 102.939 },
+  { key: 'paHinNgam', name: 'Pa Hin Ngam', province: 'Chaiyaphum', description: 'Tulip fields and strange rock formations.', imageUrl: attractionImages.paHinNgam, lat: 15.631, lng: 101.392 },
+  { key: 'sirindhornMuseum', name: 'Dinosaur Museum', province: 'Kalasin', description: 'Best dinosaur fossils in Southeast Asia.', imageUrl: attractionImages.sirindhornMuseum, lat: 16.694, lng: 103.526 },
+  { key: 'kaenNakhon', name: 'Phra Mahathat Kaen Nakhon', province: 'Khon Kaen', description: 'Stunning nine-story pagoda near the lake.', imageUrl: attractionImages.kaenNakhon, lat: 16.425, lng: 102.833 },
+  { key: 'phuKradueng', name: 'Phu Kradueng', province: 'Loei', description: 'Popular trekking plateau with sunrise views.', imageUrl: attractionImages.phuKradueng, lat: 16.883, lng: 101.785 },
+  { key: 'phraThatNaDun', name: 'Phra That Na Dun', province: 'Maha Sarakham', description: 'Isan Buddhist Park in Dvaravati style.', imageUrl: attractionImages.phraThatNaDun, lat: 15.928, lng: 103.226 },
+  { key: 'hoKaeo', name: 'Ho Kaeo Mukdahan', province: 'Mukdahan', description: 'Observation tower overlooking Mekong river.', imageUrl: attractionImages.hoKaeo, lat: 16.545, lng: 104.723 },
+  { key: 'phraThatPhanom', name: 'Wat Phra That Phanom', province: 'Nakhon Phanom', description: 'Sacred pagoda housing Buddha\'s breastbone.', imageUrl: attractionImages.phraThatPhanom, lat: 16.943, lng: 104.725 },
+  { key: 'phimaiPark', name: 'Phimai Historical Park', province: 'Nakhon Ratchasima (Korat)', description: 'Largest Khmer sanctuary in Thailand.', imageUrl: attractionImages.phimaiPark, lat: 15.221, lng: 102.493 },
+  { key: 'shellFossil', name: 'Shell Fossil Museum', province: 'Nong Bua Lamphu', description: 'Prehistoric shell fossil site.', imageUrl: attractionImages.shellFossil, lat: 17.208, lng: 102.441 },
+  { key: 'salaKeoku', name: 'Sala Keoku', province: 'Nong Khai', description: 'Surreal concrete sculpture park on Mekong.', imageUrl: attractionImages.salaKeoku, lat: 17.886, lng: 102.781 },
+  { key: 'roiEtTower', name: 'Roi Et Tower', province: 'Roi Et', description: 'Iconic observation tower shaped like a "Wot".', imageUrl: attractionImages.roiEtTower, lat: 16.058, lng: 103.655 },
+  { key: 'choengChum', name: 'Phra That Choeng Chum', province: 'Sakon Nakhon', description: 'Historic pagoda over sacred footprints.', imageUrl: attractionImages.choengChum, lat: 17.165, lng: 104.148 },
+  { key: 'phaMoIDaeng', name: 'Pha Mo I Daeng', province: 'Sisaket', description: 'Scenic cliff at the Cambodian border.', imageUrl: attractionImages.phaMoIDaeng, lat: 14.391, lng: 104.685 },
+  { key: 'elephantStudy', name: 'Elephant Study Center', province: 'Surin', description: 'Village dedicated to elephant care and culture.', imageUrl: attractionImages.elephantStudy, lat: 15.281, lng: 103.502 },
+  { key: 'samPhanBok', name: 'Sam Phan Bok', province: 'Ubon Ratchathani', description: 'Grand Canyon of Thailand on the Mekong.', imageUrl: attractionImages.samPhanBok, lat: 15.802, lng: 105.353 },
+  { key: 'redLotusSea', name: 'Red Lotus Sea', province: 'Udon Thani', description: 'Vast lake filled with millions of pink lotuses.', imageUrl: attractionImages.redLotusSea, lat: 17.183, lng: 103.050 },
+  { key: 'phrayaKankak', name: 'Toad Museum', province: 'Yasothon', description: 'Unique museum in a giant toad statue.', imageUrl: attractionImages.phrayaKankak, lat: 15.792, lng: 104.141 },
+
+  // South
+  { key: 'bigBuddhaPhuket', name: 'Big Buddha Phuket', province: 'Phuket', description: 'Iconic white marble statue atop a hill.', imageUrl: attractionImages.bigBuddhaPhuket, lat: 7.827, lng: 98.312 },
+  { key: 'mayaBay', name: 'Maya Bay', province: 'Krabi', description: 'Crystal blue bay from Hollywood fame.', imageUrl: attractionImages.mayaBay, lat: 7.678, lng: 98.765 },
+  { key: 'muKoChumphon', name: 'Marine Park', province: 'Chumphon', description: 'Pristine coral reefs and sandy beaches.', imageUrl: attractionImages.muKoChumphon, lat: 10.455, lng: 99.255 },
+  { key: 'watPhraMahathatNS', name: 'Wat Mahathat', province: 'Nakhon Si Thammarat', description: 'Spiritual center of Southern Thailand.', imageUrl: attractionImages.watPhraMahathatNS, lat: 8.411, lng: 99.966 },
+  { key: 'watKhaoKong', name: 'Wat Khao Kong', province: 'Narathiwat', description: 'Largest outdoor sitting Buddha in the deep south.', imageUrl: attractionImages.watKhaoKong, lat: 6.402, lng: 101.782 },
+  { key: 'centralMosque', name: 'Central Mosque', province: 'Pattani', description: 'Most beautiful mosque in Thailand.', imageUrl: attractionImages.centralMosque, lat: 6.862, lng: 101.252 },
+  { key: 'jamesBondIsland', name: 'James Bond Island', province: 'Phang Nga', description: 'Iconic limestone karst in a stunning bay.', imageUrl: attractionImages.jamesBondIsland, lat: 8.274, lng: 98.500 },
+  { key: 'thaleNoi', name: 'Thale Noi', province: 'Phatthalung', description: 'Wetland park famous for lotuses and birds.', imageUrl: attractionImages.thaleNoi, lat: 7.755, lng: 100.125 },
+  { key: 'raksawarinHotSpring', name: 'Raksawarin Spring', province: 'Ranong', description: 'Natural mineral hot springs for wellness.', imageUrl: attractionImages.raksawarinHotSpring, lat: 9.952, lng: 98.652 },
+  { key: 'kohLipe', name: 'Koh Lipe', province: 'Satun', description: 'Maldives of Thailand with clear turquoise water.', imageUrl: attractionImages.kohLipe, lat: 6.488, lng: 99.302 },
+  { key: 'samilaBeach', name: 'Samila Beach', province: 'Songkhla', description: 'Famous beach with the Golden Mermaid statue.', imageUrl: attractionImages.samilaBeach, lat: 7.212, lng: 100.602 },
+  { key: 'khaoSokPark', name: 'Khao Sok', province: 'Surat Thani', description: 'Ancient rainforest and emerald green lake.', imageUrl: attractionImages.khaoSokPark, lat: 8.912, lng: 98.522 },
+  { key: 'emeraldCave', name: 'Emerald Cave', province: 'Trang', description: 'Secret beach hidden inside a limestone cave.', imageUrl: attractionImages.emeraldCave, lat: 7.372, lng: 99.292 },
+  { key: 'betongTunnel', name: 'Betong Tunnel', province: 'Yala', description: 'Longest curved traffic tunnel in Thailand.', imageUrl: attractionImages.betongTunnel, lat: 5.772, lng: 101.112 },
+
+  // West & East
+  { key: 'bridgeRiverKwai', name: 'River Kwai Bridge', province: 'Kanchanaburi', description: 'Historic WWII Death Railway memorial.', imageUrl: attractionImages.bridgeRiverKwai, lat: 14.041, lng: 99.503 },
+  { key: 'khaoWang', name: 'Phra Nakhon Khiri', province: 'Phetchaburi', description: 'White royal palace complex atop a hill.', imageUrl: attractionImages.khaoWang, lat: 13.108, lng: 99.937 },
+  { key: 'khaoSamRoiYot', name: 'National Park', province: 'Prachuap Khiri Khan', description: 'Limestone peaks and the Phraya Nakhon cave.', imageUrl: attractionImages.khaoSamRoiYot, lat: 12.185, lng: 99.982 },
+  { key: 'floatingMarket', name: 'Damnoen Saduak', province: 'Ratchaburi', description: 'Iconic Thai floating market culture.', imageUrl: attractionImages.floatingMarket, lat: 13.518, lng: 99.957 },
+  { key: 'watSothon', name: 'Wat Sothon Wararam', province: 'Chachoengsao', description: 'Magnificent marble temple by the river.', imageUrl: attractionImages.watSothon, lat: 13.674, lng: 101.066 },
+  { key: 'cathedralImmaculate', name: 'Gothic Cathedral', province: 'Chanthaburi', description: 'The largest Gothic-style cathedral in Thailand.', imageUrl: attractionImages.cathedralImmaculate, lat: 12.609, lng: 102.119 },
+  { key: 'sanctuaryTruth', name: 'Sanctuary of Truth', province: 'Chonburi', description: 'Massive hand-carved wooden temple-castle.', imageUrl: attractionImages.sanctuaryTruth, lat: 12.968, lng: 100.888 },
+  { key: 'khaoYaiPrachin', name: 'Khao Yai Gateway', province: 'Prachinburi', description: 'Lush access point to the famous national park.', imageUrl: attractionImages.khaoYaiPrachin, lat: 14.155, lng: 101.405 },
+  { key: 'kohSamet', name: 'Koh Samet', province: 'Rayong', description: 'Popular island retreat with fine white sand.', imageUrl: attractionImages.kohSamet, lat: 12.562, lng: 101.448 },
+  { key: 'pangSidaPark', name: 'Pang Sida', province: 'Sa Kaeo', description: 'Nature park famous for thousands of butterflies.', imageUrl: attractionImages.pangSidaPark, lat: 13.988, lng: 102.205 },
+  { key: 'kohChang', name: 'Koh Chang', province: 'Trat', description: 'Second largest island with rainforests.', imageUrl: attractionImages.kohChang, lat: 12.062, lng: 102.355 },
 ];

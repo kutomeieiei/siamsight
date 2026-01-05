@@ -67,7 +67,7 @@ const HistoryModal: React.FC<{
             <h3 className="text-2xl md:text-5xl font-black text-white leading-relaxed drop-shadow-2xl tracking-tighter">{title}</h3>
             <div className="flex items-center gap-3 mt-3 md:mt-4">
                 <div className="h-1 w-12 md:h-1.5 md:w-16 bg-yellow-600 rounded-full"></div>
-                <p className="text-yellow-500 font-black text-[8px] md:text-[10px] tracking-widest">{t('learning.historyTitle')}</p>
+                <p className="text-yellow-500 font-black text-[8px] md:text-10px tracking-tight">{t('learning.historyTitle')}</p>
             </div>
           </div>
         </div>
@@ -87,7 +87,7 @@ const HistoryModal: React.FC<{
                    </svg>
                 </div>
                 <div>
-                   <h4 className="text-[10px] md:text-xs font-black text-white tracking-widest mb-1.5 md:mb-2">{t('learning.expertInsightTitle')}</h4>
+                   <h4 className="text-[10px] md:text-xs font-black text-white tracking-tight mb-1.5 md:mb-2">{t('learning.expertInsightTitle')}</h4>
                    <p className="text-[10px] md:text-sm text-slate-500 font-black leading-relaxed tracking-tight">{t('learning.expertInsightDesc')}</p>
                 </div>
              </div>
@@ -119,13 +119,13 @@ const CraftCard: React.FC<{
     <div className="absolute inset-0 bg-slate-950/60 group-hover:bg-slate-950/40 transition-colors"></div>
     
     <div className="absolute top-5 left-5 flex flex-col gap-2.5 items-start z-20">
-        <div className="flex items-center gap-2 bg-yellow-600 text-slate-950 px-3 py-1.5 md:px-4 md:py-2 rounded-xl text-[8px] md:text-[9px] font-black tracking-widest shadow-xl border border-yellow-500/30">
+        <div className="flex items-center gap-2 bg-yellow-600 text-slate-950 px-3 py-1.5 md:px-4 md:py-2 rounded-xl text-[8px] md:text-[9px] font-black tracking-tight shadow-xl border border-yellow-500/30">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 md:h-4 md:w-4" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
             </svg>
             {province}
         </div>
-        <div className="bg-slate-950/80 backdrop-blur-md text-yellow-500 px-3 py-1.5 md:px-4 md:py-2 rounded-xl text-[8px] md:text-[9px] font-black tracking-widest border border-slate-800 shadow-lg">
+        <div className="bg-slate-950/80 backdrop-blur-md text-yellow-500 px-3 py-1.5 md:px-4 md:py-2 rounded-xl text-[8px] md:text-[9px] font-black tracking-tight border border-slate-800 shadow-lg">
             {type}
         </div>
     </div>
@@ -169,7 +169,10 @@ const LearningView: React.FC = () => {
   const categories = useMemo(() => {
     const types = new Set<string>();
     craftKeys.forEach(key => {
-      types.add(t(`learning.crafts.${key}.type`));
+      const type = t(`learning.crafts.${key}.type`);
+      if (type && type !== `learning.crafts.${key}.type`) {
+        types.add(type);
+      }
     });
     return Array.from(types).sort();
   }, [t, craftKeys]);
@@ -288,10 +291,11 @@ const LearningView: React.FC = () => {
   };
 
   const handleShowHistory = (key: string) => {
+    const history = t(`learning.crafts.${key}.history`);
     setActiveHistory({
         key,
         title: t(`learning.crafts.${key}.title`),
-        history: t(`learning.crafts.${key}.history`),
+        history: history === `learning.crafts.${key}.history` ? 'History details coming soon.' : history,
         imageUrl: (learningImages as any)[key]
     });
   };
@@ -302,7 +306,7 @@ const LearningView: React.FC = () => {
         <>
           <div className="text-center relative px-4 mt-6 md:mt-0">
             <h2 className="text-3xl md:text-8xl font-black text-yellow-500 mb-4 md:mb-6 tracking-tighter">{t('learning.title')}</h2>
-            <p className="text-slate-500 max-w-2xl mx-auto text-sm md:text-lg font-black tracking-widest">{t('learning.subtitle')}</p>
+            <p className="text-slate-500 max-w-2xl mx-auto text-sm md:text-lg font-black tracking-tight">"{t('learning.subtitle')}"</p>
           </div>
 
           <div className="max-w-3xl mx-auto px-6">
@@ -327,7 +331,7 @@ const LearningView: React.FC = () => {
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 md:h-5 md:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
                     </svg>
-                    {selectedType !== 'all' && <span className="text-[9px] md:text-[10px] hidden sm:inline tracking-widest">{selectedType}</span>}
+                    {selectedType !== 'all' && <span className="text-[9px] md:text-[10px] hidden sm:inline tracking-tight">{selectedType}</span>}
                 </button>
             </div>
           </div>
@@ -337,7 +341,7 @@ const LearningView: React.FC = () => {
                 <div className="h-1 md:h-1.5 w-12 md:w-16 bg-yellow-600 rounded-full"></div>
                 <div>
                     <h3 className="text-2xl md:text-4xl font-black text-white tracking-tight">{t('learning.galleryTitle')}</h3>
-                    <p className="text-[9px] md:text-[10px] text-slate-600 font-black tracking-widest mt-1">{t('learning.portfolios', { count: filteredCrafts.length })}</p>
+                    <p className="text-[9px] md:text-[10px] text-slate-600 font-black tracking-tight mt-1">{t('learning.portfolios', { count: filteredCrafts.length })}</p>
                 </div>
             </div>
             
@@ -358,12 +362,12 @@ const LearningView: React.FC = () => {
                 </div>
             ) : (
                 <div className="py-24 md:py-32 text-center bg-slate-950/40 rounded-3xl border-2 border-slate-900">
-                    <p className="text-slate-600 font-black text-xl md:text-2xl tracking-widest">{t('learning.noResults')}</p>
+                    <p className="text-slate-600 font-black text-xl md:text-2xl tracking-tight">{t('learning.noResults')}</p>
                     <button 
                       onClick={() => { setSelectedType('all'); setSearchQuery(''); }}
-                      className="mt-8 md:mt-10 px-8 md:px-10 py-4 md:py-5 bg-yellow-600 text-slate-950 rounded-2xl text-[10px] md:text-xs font-black transition-all shadow-xl border-2 border-yellow-500"
+                      className="mt-8 md:mt-10 px-8 md:px-10 py-4 md:py-5 bg-yellow-600 text-slate-950 rounded-2xl text-[10px] md:text-xs font-black transition-all shadow-xl border-2 border-yellow-500 tracking-tight"
                     >
-                        {locale === 'th' ? 'แสดงทั้งหมด' : 'Show All Wisdom'}
+                        {locale === 'th' ? 'แสดงทั้งหมด' : 'Show all wisdom'}
                     </button>
                 </div>
             )}
@@ -388,7 +392,7 @@ const LearningView: React.FC = () => {
             
             <div className="text-center mb-8 md:mb-10">
                 <h3 className="text-2xl md:text-3xl font-black text-white tracking-tighter">{t('learning.categoryTitle')}</h3>
-                <p className="text-slate-600 text-[8px] md:text-[10px] font-black tracking-widest mt-2">{t('learning.categorySubtitle')}</p>
+                <p className="text-slate-600 text-[8px] md:text-[10px] font-black tracking-tight mt-2">{t('learning.categorySubtitle')}</p>
             </div>
             
             <div className="grid grid-cols-1 gap-3 md:gap-4">
@@ -400,7 +404,7 @@ const LearningView: React.FC = () => {
                     <CategoryIcon type="all" />
                 </div>
                 <div className="text-left">
-                    <span className={`block text-[11px] md:text-xs font-black tracking-widest ${selectedType === 'all' ? 'text-slate-950' : 'text-slate-300'}`}>{t('learning.showEverything')}</span>
+                    <span className={`block text-[11px] md:text-xs font-black tracking-tight ${selectedType === 'all' ? 'text-slate-950' : 'text-slate-300'}`}>{t('learning.showEverything')}</span>
                 </div>
               </button>
               {categories.map(cat => (
@@ -413,7 +417,7 @@ const LearningView: React.FC = () => {
                     <CategoryIcon type={cat} />
                   </div>
                   <div className="text-left">
-                    <span className={`block text-[11px] md:text-xs font-black tracking-widest ${selectedType === cat ? 'text-slate-950' : 'text-slate-300'}`}>{cat}</span>
+                    <span className={`block text-[11px] md:text-xs font-black tracking-tight ${selectedType === cat ? 'text-slate-950' : 'text-slate-300'}`}>{cat}</span>
                   </div>
                 </button>
               ))}
@@ -446,7 +450,7 @@ const LearningView: React.FC = () => {
               {!isFullScreen && (
                 <div className="flex items-center gap-2 mt-1 md:mt-1.5">
                     <div className="h-0.5 md:h-1 w-8 md:w-10 bg-yellow-600 rounded-full"></div>
-                    <p className="text-[8px] md:text-[9px] text-yellow-600 tracking-widest font-black">{t('learning.specialist')}</p>
+                    <p className="text-[8px] md:text-[9px] text-yellow-600 tracking-tight font-black">{t('learning.specialist')}</p>
                 </div>
               )}
             </div>
@@ -515,7 +519,7 @@ const LearningView: React.FC = () => {
             <button 
                 onClick={() => handleSend()} 
                 disabled={isLoading || !userInput.trim()} 
-                className="w-14 h-14 md:w-16 md:h-16 bg-yellow-600 hover:bg-yellow-500 text-slate-950 rounded-2xl transition-all disabled:bg-slate-800 disabled:text-slate-600 shadow-xl active:scale-90 flex items-center justify-center border-2 border-yellow-500"
+                className="w-14 h-14 md:w-16 md:h-16 bg-yellow-600 hover:bg-yellow-500 text-slate-950 rounded-2xl transition-all disabled:bg-slate-800 disabled:text-slate-600 shadow-xl active:scale-90 flex items-center justify-center border-2 border-yellow-500 shadow-yellow-500/20"
             >
                 {isLoading ? <LoadingSpinner size={6} /> : (
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 md:h-7 md:w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={4}>

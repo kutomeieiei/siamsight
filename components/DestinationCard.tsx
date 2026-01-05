@@ -34,7 +34,7 @@ const DestinationCard: React.FC<DestinationCardProps> = ({ destination, onSelect
       
       <div className="absolute bottom-0 left-0 p-8 w-full">
         <div className="mb-4">
-            <span className="bg-yellow-500 text-slate-950 text-[9px] font-black px-4 py-1.5 rounded uppercase tracking-[0.25em] shadow-2xl border border-yellow-400/30">
+            <span className="bg-yellow-500 text-slate-950 text-[9px] font-black px-4 py-1.5 rounded tracking-tight shadow-2xl border border-yellow-400/30">
                 {t(`regions.${destination.region}`)}
             </span>
         </div>

@@ -11,8 +11,9 @@ interface ShopCardProps {
 }
 
 const ShopCard: React.FC<ShopCardProps> = ({ shop, onSelect, isLiked = false, onToggleLike }) => {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const displayLikes = (shop.likeCount || 0) + (isLiked ? 1 : 0);
+  const displayName = locale === 'th' ? shop.nameTh : shop.nameEn;
 
   return (
     <button
@@ -20,7 +21,7 @@ const ShopCard: React.FC<ShopCardProps> = ({ shop, onSelect, isLiked = false, on
       className="group relative aspect-[4/3] w-full bg-slate-950 rounded-3xl overflow-hidden transition-all duration-300 border-2 border-slate-800 hover:border-yellow-500 shadow-xl text-left"
     >
       <img 
-        src={shop.imageUrl} alt={shop.name} 
+        src={shop.imageUrl} alt={displayName} 
         className="absolute inset-0 w-full h-full object-cover transition-all duration-1000 group-hover:scale-105"
       />
       
@@ -44,13 +45,13 @@ const ShopCard: React.FC<ShopCardProps> = ({ shop, onSelect, isLiked = false, on
 
       <div className="absolute bottom-0 left-0 right-0 p-10 flex flex-col justify-end">
         <div className="mb-4">
-            <span className="bg-yellow-600 text-slate-950 text-[9px] font-black px-4 py-2 rounded-xl uppercase tracking-[0.2em] shadow-xl border border-yellow-500/30">
+            <span className="bg-yellow-600 text-slate-950 text-[9px] font-black px-4 py-2 rounded-xl tracking-tight shadow-xl border border-yellow-500/30">
                 {t(`provinces.${shop.province}`)}
             </span>
         </div>
         
-        <h3 className="text-white font-black text-3xl leading-tight mb-6 tracking-tighter group-hover:text-yellow-400 transition-colors uppercase">
-            {shop.name}
+        <h3 className="text-white font-black text-3xl leading-tight mb-6 tracking-tighter group-hover:text-yellow-400 transition-colors">
+            {displayName}
         </h3>
         
         <div className="h-1 w-12 bg-yellow-500 rounded-full group-hover:w-20 transition-all"></div>

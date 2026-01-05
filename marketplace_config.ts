@@ -1,0 +1,109 @@
+
+import { Shop } from './types';
+import { shopImages } from './image_assets';
+
+/**
+ * ==============================================================================
+ * SIAM SIGHT: MARKETPLACE CONFIGURATION ("THE BACKEND")
+ * ==============================================================================
+ * 
+ * This file acts as your marketplace database. 
+ */
+
+export const INITIAL_SHOPS: Shop[] = [
+  {
+    id: 'Kanghan-Nam',
+    nameEn: 'Kanghan Nam',
+    nameTh: 'ร้านกังหันน้ำ',
+    province: 'Khon Kaen',
+    descriptionEn: 'The best restaurant in Khon Kaen. Lakeside atmosphere at Bueng Nong Khot.',
+    descriptionTh: 'สุดยอดร้านอาหารในขอนแก่น บรรยากาศริมบึงหนองโคตรที่ผ่อนคลาย',
+    imageUrl: 'https://ร้านกังหันน้ํา.com/wp-content/uploads/2024/07/DSC04104-1.png',
+    tags: ['Food', 'Outdoor seating'],
+    likeCount: 8,
+    contact: {
+      website: 'https://xn--12cm6cca9c1c4bcei0yja0d.com/',
+      phone: '085-922-2584'
+    },
+    products: [
+      { 
+        nameEn: 'Salt-Crusted Grilled Fish',
+        nameTh: 'ปลาช่อนเผาเกลือ', 
+        price: '฿120', 
+        descriptionEn: 'Signature grilled fish coated in salt for a perfectly moist and flavorful experience.',
+        descriptionTh: 'เมนูซิกเนเจอร์ ปลาช่อนเผาเกลือเนื้อนุ่มรสชาติกลมกล่อม',
+        imageUrl: 'https://ร้านกังหันน้ํา.com/wp-content/uploads/2024/06/%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%81%E0%B8%B1%E0%B8%87%E0%B8%AB%E0%B8%B1%E0%B8%99%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B8%82%E0%B8%AD%E0%B8%99%E0%B9%81%E0%B8%81%E0%B9%88%E0%B8%99-MainDishes17062024-640x640-1.png',
+        likeCount: 3
+      },
+      { 
+        nameEn: 'Deep-Fried Sea Bass with Fish Sauce',
+        nameTh: 'ปลากะพงทอดน้ำปลา', 
+        price: '฿140', 
+        descriptionEn: 'Crispy golden sea bass drizzled with premium savory fish sauce.',
+        descriptionTh: 'ปลากะพงทอดจนเหลืองทอง กรอบนอกนุ่มใน ราดด้วยซอสน้ำปลาสูตรเข้มข้น',
+        imageUrl: 'https://ร้านกังหันน้ํา.com/wp-content/uploads/2024/06/%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%81%E0%B8%B1%E0%B8%87%E0%B8%AB%E0%B8%B1%E0%B8%99%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B8%82%E0%B8%AD%E0%B8%99%E0%B9%81%E0%B8%81%E0%B9%88%E0%B8%99-Appetizers17062024-640x640-1.png',
+        likeCount: 3
+      }
+    ]
+  },
+  {
+    id: 'krua-suwimol',
+    nameEn: 'Krua Suwimol',
+    nameTh: 'ครัวสุวิมล',
+    province: 'Nakhon Ratchasima (Korat)',
+    descriptionEn: 'Authentic local Thai restaurant in Korat known for fresh ingredients and traditional Isan flavors.',
+    descriptionTh: 'ร้านอาหารไทยดั้งเดิมในโคราช ขึ้นชื่อเรื่องวัตถุดิบที่สดใหม่และรสชาติสไตล์อีสานแท้ๆ',
+    imageUrl: 'https://lh3.googleusercontent.com/gps-cs-s/AG0ilSyiAGBtAb3EGiO4eq7QEDAVKUQf78vpwsozXdMfGttbviWCPDuzNzuTvL7NHoGJv6mk7NpxWX-d1XcMhGrr35PpEX4lJHsmil9S9kwveB13X38FxnHDfUPHZDwJM2A0oAAmoDdJAxZwzSZt=w408-h306-k-no',
+    tags: ['Traditional', 'Local Food'],
+    likeCount: 4,
+    contact: {
+      phone: '081-071-5448'
+    },
+    products: [
+      { 
+        nameEn: 'Thai Omelet with Oyster',
+        nameTh: 'ไข่เจียวหอยนางรม', 
+        price: '฿79', 
+        descriptionEn: 'Crispy and fluffy Thai-style omelet loaded with fresh, juicy oysters.',
+        descriptionTh: 'ไข่เจียวกรอบฟูสไตล์ไทย อัดแน่นด้วยหอยนางรมสดรสหวาน',
+        imageUrl: 'https://lh3.googleusercontent.com/gps-cs-s/AG0ilSyPLZZ8rySw8u4SJSYTVxFE2QwXq2or7oFwH4hrmou3H9REHVM3zUuWEQEnAGBu5pchsOSQEdrIevvLZhjW5kFiUNPiRC76xtmEbqaxv2r6R9Ok4Z6K9f0kgbPfB9OHS4WMRvF3=w172-h224-p-k-no',
+        likeCount: 4
+      }
+    ]
+  },
+  {
+    id: 'juuat-cafe',
+    nameEn: 'Jûuat Cafe',
+    nameTh: 'จ๊วด คาเฟ่',
+    province: 'Khon Kaen',
+    descriptionEn: 'A trendy cafe in Khon Kaen with a relaxing atmosphere, great coffee, and delicious homemade desserts.',
+    descriptionTh: 'คาเฟ่สุดชิคในขอนแก่น บรรยากาศน่านั่งพักผ่อน พร้อมกาแฟคุณภาพและขนมหวานโฮมเมดรสเยี่ยม',
+    imageUrl: 'https://lh3.googleusercontent.com/gps-cs-s/AG0ilSwt3VxNGkzyCvRy-L862yc_CXwwjd9-eRDcQFc7lED_C10sNYpz0XRfL-Kh1k1hToOkpBN0YifKEM9fTkGCbYVFpk-IFimfJxVSNSSNoh5yjnQSELN5lbOvLgtz124fgLCk2nizeA=w408-h306-k-no',
+    tags: ['Cafe', 'Outdoor seating'],
+    likeCount: 7,
+    contact: {
+      facebook: 'https://web.facebook.com/Juadcafe/?locale=th_TH&_rdc=1&_rdr#',
+      phone: '091-063-4589'
+    },
+    products: [
+      { 
+        nameEn: 'Banana Sundae Ice Cream',
+        nameTh: 'ไอศกรีมกล้วยซันเดย์', 
+        price: '฿70', 
+        descriptionEn: 'Creamy vanilla ice cream topped with fresh bananas, chocolate syrup, and whipped cream.',
+        descriptionTh: 'ไอศกรีมวานิลลาเนื้อเนียน เสิร์ฟพร้อมกล้วยหอมสด ราดซอสช็อกโกแลตและวิปครีม',
+        imageUrl: 'https://lh3.googleusercontent.com/gps-cs-s/AG0ilSwM6kaKtKV8-j5DAcqfbZuwq0-q0v7fCB_9TZlgMTwKdYRX6oeeFiP7CcECI2K2N8MkgAx7n58wEPqWEIhBerFRpt82AO-EInhX5fajpIvttYAozjs3G5YDpmRu8eNm-zWMbrWb=w172-h224-p-k-no',
+        likeCount: 4
+      },
+      { 
+        nameEn: 'Butterfly Pea Honey Lemon',
+        nameTh: 'อัญชันน้ำผึ้งมะนาว', 
+        price: '฿40', 
+        descriptionEn: 'Refreshing herbal drink made from butterfly pea flowers, wild honey, and fresh lime.',
+        descriptionTh: 'เครื่องดื่มสมุนไพรคลายร้อนจากดอกอัญชัน ผสมน้ำผึ้งป่าและมะนาวสดรสเปรี้ยวหวานลงตัว',
+        imageUrl: 'https://lh3.googleusercontent.com/gps-cs-s/AG0ilSwRYLiCfC1WveVT2Fsj4KgZHvUge5xxZ615NcfPEuTFV5uf0641zU6wIKElx1BHm_fYFLrEp4C-fiXBN9jOzRwY2eE_4dKeCo7Lcp13cUFLUCZRk91Y72IUx13Svn1G-gooyaCF=w172-h224-p-k-no',
+        likeCount: 5
+      }
+    ]
+  },
+];

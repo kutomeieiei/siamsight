@@ -1,3 +1,4 @@
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
@@ -5,6 +6,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { CommunityProvider } from './contexts/CommunityContext';
 import { BrandingProvider } from './contexts/BrandingContext';
+import { MarketplaceProvider } from './contexts/MarketplaceContext';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -17,9 +19,11 @@ root.render(
     <LanguageProvider>
       <BrandingProvider>
         <AuthProvider>
-          <CommunityProvider>
-            <App />
-          </CommunityProvider>
+          <MarketplaceProvider>
+            <CommunityProvider>
+              <App />
+            </CommunityProvider>
+          </MarketplaceProvider>
         </AuthProvider>
       </BrandingProvider>
     </LanguageProvider>

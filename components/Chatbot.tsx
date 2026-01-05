@@ -53,13 +53,13 @@ const LandmarkCard: React.FC<{
                 <svg xmlns="http://www.w3.org/2000/svg" className={`h-4 w-4 md:h-5 md:w-5 ${isLiked ? 'fill-current' : 'fill-none'}`} viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
-                <span className="text-[9px] md:text-[10px] font-black tracking-widest">{isLiked ? 'Saved' : 'Save'}</span>
+                <span className="text-[9px] md:text-[10px] font-black tracking-tight">{isLiked ? 'Saved' : 'Save'}</span>
             </button>
         </div>
 
         <div className="absolute bottom-5 left-5 pr-6">
             <h3 className="text-white font-black text-xl md:text-2xl leading-none mb-3 truncate tracking-tight">{t(`featuredAttractions.names.${place.key}`)}</h3>
-            <p className="text-[9px] md:text-[10px] text-yellow-500 font-black tracking-widest">{t(`provinces.${place.province}`)}</p>
+            <p className="text-[9px] md:text-[10px] text-yellow-500 font-black tracking-tight">{t(`provinces.${place.province}`)}</p>
         </div>
       </div>
 
@@ -199,14 +199,14 @@ const Chatbot: React.FC = () => {
             <h2 className="text-2xl md:text-6xl font-black text-yellow-500 mb-3 tracking-tighter leading-[0.9]">
               {t('chatbot.title')}
             </h2>
-            <p className="text-slate-500 max-w-lg mx-auto text-[11px] md:text-sm font-bold tracking-widest opacity-80">"{t('chatbot.subtitle')}"</p>
+            <p className="text-slate-500 max-w-lg mx-auto text-[11px] md:text-sm font-bold tracking-tight opacity-80">"{t('chatbot.subtitle')}"</p>
           </div>
 
           <section className="mb-16 md:mb-24">
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-10 gap-6 md:gap-8 border-b-2 border-slate-900 pb-8 md:pb-10">
                 <div>
                     <h3 className="text-xl md:text-3xl font-black text-white mb-2 tracking-tight">{t('chatbot.famousPlacesTitle')}</h3>
-                    <p className="text-[9px] md:text-[10px] text-yellow-600 font-black tracking-widest">{t('chatbot.famousPlacesSubtitle')}</p>
+                    <p className="text-[9px] md:text-[10px] text-yellow-600 font-black tracking-tight">{t('chatbot.famousPlacesSubtitle')}</p>
                 </div>
                 <div className="relative w-full md:w-96">
                     <input
@@ -250,7 +250,7 @@ const Chatbot: React.FC = () => {
                   </div>
                   <div>
                     <h3 className="font-black text-xl md:text-2xl text-white tracking-tight">Nong Siam</h3>
-                    {!isFullScreen && <p className="text-[8px] md:text-[10px] font-black tracking-widest text-yellow-500">{t('chatbot.online')}</p>}
+                    {!isFullScreen && <p className="text-[8px] md:text-[10px] font-black tracking-tight text-yellow-500">{t('chatbot.online')}</p>}
                   </div>
                </div>
                

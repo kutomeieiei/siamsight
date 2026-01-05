@@ -28,7 +28,7 @@ const UserDisplay: React.FC<{ user: User }> = ({ user }) => {
 
   return (
     <div className={`flex items-center gap-2 text-sm text-slate-300 rounded-full py-1.5 px-3 ${bgClass} border ${borderClass}`}>
-      <span className={`font-black uppercase text-[10px] tracking-widest ${colorClass}`}>{displayName}</span>
+      <span className={`font-black text-[10px] tracking-tight ${colorClass}`}>{displayName}</span>
     </div>
   );
 };

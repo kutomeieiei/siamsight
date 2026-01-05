@@ -1,3 +1,4 @@
+
 import { GoogleGenAI, Chat } from "@google/genai";
 import { ItineraryDay, ItineraryResult, GroundingChunk, Locale } from "../types";
 import { translations } from '../translations';
@@ -42,8 +43,8 @@ export const generateItinerary = async (
 
   try {
     const response = await ai.models.generateContent({
-      // Switched to gemini-flash-lite-latest for maximum free-tier headroom
-      model: "gemini-flash-lite-latest", 
+      // Complex Text Tasks use gemini-3-pro-preview
+      model: "gemini-3-pro-preview", 
       contents: prompt,
       config: {
         tools: [{googleSearch: {}}],
@@ -53,6 +54,7 @@ export const generateItinerary = async (
     const groundingMetadata = response.candidates?.[0]?.groundingMetadata;
     const sources: GroundingChunk[] = groundingMetadata?.groundingChunks || [];
     
+    // Correctly accessing the text property on GenerateContentResponse
     const text = response.text;
     if (!text) {
       throw new Error("The AI planner returned an empty response.");
@@ -101,7 +103,8 @@ export const startChatSession = (locale: Locale): Chat => {
   const systemInstruction = translations[locale].prompts.chatbotSystem;
   
   return ai.chats.create({
-    model: 'gemini-flash-lite-latest', // Consistent use of Lite for high availability
+    // Basic Text Tasks use gemini-3-flash-preview
+    model: 'gemini-3-flash-preview', 
     config: {
       systemInstruction: systemInstruction,
       tools: [{googleSearch: {}}]
@@ -115,7 +118,8 @@ export const startLearningSession = (locale: Locale): Chat => {
   const systemInstruction = translations[locale].prompts.learningSystem;
   
   return ai.chats.create({
-    model: 'gemini-flash-lite-latest', // Consistent use of Lite for high availability
+    // Basic Text Tasks use gemini-3-flash-preview
+    model: 'gemini-3-flash-preview', 
     config: {
       systemInstruction: systemInstruction,
       tools: [{googleSearch: {}}]

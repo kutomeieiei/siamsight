@@ -43,7 +43,7 @@ const LargeContactButton: React.FC<{ href?: string; type: 'facebook' | 'phone'; 
       <div className="p-2.5 md:p-3 bg-slate-800 rounded-xl group-hover:bg-yellow-600 transition-colors">
         {getIcon()}
       </div>
-      <span className="font-black uppercase tracking-widest text-[10px] md:text-xs">{label}</span>
+      <span className="font-black tracking-tight text-[10px] md:text-xs">{label}</span>
     </a>
   );
 };
@@ -52,9 +52,11 @@ const ProductCard: React.FC<{
     product: Product; 
     onMoreInfo: () => void; 
     isLiked: boolean;
+    locale: string;
     t: any;
-}> = ({ product, onMoreInfo, isLiked, t }) => {
+}> = ({ product, onMoreInfo, isLiked, locale, t }) => {
     const displayLikes = (product.likeCount || 0) + (isLiked ? 1 : 0);
+    const displayName = locale === 'th' ? product.nameTh : product.nameEn;
 
     return (
         <button
@@ -62,7 +64,7 @@ const ProductCard: React.FC<{
             className="group relative aspect-[4/3] w-full bg-slate-950 rounded-[2rem] md:rounded-[2.5rem] overflow-hidden transition-all duration-300 border-2 border-slate-800 hover:border-yellow-600 shadow-2xl text-left"
         >
             <img 
-                src={product.imageUrl} alt={product.name} 
+                src={product.imageUrl} alt={displayName} 
                 className="absolute inset-0 w-full h-full object-cover transition-all duration-1000 group-hover:scale-105" 
             />
             
@@ -87,7 +89,7 @@ const ProductCard: React.FC<{
             </div>
 
             <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
-                <h4 className="text-white font-black leading-relaxed text-xl md:text-3xl mb-3 md:mb-4 truncate group-hover:text-yellow-400 transition-colors uppercase tracking-tight">{product.name}</h4>
+                <h4 className="text-white font-black leading-relaxed text-xl md:text-3xl mb-3 md:mb-4 truncate group-hover:text-yellow-400 transition-colors tracking-tight">{displayName}</h4>
                 <div className="flex items-center gap-3 md:gap-4">
                     <div className="h-1 md:h-1.5 w-10 md:w-12 bg-yellow-600 rounded-full group-hover:w-20 md:group-hover:w-24 transition-all"></div>
                 </div>
@@ -102,11 +104,14 @@ const ProductModal: React.FC<{
   shopName: string;
   isLiked: boolean;
   onToggleLike: (productName: string) => void;
+  locale: string;
   t: any;
-}> = ({ product, onClose, shopName, isLiked, onToggleLike, t }) => {
+}> = ({ product, onClose, shopName, isLiked, onToggleLike, locale, t }) => {
   if (!product) return null;
 
   const displayLikes = (product.likeCount || 0) + (isLiked ? 1 : 0);
+  const displayName = locale === 'th' ? product.nameTh : product.nameEn;
+  const displayDescription = locale === 'th' ? product.descriptionTh : product.descriptionEn;
 
   return (
     <div className="fixed inset-0 z-[150] flex items-end md:items-center justify-center p-0 md:p-6 bg-slate-950/90 backdrop-blur-sm animate-fade-in">
@@ -124,36 +129,36 @@ const ProductModal: React.FC<{
         </button>
 
         <div className="aspect-[4/3] relative">
-          <img src={product.imageUrl} alt={product.name} className="w-full h-full object-cover" />
+          <img src={product.imageUrl} alt={displayName} className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-slate-950/60"></div>
           <div className="absolute bottom-8 left-8 md:bottom-10 md:left-10 right-8 md:right-10">
-            <span className="text-yellow-500 font-black text-[10px] md:text-xs tracking-[0.3em] uppercase mb-3 md:mb-4 block">{shopName}</span>
-            <h3 className="text-xl md:text-4xl font-black text-white leading-tight uppercase tracking-tighter drop-shadow-2xl">{product.name}</h3>
+            <span className="text-yellow-500 font-black text-[10px] md:text-xs tracking-tight mb-3 md:mb-4 block">{shopName}</span>
+            <h3 className="text-xl md:text-4xl font-black text-white leading-tight tracking-tighter drop-shadow-2xl">{displayName}</h3>
           </div>
         </div>
 
         <div className="p-8 md:p-12">
-          <p className="text-slate-300 leading-relaxed text-[11px] md:text-sm italic mb-8 md:mb-12 font-black uppercase tracking-tight">"{product.description}"</p>
+          <p className="text-slate-300 leading-relaxed text-[11px] md:text-sm italic mb-8 md:mb-12 font-black tracking-tight">"{displayDescription}"</p>
           
           <div className="flex items-center justify-between mb-8 md:mb-12 pb-6 md:pb-10 border-b-2 border-slate-800">
             <div>
-              <p className="text-[9px] md:text-[10px] text-slate-600 font-black uppercase tracking-[0.4em] mb-2 md:mb-3">{t('marketplace.authenticityCheck')}</p>
-              <p className="text-yellow-500 font-black flex items-center gap-2.5 md:gap-3 uppercase tracking-widest text-[9px] md:text-[10px]">
+              <p className="text-[9px] md:text-[10px] text-slate-600 font-black tracking-tight mb-2 md:mb-3">{t('marketplace.authenticityCheck')}</p>
+              <p className="text-yellow-500 font-black flex items-center gap-2.5 md:gap-3 tracking-tight text-[9px] md:text-[10px]">
                 <span className="w-2 md:w-3 h-2 md:h-3 bg-yellow-500 rounded-full animate-pulse"></span>
                 {t('marketplace.certified')}
               </p>
             </div>
             {product.price && (
               <div className="text-right">
-                <p className="text-[9px] md:text-[10px] text-slate-600 font-black uppercase tracking-[0.4em] mb-2 md:mb-3">{t('marketplace.guidePrice')}</p>
+                <p className="text-[9px] md:text-[10px] text-slate-600 font-black tracking-tight mb-2 md:mb-3">{t('marketplace.guidePrice')}</p>
                 <p className="text-xl md:text-4xl font-black text-white tracking-tighter">{product.price}</p>
               </div>
             )}
           </div>
 
           <button 
-            onClick={() => onToggleLike(product.name)}
-            className={`w-full py-4 md:py-7 rounded-[1.5rem] md:rounded-[2rem] font-black text-[10px] md:text-xs uppercase tracking-[0.25em] md:tracking-[0.3em] shadow-2xl transition-all flex items-center justify-center gap-3 md:gap-5 border-2 ${
+            onClick={() => onToggleLike(product.nameEn)}
+            className={`w-full py-4 md:py-7 rounded-[1.5rem] md:rounded-[2rem] font-black text-[10px] md:text-xs tracking-tight shadow-2xl transition-all flex items-center justify-center gap-3 md:gap-5 border-2 ${
                 isLiked 
                 ? 'bg-yellow-700 border-yellow-500 text-slate-950' 
                 : 'bg-slate-800 border-slate-700 text-slate-400 hover:border-yellow-600'
@@ -171,7 +176,7 @@ const ProductModal: React.FC<{
 };
 
 const ShopDetailView: React.FC<ShopDetailViewProps> = ({ shop, onBack, setActiveView }) => {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const { isAuthenticated } = useAuth();
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [likedProductNames, setLikedProductNames] = useState<string[]>([]);
@@ -197,6 +202,9 @@ const ShopDetailView: React.FC<ShopDetailViewProps> = ({ shop, onBack, setActive
     });
   };
 
+  const displayName = locale === 'th' ? shop.nameTh : shop.nameEn;
+  const displayDescription = locale === 'th' ? shop.descriptionTh : shop.descriptionEn;
+
   return (
     <div className="animate-fade-in pb-32">
       <div className="container mx-auto px-6 pt-6 md:pt-10">
@@ -207,21 +215,21 @@ const ShopDetailView: React.FC<ShopDetailViewProps> = ({ shop, onBack, setActive
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 md:h-6 md:w-6 transition-transform group-hover:-translate-x-2" viewBox="0 0 20 20" fill="currentColor">
             <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
           </svg>
-          <span className="font-black text-[9px] md:text-xs uppercase tracking-[0.4em]">{t('shopDetail.backButton')}</span>
+          <span className="font-black text-[9px] md:text-xs tracking-tight">{t('shopDetail.backButton')}</span>
         </button>
       </div>
 
       <div className="relative w-full h-[40vh] md:h-[60vh] bg-slate-900 overflow-hidden shadow-2xl mb-12 md:mb-20">
-        <img src={shop.imageUrl} alt={shop.name} className="w-full h-full object-cover" />
+        <img src={shop.imageUrl} alt={displayName} className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-slate-950/60"></div>
         <div className="absolute bottom-0 left-0 p-8 md:p-24 w-full">
-            <span className="bg-yellow-600 text-slate-950 text-[10px] md:text-xs font-black px-4 md:px-6 py-2 md:py-2.5 rounded-xl uppercase tracking-[0.4em] mb-6 md:mb-8 inline-block shadow-2xl border-2 border-yellow-500/30">
+            <span className="bg-yellow-600 text-slate-950 text-[10px] md:text-xs font-black px-4 md:px-6 py-2 md:py-2.5 rounded-xl tracking-tight mb-6 md:mb-8 inline-block shadow-2xl border-2 border-yellow-500/30">
               {t(`provinces.${shop.province}`)}
             </span>
-            <h1 className="text-2xl md:text-9xl font-black text-white leading-relaxed mb-6 md:mb-12 tracking-tighter drop-shadow-2xl uppercase">{shop.name}</h1>
+            <h1 className="text-2xl md:text-9xl font-black text-white leading-relaxed mb-6 md:mb-12 tracking-tighter drop-shadow-2xl">{displayName}</h1>
             <div className="flex flex-wrap gap-2 md:gap-4">
               {shop.tags.map(tag => (
-                <span key={tag} className="bg-slate-900/90 text-slate-400 text-[8px] md:text-xs font-black px-3 md:px-6 py-1.5 md:py-3 rounded-2xl border-2 border-slate-800 uppercase tracking-widest shadow-xl">
+                <span key={tag} className="bg-slate-900/90 text-slate-400 text-[8px] md:text-xs font-black px-3 md:px-6 py-1.5 md:py-3 rounded-2xl border-2 border-slate-800 tracking-tight shadow-xl">
                   {tag}
                 </span>
               ))}
@@ -232,14 +240,14 @@ const ShopDetailView: React.FC<ShopDetailViewProps> = ({ shop, onBack, setActive
       <div className="container mx-auto px-8 md:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 mb-20 md:mb-32 items-start">
             <div className="max-w-4xl">
-                <h2 className="text-[9px] md:text-[11px] font-black text-slate-600 uppercase tracking-[0.5em] mb-6 md:mb-8">{t('marketplace.storeHeritage')}</h2>
-                <p className="text-xl md:text-4xl text-slate-200 leading-relaxed font-black uppercase tracking-tight">
-                    {shop.description}
+                <h2 className="text-[9px] md:text-[11px] font-black text-slate-600 tracking-tight mb-6 md:mb-8">{t('marketplace.storeHeritage')}</h2>
+                <p className="text-xl md:text-4xl text-slate-200 leading-relaxed font-black tracking-tight">
+                    {displayDescription}
                 </p>
             </div>
 
             <div className="bg-slate-900 border-2 border-slate-800 p-8 md:p-12 rounded-[2.5rem] shadow-2xl">
-                <h2 className="text-[9px] md:text-[11px] font-black text-yellow-600 uppercase tracking-[0.5em] mb-8 md:mb-10 text-center">{t('marketplace.connectWithUs')}</h2>
+                <h2 className="text-[9px] md:text-[11px] font-black text-yellow-600 tracking-tight mb-8 md:mb-10 text-center">{t('marketplace.connectWithUs')}</h2>
                 <div className="flex flex-col gap-4 md:gap-6">
                     <LargeContactButton href={shop.contact?.facebook} type="facebook" label={t('marketplace.officialFacebook')} />
                     <LargeContactButton href={shop.contact?.phone} type="phone" label={t('marketplace.callMerchant')} />
@@ -250,12 +258,12 @@ const ShopDetailView: React.FC<ShopDetailViewProps> = ({ shop, onBack, setActive
         <div className="mb-24 md:mb-40">
           <div className="flex items-center gap-5 md:gap-10 mb-10 md:mb-20">
              <div className="h-1.5 md:h-2 w-12 md:w-24 bg-yellow-600 rounded-full"></div>
-             <h2 className="text-2xl md:text-6xl font-black text-white tracking-tighter uppercase">{t('shopDetail.productsTitle')}</h2>
+             <h2 className="text-2xl md:text-6xl font-black text-white tracking-tighter">{t('shopDetail.productsTitle')}</h2>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
             {shop.products?.map((product, idx) => (
-                <ProductCard key={idx} product={product} onMoreInfo={() => setSelectedProduct(product)} isLiked={likedProductNames.includes(product.name)} t={t} />
+                <ProductCard key={idx} product={product} onMoreInfo={() => setSelectedProduct(product)} isLiked={likedProductNames.includes(product.nameEn)} locale={locale} t={t} />
             ))}
           </div>
         </div>
@@ -264,9 +272,10 @@ const ShopDetailView: React.FC<ShopDetailViewProps> = ({ shop, onBack, setActive
       <ProductModal 
         product={selectedProduct} 
         onClose={() => setSelectedProduct(null)} 
-        shopName={shop.name} 
-        isLiked={selectedProduct ? likedProductNames.includes(selectedProduct.name) : false} 
+        shopName={displayName} 
+        isLiked={selectedProduct ? likedProductNames.includes(selectedProduct.nameEn) : false} 
         onToggleLike={handleToggleLike} 
+        locale={locale}
         t={t}
       />
     </div>

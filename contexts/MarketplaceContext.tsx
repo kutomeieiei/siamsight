@@ -1,7 +1,7 @@
 
 import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
 import { Shop } from '../types';
-import { LOCAL_SHOPS } from '../constants';
+import { INITIAL_SHOPS } from '../marketplace_config';
 import { useAuth } from './AuthContext';
 
 // Define the full context type including modal state and shop manipulation methods
@@ -17,7 +17,7 @@ interface MarketplaceContextType {
 
 const MarketplaceContext = createContext<MarketplaceContextType | undefined>(undefined);
 
-const SHOPS_STORAGE_KEY = 'siam-sight-shops';
+const SHOPS_STORAGE_KEY = 'siam-sight-shops-v2';
 
 export const MarketplaceProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [shops, setShops] = useState<Shop[]>([]);
@@ -25,20 +25,20 @@ export const MarketplaceProvider: React.FC<{ children: ReactNode }> = ({ childre
     const [shopToEdit, setShopToEdit] = useState<Shop | null>(null);
     const { user } = useAuth();
 
-    // Load initial shop data from localStorage or fallback to constants
+    // Load initial shop data from localStorage or fallback to our "backend" config
     useEffect(() => {
         try {
             const storedShops = localStorage.getItem(SHOPS_STORAGE_KEY);
             if (storedShops) {
                 setShops(JSON.parse(storedShops));
             } else {
-                // Seed with initial data if localStorage is empty
-                setShops(LOCAL_SHOPS);
-                localStorage.setItem(SHOPS_STORAGE_KEY, JSON.stringify(LOCAL_SHOPS));
+                // Seed with initial data from marketplace_config.ts if localStorage is empty
+                setShops(INITIAL_SHOPS);
+                localStorage.setItem(SHOPS_STORAGE_KEY, JSON.stringify(INITIAL_SHOPS));
             }
         } catch (error) {
             console.error("Could not access localStorage for shops:", error);
-            setShops(LOCAL_SHOPS);
+            setShops(INITIAL_SHOPS);
         }
     }, []);
 
@@ -68,10 +68,9 @@ export const MarketplaceProvider: React.FC<{ children: ReactNode }> = ({ childre
             ...shopData,
             id: user.businessName || user.username, // Fallback to username if business name is missing
             province: user.province || '',
-            likeCount: 0, // CRITICAL: Initialize new shops with zero likes as per request
+            likeCount: 0,
         };
         
-        // Prevent multiple shops for the same business identifier in this mock
         if (shops.some(s => s.id === newShop.id)) {
             throw new Error('You already have a shop registered. Please edit your existing shop.');
         }

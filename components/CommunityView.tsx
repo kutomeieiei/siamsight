@@ -146,7 +146,7 @@ const CommunityView: React.FC<CommunityViewProps> = ({ setActiveView }) => {
         <div className="flex items-center justify-between mb-6">
             <div className="flex flex-col">
               <h3 className="text-lg md:text-xl font-black text-white tracking-tight">{t('community.hubTitle')}</h3>
-              <p className="text-[9px] md:text-[10px] text-yellow-500 font-black tracking-widest">{selectedHub === 'all' ? t('community.allProvinces') : t(`provinces.${selectedHub}`)}</p>
+              <p className="text-[9px] md:text-[10px] text-yellow-500 font-black tracking-tight">{selectedHub === 'all' ? t('community.allProvinces') : t(`provinces.${selectedHub}`)}</p>
             </div>
             
             <div className="relative">
@@ -162,7 +162,7 @@ const CommunityView: React.FC<CommunityViewProps> = ({ setActiveView }) => {
                 {isMenuOpen && (
                     <div ref={menuRef} className="absolute top-full right-0 mt-4 w-60 bg-slate-900 border-2 border-yellow-600 rounded-[2rem] shadow-[0_0_50px_rgba(234,179,8,0.3)] p-3 z-[110] animate-fade-in-up flex flex-col gap-1">
                         <div className="px-4 py-2 border-b border-slate-800 mb-2">
-                             <p className="text-[9px] font-black uppercase text-yellow-500 tracking-[0.3em]">{t('community.navigateMenu')}</p>
+                             <p className="text-[9px] font-black text-yellow-500 tracking-tight">{t('community.navigateMenu')}</p>
                         </div>
                         <button onClick={() => handleNavigate(View.EXPLORE)} className="flex items-center w-full p-4 rounded-xl text-slate-300 hover:bg-slate-800 font-black tracking-tight text-sm text-left">{t('footer.explore')}</button>
                         <button onClick={() => handleNavigate(View.ITINERARY)} className="flex items-center w-full p-4 rounded-xl text-slate-300 hover:bg-slate-800 font-black tracking-tight text-sm text-left">{t('footer.itinerary')}</button>
@@ -255,7 +255,7 @@ const CommunityView: React.FC<CommunityViewProps> = ({ setActiveView }) => {
       <div className={`p-5 md:p-6 bg-slate-900 border-t-2 border-slate-800 ${isFullScreen ? 'pb-12 md:pb-14' : ''}`}>
         {!user ? (
           <div className="text-center p-4 bg-yellow-900/10 border-2 border-yellow-900/20 rounded-2xl">
-            <p className="text-xs md:text-sm text-yellow-500 font-black tracking-widest">{t('community.loginRequired')}</p>
+            <p className="text-xs md:text-sm text-yellow-500 font-black tracking-tight">{t('community.loginRequired')}</p>
           </div>
         ) : (
           <form onSubmit={handleSend} className="flex gap-3 md:gap-4 max-w-4xl mx-auto">

@@ -80,13 +80,13 @@ const MapView: React.FC<MapViewProps> = ({ provinces, attractions, onSelectProvi
             
             <div className="px-6 pb-7 pt-2">
                 <div className="flex flex-col mb-6">
-                    <span className="text-[8px] md:text-[10px] text-yellow-500 font-black uppercase tracking-[0.3em] mb-1">{locationSubtext}</span>
+                    <span className="text-[8px] md:text-[10px] text-yellow-500 font-black tracking-tight mb-1">{locationSubtext}</span>
                     <h3 className="font-black text-white text-xl md:text-2xl truncate tracking-tight drop-shadow-lg">{locationName}</h3>
                 </div>
                 
                 <button 
                     onClick={() => handleDetailsClick(activeLocation)}
-                    className="w-full bg-yellow-600 text-slate-950 text-[10px] md:text-xs font-black py-4.5 md:py-5 rounded-2xl hover:bg-yellow-500 transition-all uppercase tracking-[0.2em] shadow-2xl border-2 border-yellow-500 active:scale-95 flex items-center justify-center gap-3"
+                    className="w-full bg-yellow-600 text-slate-950 text-[10px] md:text-xs font-black py-4.5 md:py-5 rounded-2xl hover:bg-yellow-500 transition-all tracking-tight shadow-2xl border-2 border-yellow-500 active:scale-95 flex items-center justify-center gap-3"
                 >
                     <span>{t('mapView.viewDetails')}</span>
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
@@ -104,6 +104,20 @@ const MapView: React.FC<MapViewProps> = ({ provinces, attractions, onSelectProvi
         {/* Abstract Pattern Overlay */}
         <div className="absolute inset-0 opacity-20 bg-cover bg-center" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 1200'%3E%3Cpath d='M400 0 L450 50 L420 100 L480 150 L450 200 L500 250 L480 300 L520 350 L500 400 L550 450 L520 500 L580 550 L550 600 L600 650 L580 700 L620 750 L600 800 L650 850 L620 900 L680 950 L650 1000 L700 1050 L680 1100 L720 1150 L700 1200 L300 1200 L280 1150 L320 1100 L300 1050 L350 1000 L320 950 L380 900 L350 850 L400 800 L380 750 L420 700 L400 650 L450 600 L420 550 L480 500 L450 450 L500 400 L480 350 L420 300 L450 250 L400 200 L420 150 L380 100 L400 50 Z' fill='%23eab308'/%3E%3C/svg%3E")`}}></div>
         
+        {/* Map Legend Overlay */}
+        <div className="absolute top-6 left-6 z-20 flex flex-col gap-3 p-4 thai-glass rounded-2xl border border-yellow-500/20 shadow-2xl">
+            <div className="flex items-center gap-3">
+                <div className="w-3 h-3 bg-yellow-400 rounded-full border border-slate-950"></div>
+                <span className="text-[10px] font-black text-slate-300 tracking-tight">{t('mapView.legendProvince')}</span>
+            </div>
+            <div className="flex items-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.707-10.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l.293.293a1 1 0 001.414-1.414l-3-3z" clipRule="evenodd" />
+                </svg>
+                <span className="text-[10px] font-black text-slate-300 tracking-tight">{t('mapView.legendAttraction')}</span>
+            </div>
+        </div>
+
         {locations.map((loc) => {
             const { top, left } = convertCoordsToPercent(loc.lat, loc.lng);
             const isActive = activeLocation?.name === loc.name;

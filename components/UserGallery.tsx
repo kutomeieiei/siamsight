@@ -38,7 +38,7 @@ const UserGallery: React.FC = () => {
         <h2 className="text-xl md:text-3xl font-black text-white">{t('explore.myPhotoAlbum')}</h2>
         <button 
           onClick={() => fileInputRef.current?.click()}
-          className="flex items-center gap-2 px-4 py-2 bg-yellow-500 text-slate-950 font-black text-[9px] md:text-xs uppercase rounded-full hover:bg-yellow-400 transition-all active:scale-95 shadow-lg shadow-yellow-500/20"
+          className="flex items-center gap-2 px-4 py-2 bg-yellow-500 text-slate-950 font-black text-[9px] md:text-xs rounded-full hover:bg-yellow-400 transition-all active:scale-95 shadow-lg shadow-yellow-500/20"
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />

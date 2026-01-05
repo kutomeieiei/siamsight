@@ -5,14 +5,18 @@ import { useTranslation } from '../contexts/LanguageContext';
 
 interface AttractionListCardProps {
   attraction: FeaturedAttraction;
+  onSelect: () => void;
 }
 
-const AttractionListCard: React.FC<AttractionListCardProps> = ({ attraction }) => {
+const AttractionListCard: React.FC<AttractionListCardProps> = ({ attraction, onSelect }) => {
   const [imageStatus, setImageStatus] = useState<'loading' | 'loaded' | 'error'>('loading');
   const { t } = useTranslation();
 
   return (
-    <div className="flex items-center bg-slate-800/80 p-4 rounded-xl shadow-lg border border-slate-700/50 hover:bg-slate-800 transition-colors duration-300">
+    <button
+      onClick={onSelect}
+      className="flex items-center text-left w-full bg-slate-800/80 p-4 rounded-xl shadow-lg border border-slate-700/50 hover:bg-slate-800 hover:border-yellow-500/50 transition-all duration-300 group"
+    >
       <div className="flex-shrink-0 w-32 h-24 bg-slate-700 rounded-lg overflow-hidden">
          {imageStatus === 'loading' && <div className="w-full h-full animate-pulse bg-slate-700"></div>}
          {imageStatus === 'error' && (
@@ -25,16 +29,20 @@ const AttractionListCard: React.FC<AttractionListCardProps> = ({ attraction }) =
         <img
           src={attraction.imageUrl}
           alt={attraction.name}
-          className={`w-full h-full object-cover transition-opacity duration-300 ${imageStatus === 'loaded' ? 'opacity-100' : 'opacity-0'}`}
+          className={`w-full h-full object-cover transition-all duration-500 group-hover:scale-110 ${imageStatus === 'loaded' ? 'opacity-100' : 'opacity-0'}`}
           onLoad={() => setImageStatus('loaded')}
           onError={() => setImageStatus('error')}
         />
       </div>
       <div className="ml-5">
-        <h3 className="text-lg font-bold text-white">{t(`featuredAttractions.names.${attraction.key}`)}</h3>
-        <p className="text-sm text-slate-400 mt-1">{t(`featuredAttractions.descriptions.${attraction.key}`)}</p>
+        <h3 className="text-lg font-black text-white tracking-tight group-hover:text-yellow-400 transition-colors">
+          {t(`featuredAttractions.names.${attraction.key}`)}
+        </h3>
+        <p className="text-xs text-slate-400 mt-1 line-clamp-2 italic">
+          {t(`featuredAttractions.descriptions.${attraction.key}`)}
+        </p>
       </div>
-    </div>
+    </button>
   );
 };
 

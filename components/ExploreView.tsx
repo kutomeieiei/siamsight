@@ -6,7 +6,6 @@ import FeaturedAttractionCard from './FeaturedAttractionCard';
 import { Province, FeaturedAttraction } from '../types';
 import MapView from './MapView';
 import { useTranslation } from '../contexts/LanguageContext';
-import UserGallery from './UserGallery';
 
 const RegionHeadingIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8 text-yellow-500">
@@ -72,7 +71,7 @@ const ExploreView: React.FC<ExploreViewProps> = ({ onSelectProvince, onSelectAtt
         <section key={region} className="max-w-[1200px] mx-auto px-4">
           <div className="flex items-center gap-4 md:gap-6 mb-8 md:mb-10">
              <RegionHeadingIcon />
-             <h3 className="text-2xl md:text-4xl font-black text-white tracking-tight uppercase">{t(`regions.${region}`)}</h3>
+             <h3 className="text-2xl md:text-4xl font-black text-white tracking-tight">{t(`regions.${region}`)}</h3>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
             {provincesByRegion[region].map((province) => (
@@ -86,7 +85,7 @@ const ExploreView: React.FC<ExploreViewProps> = ({ onSelectProvince, onSelectAtt
 
   const SearchResultsView = () => (
      <div className="animate-fade-in max-w-[1200px] mx-auto px-4">
-        <h3 className="text-xl md:text-3xl font-black mb-8 md:mb-10 text-slate-200 uppercase tracking-tight">
+        <h3 className="text-xl md:text-3xl font-black mb-8 md:mb-10 text-slate-200 tracking-tight">
           {filteredResults.provinces.length + filteredResults.attractions.length > 0 
             ? t('explore.searchResults', { query: searchQuery })
             : t('explore.noResults', { query: searchQuery })}
@@ -111,26 +110,22 @@ const ExploreView: React.FC<ExploreViewProps> = ({ onSelectProvince, onSelectAtt
         />
       </div>
 
-      <div className="px-4">
-        <UserGallery />
-      </div>
-
       <div className="text-center mb-10 md:mb-16 px-4 mt-6 md:mt-0">
-          <h2 className="text-2xl md:text-7xl font-black mb-4 text-yellow-500 tracking-tighter uppercase leading-[0.9]">{t('explore.title')}</h2>
-          <p className="text-slate-400 max-w-2xl mx-auto text-[11px] md:text-lg font-bold uppercase tracking-[0.15em] opacity-80">{t('explore.subtitle')}</p>
+          <h2 className="text-2xl md:text-7xl font-black mb-4 text-yellow-500 tracking-tighter leading-[0.9]">{t('explore.title')}</h2>
+          <p className="text-slate-400 max-w-2xl mx-auto text-[11px] md:text-lg font-bold tracking-tight opacity-80">{t('explore.subtitle')}</p>
       </div>
 
       <div className="flex justify-center mb-10 md:mb-16 px-4">
           <div className="thai-glass p-1.5 rounded-[2rem] flex items-center border border-yellow-500/20 shadow-2xl">
               <button 
                   onClick={() => setViewMode('list')}
-                  className={`px-5 md:px-10 py-3 md:py-4 text-[9px] md:text-xs font-black uppercase tracking-widest rounded-2xl transition-all ${viewMode === 'list' ? 'bg-yellow-500 text-slate-950 shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}
+                  className={`px-5 md:px-10 py-3 md:py-4 text-[9px] md:text-xs font-black tracking-tight rounded-2xl transition-all ${viewMode === 'list' ? 'bg-yellow-500 text-slate-950 shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}
               >
                   {t('explore.listView')}
               </button>
               <button 
                   onClick={() => setViewMode('map')}
-                  className={`px-5 md:px-10 py-3 md:py-4 text-[9px] md:text-xs font-black uppercase tracking-widest rounded-2xl transition-all ${viewMode === 'map' ? 'bg-yellow-500 text-slate-950 shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}
+                  className={`px-5 md:px-10 py-3 md:py-4 text-[9px] md:text-xs font-black tracking-tight rounded-2xl transition-all ${viewMode === 'map' ? 'bg-yellow-500 text-slate-950 shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}
               >
                   {t('explore.mapView')}
               </button>
@@ -144,7 +139,7 @@ const ExploreView: React.FC<ExploreViewProps> = ({ onSelectProvince, onSelectAtt
             value={searchQuery}
             onChange={handleSearchChange}
             placeholder={t('explore.searchPlaceholder')}
-            className="w-full p-4 md:p-6 pl-12 md:pl-14 text-sm md:text-lg bg-slate-900/80 backdrop-blur-md border-2 border-slate-800 rounded-[2rem] md:rounded-[2.5rem] focus:border-yellow-600 focus:outline-none text-slate-100 transition-all duration-300 shadow-2xl font-black uppercase tracking-widest"
+            className="w-full p-4 md:p-6 pl-12 md:pl-14 text-sm md:text-lg bg-slate-900/80 backdrop-blur-md border-2 border-slate-800 rounded-[2rem] md:rounded-[2.5rem] focus:border-yellow-600 focus:outline-none text-slate-100 transition-all duration-300 shadow-2xl font-black tracking-tight"
           />
           <svg className="absolute left-4 md:left-5 top-1/2 transform -translate-y-1/2 h-5 w-5 md:h-6 md:w-6 text-yellow-600 group-focus-within:text-yellow-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
