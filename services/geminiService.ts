@@ -43,37 +43,39 @@ export const generateItinerary = async (
 
   try {
     const response = await ai.models.generateContent({
-      // Complex Text Tasks use gemini-3-pro-preview
-      model: "gemini-3-pro-preview", 
+      // Using gemini-3-flash-preview for better quota availability and high performance
+      model: "gemini-3-flash-preview", 
       contents: prompt,
       config: {
+        // Grounding with Google Search helps find real locations
         tools: [{googleSearch: {}}],
+        responseMimeType: "application/json",
       },
     });
     
-    const groundingMetadata = response.candidates?.[0]?.groundingMetadata;
-    const sources: GroundingChunk[] = groundingMetadata?.groundingChunks || [];
-    
-    // Correctly accessing the text property on GenerateContentResponse
+    // Check if the response contains text
     const text = response.text;
     if (!text) {
       throw new Error("The AI planner returned an empty response.");
     }
 
-    const jsonMatch = text.match(/```json\n([\s\S]*?)\n```/);
+    const groundingMetadata = response.candidates?.[0]?.groundingMetadata;
+    const sources: GroundingChunk[] = groundingMetadata?.groundingChunks || [];
     
     let parsedJson;
-    if (jsonMatch && jsonMatch[1]) {
-      try {
-        parsedJson = JSON.parse(jsonMatch[1]);
-      } catch (e) {
-        throw new Error("The AI planner returned an invalid format.");
-      }
-    } else {
-      try {
-        parsedJson = JSON.parse(text);
-      } catch (e) {
-        throw new Error("The AI planner gave an unexpected response.");
+    try {
+      parsedJson = JSON.parse(text);
+    } catch (e) {
+      // Fallback for cases where markdown block might be returned despite responseMimeType
+      const jsonMatch = text.match(/```json\n([\s\S]*?)\n```/) || text.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        try {
+          parsedJson = JSON.parse(jsonMatch[0]);
+        } catch (innerE) {
+          throw new Error("The AI planner returned an invalid format.");
+        }
+      } else {
+        throw new Error("The AI planner gave an unexpected response format.");
       }
     }
 
@@ -86,11 +88,12 @@ export const generateItinerary = async (
       feasibility_warning: parsedJson.feasibility_warning || undefined
     };
   } catch (error: any) {
+    console.error("Gemini Error:", error);
     if (error?.message?.includes('429') || error?.message?.toLowerCase().includes('quota')) {
       throw new Error(
         locale === 'th' 
-          ? "โควตาฟรีชั่วคราวเต็มแล้ว (429) กรุณารอ 60 วินาทีแล้วลองใหม่" 
-          : "Free quota exceeded (429). Please wait 60 seconds and try again."
+          ? "โควตาการใช้งานชั่วคราวเต็มแล้ว กรุณารอสักครู่แล้วลองใหม่ หรือหากเพิ่งเริ่มใช้ อาจเป็นข้อจำกัดของรุ่นโมเดล" 
+          : "Temporary quota limit reached. Please wait a moment and try again. Flash models are generally more available."
       );
     }
     throw error;
@@ -98,12 +101,10 @@ export const generateItinerary = async (
 };
 
 export const startChatSession = (locale: Locale): Chat => {
-  // Always use process.env.API_KEY directly for initialization
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   const systemInstruction = translations[locale].prompts.chatbotSystem;
   
   return ai.chats.create({
-    // Basic Text Tasks use gemini-3-flash-preview
     model: 'gemini-3-flash-preview', 
     config: {
       systemInstruction: systemInstruction,
@@ -113,12 +114,10 @@ export const startChatSession = (locale: Locale): Chat => {
 };
 
 export const startLearningSession = (locale: Locale): Chat => {
-  // Always use process.env.API_KEY directly for initialization
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   const systemInstruction = translations[locale].prompts.learningSystem;
   
   return ai.chats.create({
-    // Basic Text Tasks use gemini-3-flash-preview
     model: 'gemini-3-flash-preview', 
     config: {
       systemInstruction: systemInstruction,
