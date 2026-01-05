@@ -10,7 +10,7 @@ export const generateItinerary = async (
   locale: Locale,
   shopNames?: string[]
 ): Promise<ItineraryResult> => {
-  // Always use process.env.API_KEY directly for initialization as per guidelines
+  // Direct initialization with API Key as per guidelines
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
   const tPrompt = (key: string, replacements?: { [key: string]: string | number }) => {
@@ -43,30 +43,23 @@ export const generateItinerary = async (
 
   try {
     const response = await ai.models.generateContent({
-      // Using gemini-3-flash-preview for better quota availability and high performance
       model: "gemini-3-flash-preview", 
       contents: prompt,
       config: {
-        // Grounding with Google Search helps find real locations
-        tools: [{googleSearch: {}}],
+        // Removed googleSearch tool to avoid strict specialized quota limits
         responseMimeType: "application/json",
       },
     });
     
-    // Check if the response contains text
     const text = response.text;
     if (!text) {
       throw new Error("The AI planner returned an empty response.");
     }
 
-    const groundingMetadata = response.candidates?.[0]?.groundingMetadata;
-    const sources: GroundingChunk[] = groundingMetadata?.groundingChunks || [];
-    
     let parsedJson;
     try {
       parsedJson = JSON.parse(text);
     } catch (e) {
-      // Fallback for cases where markdown block might be returned despite responseMimeType
       const jsonMatch = text.match(/```json\n([\s\S]*?)\n```/) || text.match(/\{[\s\S]*\}/);
       if (jsonMatch) {
         try {
@@ -84,7 +77,7 @@ export const generateItinerary = async (
       total_estimated_cost: parsedJson.total_estimated_cost || 0,
       currency: parsedJson.currency || 'THB',
       cost_breakdown: parsedJson.cost_breakdown || { accommodation: 0, food: 0, transport: 0, activities: 0 },
-      sources,
+      sources: [], // Sources empty as search grounding is removed for quota stability
       feasibility_warning: parsedJson.feasibility_warning || undefined
     };
   } catch (error: any) {
@@ -92,8 +85,8 @@ export const generateItinerary = async (
     if (error?.message?.includes('429') || error?.message?.toLowerCase().includes('quota')) {
       throw new Error(
         locale === 'th' 
-          ? "โควตาการใช้งานชั่วคราวเต็มแล้ว กรุณารอสักครู่แล้วลองใหม่ หรือหากเพิ่งเริ่มใช้ อาจเป็นข้อจำกัดของรุ่นโมเดล" 
-          : "Temporary quota limit reached. Please wait a moment and try again. Flash models are generally more available."
+          ? "ขณะนี้มีผู้ใช้งานจำนวนมาก กรุณารอสักครู่แล้วลองใหม่อีกครั้ง" 
+          : "System is currently busy. Please wait a moment and try again."
       );
     }
     throw error;
@@ -108,7 +101,7 @@ export const startChatSession = (locale: Locale): Chat => {
     model: 'gemini-3-flash-preview', 
     config: {
       systemInstruction: systemInstruction,
-      tools: [{googleSearch: {}}]
+      // Removed googleSearch for reliability
     }
   });
 };
@@ -121,7 +114,7 @@ export const startLearningSession = (locale: Locale): Chat => {
     model: 'gemini-3-flash-preview', 
     config: {
       systemInstruction: systemInstruction,
-      tools: [{googleSearch: {}}]
+      // Removed googleSearch for reliability
     }
   });
 };
