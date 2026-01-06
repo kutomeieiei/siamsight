@@ -120,15 +120,6 @@ export const INITIAL_SHOPS: Shop[] = [
       phone: '043-202-662'
     },
     products: [
-      { 
-        nameEn: 'Banana Sundae Ice Cream',
-        nameTh: 'ไอศกรีมกล้วยซันเดย์', 
-        price: '฿70', 
-        descriptionEn: 'Creamy vanilla ice cream topped with fresh bananas, chocolate syrup, and whipped cream.',
-        descriptionTh: 'ไอศกรีมวานิลลาเนื้อเนียน เสิร์ฟพร้อมกล้วยหอมสด ราดซอสช็อกโกแลตและวิปครีม',
-        imageUrl: 'https://lh3.googleusercontent.com/gps-cs-s/AG0ilSwM6kaKtKV8-j5DAcqfbZuwq0-q0v7fCB_9TZlgMTwKdYRX6oeeFiP7CcECI2K2N8MkgAx7n58wEPqWEIhBerFRpt82AO-EInhX5fajpIvttYAozjs3G5YDpmRu8eNm-zWMbrWb=w172-h224-p-k-no',
-        likeCount: 4
-      }
     ]
   },
   {
@@ -146,15 +137,6 @@ export const INITIAL_SHOPS: Shop[] = [
       phone: '043-227-986'
     },
     products: [
-      { 
-        nameEn: 'Banana Sundae Ice Cream',
-        nameTh: 'ไอศกรีมกล้วยซันเดย์', 
-        price: '฿70', 
-        descriptionEn: 'Creamy vanilla ice cream topped with fresh bananas, chocolate syrup, and whipped cream.',
-        descriptionTh: 'ไอศกรีมวานิลลาเนื้อเนียน เสิร์ฟพร้อมกล้วยหอมสด ราดซอสช็อกโกแลตและวิปครีม',
-        imageUrl: 'https://lh3.googleusercontent.com/gps-cs-s/AG0ilSwM6kaKtKV8-j5DAcqfbZuwq0-q0v7fCB_9TZlgMTwKdYRX6oeeFiP7CcECI2K2N8MkgAx7n58wEPqWEIhBerFRpt82AO-EInhX5fajpIvttYAozjs3G5YDpmRu8eNm-zWMbrWb=w172-h224-p-k-no',
-        likeCount: 4
-      }
     ]
   },
   {
@@ -171,15 +153,6 @@ export const INITIAL_SHOPS: Shop[] = [
       phone: '087-951-0441'
     },
     products: [
-      { 
-        nameEn: 'Banana Sundae Ice Cream',
-        nameTh: 'ไอศกรีมกล้วยซันเดย์', 
-        price: '฿70', 
-        descriptionEn: 'Creamy vanilla ice cream topped with fresh bananas, chocolate syrup, and whipped cream.',
-        descriptionTh: 'ไอศกรีมวานิลลาเนื้อเนียน เสิร์ฟพร้อมกล้วยหอมสด ราดซอสช็อกโกแลตและวิปครีม',
-        imageUrl: 'https://lh3.googleusercontent.com/gps-cs-s/AG0ilSwM6kaKtKV8-j5DAcqfbZuwq0-q0v7fCB_9TZlgMTwKdYRX6oeeFiP7CcECI2K2N8MkgAx7n58wEPqWEIhBerFRpt82AO-EInhX5fajpIvttYAozjs3G5YDpmRu8eNm-zWMbrWb=w172-h224-p-k-no',
-        likeCount: 4
-      }
     ]
   }
 ];
