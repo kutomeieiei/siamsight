@@ -1,7 +1,8 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Shop } from '../types';
 import { useTranslation } from '../contexts/LanguageContext';
+import { uiAssets } from '../image_assets';
 
 interface ShopCardProps {
   shop: Shop;
@@ -12,6 +13,7 @@ interface ShopCardProps {
 
 const ShopCard: React.FC<ShopCardProps> = ({ shop, onSelect, isLiked = false, onToggleLike }) => {
   const { t, locale } = useTranslation();
+  const [imageStatus, setImageStatus] = useState<'loading' | 'loaded' | 'error'>('loading');
   const displayLikes = (shop.likeCount || 0) + (isLiked ? 1 : 0);
   const displayName = locale === 'th' ? shop.nameTh : shop.nameEn;
 
@@ -20,9 +22,17 @@ const ShopCard: React.FC<ShopCardProps> = ({ shop, onSelect, isLiked = false, on
       onClick={() => onSelect?.(shop)}
       className="group relative aspect-[4/3] w-full bg-slate-950 rounded-3xl overflow-hidden transition-all duration-300 border-2 border-slate-800 hover:border-yellow-500 shadow-xl text-left"
     >
+      {imageStatus === 'loading' && (
+        <div className="absolute inset-0 animate-pulse bg-slate-900 z-10"></div>
+      )}
+      
       <img 
-        src={shop.imageUrl} alt={displayName} 
-        className="absolute inset-0 w-full h-full object-cover transition-all duration-1000 group-hover:scale-105"
+        src={imageStatus === 'error' ? uiAssets.placeholder : shop.imageUrl} 
+        alt={displayName} 
+        loading="lazy"
+        className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 group-hover:scale-105 ${imageStatus === 'loaded' || imageStatus === 'error' ? 'opacity-100' : 'opacity-0'}`}
+        onLoad={() => setImageStatus('loaded')}
+        onError={() => setImageStatus('error')}
       />
       
       <div className="absolute inset-0 bg-slate-950/60 group-hover:bg-slate-950/40 transition-colors"></div>

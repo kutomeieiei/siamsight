@@ -1,4 +1,3 @@
-
 import { Province, FeaturedAttraction, Shop } from './types';
 import { provinceImages, attractionImages, shopImages } from './image_assets';
 import { INITIAL_SHOPS } from './marketplace_config';
@@ -142,7 +141,7 @@ export const FEATURED_ATTRACTIONS: FeaturedAttraction[] = [
   { key: 'watHariphunchai', name: 'Wat Hariphunchai', province: 'Lamphun', description: 'Legendary golden pagoda from the Mon era.', imageUrl: attractionImages.watHariphunchai, lat: 18.577, lng: 99.009 },
   { key: 'banRakThai', name: 'Ban Rak Thai', province: 'Mae Hong Son', description: 'Scenic Chinese village in the mist.', imageUrl: attractionImages.banRakThai, lat: 19.585, lng: 97.942 },
   { key: 'buengBoraphet', name: 'Bueng Boraphet', province: 'Nakhon Sawan', description: 'Largest freshwater lake in Thailand.', imageUrl: attractionImages.buengBoraphet, lat: 15.712, lng: 100.145 },
-  { key: 'watPhumin', name: 'Wat Phumin', province: 'Nan', description: 'Iconic temple with the "Whispering Love" mural.', imageUrl: attractionImages.watPhumin, lat: 18.775, lng: 100.771 },
+  { key: 'watPhumin', name: 'Wat Phumin', province: 'Nan', description: 'Iconic temple with the "Whispering Love" mural.', imageUrl: attractionImages.watPhmin, lat: 18.775, lng: 100.771 },
   { key: 'kwanPhayao', name: 'Kwan Phayao', province: 'Phayao', description: 'Tranquil lake with spectacular sunset views.', imageUrl: attractionImages.kwanPhayao, lat: 19.163, lng: 99.904 },
   { key: 'phaSornKaew', name: 'Wat PhaSornKaew', province: 'Phetchabun', description: 'Stunning mosaic temple in the mountains.', imageUrl: attractionImages.phaSornKaew, lat: 16.788, lng: 101.050 },
   { key: 'watThaLuang', name: 'Wat Tha Luang', province: 'Phichit', description: 'Sacred temple housing Luang Phor Phet.', imageUrl: attractionImages.watThaLuang, lat: 16.442, lng: 100.352 },

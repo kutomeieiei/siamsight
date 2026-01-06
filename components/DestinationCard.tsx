@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Province } from '../types';
 import { useTranslation } from '../contexts/LanguageContext';
+import { uiAssets } from '../image_assets';
 
 interface DestinationCardProps {
   destination: Province;
@@ -12,6 +13,10 @@ const DestinationCard: React.FC<DestinationCardProps> = ({ destination, onSelect
   const [imageStatus, setImageStatus] = useState<'loading' | 'loaded' | 'error'>('loading');
   const { t } = useTranslation();
 
+  const handleImageError = () => {
+    setImageStatus('error');
+  };
+
   return (
     <button
       onClick={() => onSelect(destination)}
@@ -19,15 +24,16 @@ const DestinationCard: React.FC<DestinationCardProps> = ({ destination, onSelect
     >
       <div className="absolute inset-0">
         {imageStatus === 'loading' && (
-          <div className="absolute inset-0 animate-pulse bg-slate-900"></div>
+          <div className="absolute inset-0 animate-pulse bg-slate-800"></div>
         )}
 
         <img 
-          src={destination.imageUrl} 
+          src={imageStatus === 'error' ? uiAssets.placeholder : destination.imageUrl} 
           alt={destination.name} 
-          className={`w-full h-full object-cover transition-all duration-1000 group-hover:scale-105 ${imageStatus === 'loaded' ? 'opacity-100' : 'opacity-0'}`}
+          loading="lazy"
+          className={`w-full h-full object-cover transition-all duration-1000 group-hover:scale-105 ${imageStatus === 'loaded' || imageStatus === 'error' ? 'opacity-100' : 'opacity-0'}`}
           onLoad={() => setImageStatus('loaded')}
-          onError={() => setImageStatus('error')}
+          onError={handleImageError}
         />
         <div className="absolute inset-0 bg-slate-950/60 transition-colors group-hover:bg-slate-950/40"></div>
       </div>
