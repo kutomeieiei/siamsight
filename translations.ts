@@ -1,4 +1,3 @@
-
 export const translations = {
   en: {
     header: { amazing: 'Siam', thailand: 'Sight' },
@@ -42,7 +41,7 @@ export const translations = {
     featuredAttractions: {
       names: {
         grandPalace: 'The Grand Palace', watMahathat: 'Wat Mahathat', watMuang: 'Wat Muang', chaiNatBirdPark: 'Chai Nat Bird Park', phraPrangSamYod: 'Phra Prang Sam Yod', sarikaFalls: 'Sarika Waterfall', phraPathomChedi: 'Phra Pathom Chedi', kohKret: 'Koh Kret', dreamWorld: 'Dream World', ancientCity: 'The Ancient City', watChongLom: 'Wat Chong Lom', maeklongMarket: 'Railway Market', watPhraPhutthabat: 'Wat Phra Phutthabat', bangRachan: 'Bang Rachan Memorial', dragonMuseum: 'Dragon Museum',
-        doiInthanon: 'Doi Inthanon', whiteTemple: 'White Temple', kamphaengPhetPark: 'Historical Park', lampangLuang: 'Lampang Luang', watHariphunchai: 'Wat Hariphunchai', banRakThai: 'Ban Rak Thai', buengBoraphet: 'Bueng Boraphet', watPhmin: 'Wat Phumin', kwanPhayao: 'Kwan Phayao', phaSornKaew: 'Pha Sorn Kaew', watThaLuang: 'Wat Tha Luang', phraPhutthaChinnarat: 'Wat Mahathat', phraThatChaeHaeng: 'Wat Phra That Chae Haeng', sukhothaiHistoricalPark: 'Historical Park', bhumibolDam: 'Bhumibol Dam', watThaSung: 'Wat Tha Sung', sirikitDam: 'Sirikit Dam',
+        doiInthanon: 'Doi Inthanon', whiteTemple: 'White Temple', kamphaengPhetPark: 'Historical Park', lampangLuang: 'Lampang Luang', watHariphunchai: 'Wat Hariphunchai', banRakThai: 'Ban Rak Thai', buengBoraphet: 'Bueng Boraphet', watPhumin: 'Wat Phumin', kwanPhayao: 'Kwan Phayao', phaSornKaew: 'Pha Sorn Kaew', watThaLuang: 'Wat Tha Luang', phraPhutthaChinnarat: 'Wat Mahathat', phraThatChaeHaeng: 'Wat Phra That Chae Haeng', sukhothaiHistoricalPark: 'Historical Park', bhumibolDam: 'Bhumibol Dam', watThaSung: 'Wat Tha Sung', sirikitDam: 'Sirikit Dam',
         putthaUtthayan: 'Puttha Utthayan', hinSamWan: 'Three Whale Rocks', phanomRung: 'Phanom Rung', paHinNgam: 'Pa Hin Ngam', sirindhornMuseum: 'Dinosaur Museum', kaenNakhon: 'Phra Mahathat Kaen Nakhon', phuKradueng: 'Phu Kradueng', phraThatNaDun: 'Phra That Na Dun', hoKaeo: 'Ho Kaeo Mukdahan', phraThatPhanom: 'Wat Phra That Phanom', phimaiPark: 'Phimai Park', shellFossil: 'Shell Fossil Museum', salaKeoku: 'Sala Keoku', roiEtTower: 'Roi Et Tower', choengChum: 'Phra That Choeng Chum', phaMoIDaeng: 'Pha Mo I Daeng', elephantStudy: 'Elephant Center', samPhanBok: 'Sam Phan Bok', redLotusSea: 'Red Lotus Sea', phrayaKankak: 'Toad Museum',
         bigBuddhaPhuket: 'Big Buddha Phuket', mayaBay: 'Maya Bay', muKoChumphon: 'Mu Ko Chumphon', watPhraMahathatNS: 'Wat Phra Mahathat', watKhaoKong: 'Wat Khao Kong', centralMosque: 'Pattani Central Mosque', jamesBondIsland: 'James Bond Island', thaleNoi: 'Thale Noi', raksawarinHotSpring: 'Hot Spring', kohLipe: 'Koh Lipe', samilaBeach: 'Samila Beach', khaoSokPark: 'Khao Sok Park', emeraldCave: 'Emerald Cave', betongTunnel: 'Betong Tunnel',
         bridgeRiverKwai: 'River Kwai Bridge', khaoWang: 'Khao Wang', khaoSamRoiYot: 'Khao Sam Roi Yot', floatingMarket: 'Floating Market', watSothon: 'Wat Sothon Wararam', cathedralImmaculate: 'Cathedral of Immaculate', sanctuaryTruth: 'Sanctuary of Truth', khaoYaiPrachin: 'Khao Yai Gateway', kohSamet: 'Koh Samet', pangSidaPark: 'Pang Sida Park', kohChang: 'Koh Chang'
@@ -167,7 +166,7 @@ export const translations = {
     },
     learning: { 
       title: 'ภูมิปัญญาท้องถิ่น', 
-      subtitle: 'เรียนรู้เรื่องราวและงานฝีมือเบื้องหลังสินค้าไทย',
+      subtitle: 'เรียนรู้เรื่องราวและงานฝีมือหลังสินค้าไทย',
       initialMessage: 'สวัสดีครับ ผมคือครูสยาม ผมพร้อมเล่าประวัติและเคล็ดลับของงานฝีมือไทยให้ฟัง คุณอยากเรียนรู้เรื่องอะไรครับ?',
       searchPlaceholder: 'ค้นหางานฝีมือหรือจังหวัด...',
       galleryTitle: 'พอร์ตโฟลิโองานฝีมือ',
@@ -200,7 +199,7 @@ export const translations = {
     featuredAttractions: {
       names: {
         grandPalace: 'พระบรมมหาราชวัง', watMahathat: 'วัดมหาธาตุ', watMuang: 'วัดม่วง', chaiNatBirdPark: 'สวนนกชัยนาท', phraPrangSamYod: 'พระปรางค์สามยอด', sarikaFalls: 'น้ำตกสาริกา', phraPathomChedi: 'พระปฐมเจดีย์', kohKret: 'เกาะเกร็ด', dreamWorld: 'ดรีมเวิลด์', ancientCity: 'เมืองโบราณ', watChongLom: 'วัดช่องลม', maeklongMarket: 'ตลาดร่มหุบ', watPhraPhutthabat: 'วัดพระพุทธบาท', bangRachan: 'อนุสาวรีย์บางระจัน', dragonMuseum: 'อุทยานมังกรสวรรค์',
-        doiInthanon: 'ดอยอินทนนท์', whiteTemple: 'วัดร่องขุ่น', kamphaengPhetPark: 'อุทยานประวัติศาสตร์', lampangLuang: 'วัดพระธาตุลำปางหลวง', watHariphunchai: 'วัดพระธาตุหริภุญชัย', banRakThai: 'บ้านรักไทย', buengBoraphet: 'บึงบอระเพ็ด', watPhmin: 'วัดภูมินทร์', kwanPhayao: 'กว๊านพะเยา', phaSornKaew: 'วัดพระธาตุผาซ่อนแก้ว', watThaLuang: 'วัดท่าหลวง', phraPhutthaChinnarat: 'พระพุทธชินราช', phraThatChaeHaeng: 'วัดพระธาตุแช่แห้ง', sukhothaiHistoricalPark: 'อุทยานประวัติศาสตร์', bhumibolDam: 'เขื่อนภูมิพล', watThaSung: 'วัดท่าซุง', sirikitDam: 'เขื่อนสิริกิติ์',
+        doiInthanon: 'ดอยอินทนนท์', whiteTemple: 'วัดร่องขุ่น', kamphaengPhetPark: 'อุทยานประวัติศาสตร์', lampangLuang: 'วัดพระธาตุลำปางหลวง', watHariphunchai: 'วัดพระธาตุหริภุญชัย', banRakThai: 'บ้านรักไทย', buengBoraphet: 'บึงบอระเพ็ด', watPhumin: 'วัดภูมินทร์', kwanPhayao: 'กว๊านพะเยา', phaSornKaew: 'วัดพระธาตุผาซ่อนแก้ว', watThaLuang: 'วัดท่าหลวง', phraPhutthaChinnarat: 'พระพุทธชินราช', phraThatChaeHaeng: 'วัดพระธาตุแช่แห้ง', sukhothaiHistoricalPark: 'อุทยานประวัติศาสตร์', bhumibolDam: 'เขื่อนภูมิพล', watThaSung: 'วัดท่าซุง', sirikitDam: 'เขื่อนสิริกิติ์',
         putthaUtthayan: 'พุทธอุทยาน', hinSamWan: 'หินสามวาฬ', phanomRung: 'ปราสาทหินพนมรุ้ง', paHinNgam: 'ป่าหินงาม', sirindhornMuseum: 'พิพิธภัณฑ์สิรินธร', kaenNakhon: 'พระมหาธาตุแก่นนคร', phuKradueng: 'ภูกระดึง', phraThatNaDun: 'พระธาตุนาดูน', hoKaeo: 'หอแก้วมุกดาหาร', phraThatPhanom: 'พระธาตุพนม', phimaiPark: 'ปราสาทหินพิมาย', shellFossil: 'พิพิธภัณฑ์หอยหิน', salaKeoku: 'ศาลาแก้วกู่', roiEtTower: 'หอโหวด 101', choengChum: 'พระธาตุเชิงชุม', phaMoIDaeng: 'ผามออีแดง', elephantStudy: 'ศูนย์คชศึกษา', samPhanBok: 'สามพันโบก', redLotusSea: 'ทะเลบัวแดง', phrayaKankak: 'พิพิธภัณฑ์พญาคันคาก',
         bigBuddhaPhuket: 'พระใหญ่ภูเก็ต', mayaBay: 'อ่าวมาหยา', muKoChumphon: 'หมู่เกาะชุมพร', watPhraMahathatNS: 'วัดพระมหาธาตุ', watKhaoKong: 'วัดเขากง', centralMosque: 'มัสยิดกลางปัตตานี', jamesBondIsland: 'เกาะเจมส์บอนด์', thaleNoi: 'ทะเลน้อย', raksawarinHotSpring: 'บ่อน้ำร้อนรักษะวาริน', kohLipe: 'เกาะหลีเป๊ะ', samilaBeach: 'หาดสมิหลา', khaoSokPark: 'เขาสก', emeraldCave: 'ถ้ำมรกต', betongTunnel: 'อุโมงค์เบตง',
         bridgeRiverKwai: 'สะพานข้ามแม่น้ำแคว', khaoWang: 'เขาวัง', khaoSamRoiYot: 'เขาสามร้อยยอด', floatingMarket: 'ตลาดน้ำดำเนินสะดวก', watSothon: 'วัดโสธรวราราม', cathedralImmaculate: 'อาสนวิหาร', sanctuaryTruth: 'ปราสาทสัจธรรม', khaoYaiPrachin: 'อุทยานแห่งชาติเขาใหญ่', kohSamet: 'เกาะเสม็ด', pangSidaPark: 'ป่าสีดา', kohChang: 'เกาะช้าง'
@@ -228,7 +227,7 @@ export const translations = {
         watHariphunchai: 'ศูนย์กลางศรัทธาชาวลำพูนสมัยหริภุญชัย มีพระธาตุสีทองอร่ามสูง 46 เมตร',
         banRakThai: 'หมู่บ้านชาวจีนยูนนานริมอ่างเก็บน้ำท่ามกลางหุบเขาและไร่ชา ล้อมรอบด้วยสายหมอก',
         buengBoraphet: 'บึงน้ำจืดที่ใหญ่ที่สุดในไทย เป็นแหล่งอาศัยของนกน้ำนานาพันธุ์และพรรณพืชที่อุดมสมบูรณ์',
-        watPhmin: 'วัดทรงจตุรมุขเพียงหนึ่งเดียวในไทย มีภาพจิตรกรรมฝาผนัง "ปู่ม่านย่าม่าน" หรือภาพกระซิบรัก',
+        watPhumin: 'วัดทรงจตุรมุขเพียงหนึ่งเดียวในไทย มีภาพจิตรกรรมฝาผนัง "ปู่ม่านย่าม่าน" หรือภาพกระซิบรัก',
         kwanPhayao: 'ทะเลสาบน้ำจืดขนาดใหญ่ที่เป็นหัวใจของจังหวัด เป็นจุดชมพระอาทิตย์ตกดินที่สวยงามที่สุด',
         phaSornKaew: 'โดดเด่นด้วยพระพุทธเจ้า 5 พระองค์สีขาวสะอาดตา เจดีย์ประดับด้วยเบญจรงค์และหินสีกกว่า 5 ล้านชิ้น',
         watThaLuang: 'ที่ประดิษฐาน "หลวงพ่อเพชร" พระพุทธรูปหล่อด้วยโลหะสมัยเชียงแสนที่มีพุทธลักษณะงดงาม',
@@ -266,7 +265,7 @@ export const translations = {
         centralMosque: 'มัสยิดที่สวยที่สุดในประเทศไทย โดดเด่นด้วยโดมขนาดใหญ่สีชมพูสถาปัตยกรรมสไตล์ทัชมาฮาล',
         jamesBondIsland: 'เขาตาปูสถาปัตยกรรมทางธรรมชาติที่มีชื่อเสียงระดับโลกจากการถ่ายทำภาพยนตร์เจมส์ บอนด์',
         thaleNoi: 'พื้นที่ชุ่มน้ำที่มีความหลากหลายทางชีวภาพสูงมาก ไฮไลท์คือทุ่งบัวสายและแหล่งดูนกน้ำ',
-        raksawarinHotSpring: 'แหล่งน้ำแร่ร้อนธรรมชาติที่บริสุทธิ์สูงและไม่มีกลิ่นกำมะถัน ช่วยผ่อนคลายและบำรงสุขภาพ',
+        raksawarinHotSpring: 'แหล่งน้ำแร่ร้อนธรรมชาติที่บริสุทธิ์สูงและไม่มีกลิ่นกำมะถัน ช่วยผ่อนคลายและบำรุงสุขภาพ',
         kohLipe: 'มัลดีฟส์เมืองไทยด้วยน้ำทะเลสีฟ้าใสจนเห็นฝูงปลาและปะการังน้ำตื้น พร้อมหาดทรายขาวนุ่ม',
         samilaBeach: 'ชายหาดที่สวยงามที่สุดของสงขลา มีสัญลักษณ์คือนางเงือกทองนั่งหวีผมบนโขดหินริมทะเล',
         khaoSokPark: 'แหล่งรวมป่าดิบชื้นเก่าแก่และเขื่อนรัชชประภาที่มีเขาสามเกลอตั้งตระหง่านกลางน้ำมรกต',
@@ -275,7 +274,7 @@ export const translations = {
         bridgeRiverKwai: 'แลนด์มาร์คประวัติศาสตร์เส้นทางรถไฟสายมรณะ เป็นอนุสรณ์รำลึกถึงเหตุการณ์สงครามโลกครั้งที่ 2',
         khaoWang: 'พระราชวังบนยอดเขาแห่งแรกของไทย มีสถาปัตยกรรมแบบตะวันตกผสมผสานศิลปะไทยและจีน',
         khaoSamRoiYot: 'อุทยานแห่งชาติที่มีภูเขาหินปูนสลับซับซ้อน มีไฮไลท์คือถ้ำพระยานครที่งดงามยามแสงส่องถึง',
-        floatingMarket: 'ตลาดน้ำที่เก่าแก่และโด่งดังที่สุด สัมผาสวิถีชีวิตการค้าขายทางเรือและอาหารพื้นเมืองแสนอร่อย',
+        floatingMarket: 'ตลาดน้ำที่เก่าแก่และโด่งดังที่สุด สัมผัสวิถีชีวิตการค้าขายทางเรือและอาหารพื้นเมืองแสนอร่อย',
         watSothon: 'พระอุโบสถหินอ่อนที่ยิ่งใหญ่และงดงาม ประดิษฐานหลวงพ่อโสธรพระพุทธรูปคู่บ้านคู่เมือง',
         cathedralImmaculate: 'โบสถ์คริสต์สไตล์โกธิคที่สวยงามและใหญ่ที่สุด ภายในมีรูปปั้นแม่พระประดับอัญมณีกว่า 2 แสนเม็ด',
         sanctuaryTruth: 'ปราสาทไม้แกะสลักทั้งหลังที่ยิ่งใหญ่ที่สุดในโลก สร้างโดยไม่ใช้ตะปูเหล็กแม้แต่ตัวเดียว',
