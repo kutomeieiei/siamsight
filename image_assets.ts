@@ -1,26 +1,34 @@
+
 /**
  * ==============================================================================
  * SIAM SIGHT: GLOBAL IMAGE CONFIGURATION
  * ==============================================================================
+ * 
+ * You can now paste raw Google Drive links directly into any of the objects below.
+ * The system will automatically convert them into direct, high-res image URLs.
+ * 
+ * IMPORTANT: Ensure the Google Drive file is set to "Anyone with the link can view".
  */
 
 /**
  * Robust Google Drive Link Resolver.
- * Uses the lh3.googleusercontent.com proxy which is much more reliable for 
- * public web hotlinking than the /thumbnail or /uc endpoints.
+ * Uses the /thumbnail endpoint which is the most reliable way to hotlink 
+ * Google Drive images in production (avoids virus scan warnings and CORS issues).
  */
 const resolveDriveUrl = (url: string): string => {
   if (!url || typeof url !== 'string') return url;
   
   // Handle Google Drive links
   if (url.includes('drive.google.com')) {
-    // Matches /d/{ID}/ or id={ID}
+    // Extract ID from various formats: /d/ID/view, id=ID, etc.
     const match = url.match(/\/d\/(.+?)([\/?]|$)/) || url.match(/id=(.+?)(&|$)/);
     const id = match ? match[1] : null;
     
-    // Using 'd' endpoint on lh3 is standard for public drive files
-    // Adding =s2000 ensures high resolution where possible
-    return id ? `https://lh3.googleusercontent.com/d/${id}=s2000` : url;
+    /**
+     * Using the thumbnail endpoint is much more reliable for <img> tags.
+     * sz=w1200 requests a high-resolution version (up to 1600px supported).
+     */
+    return id ? `https://drive.google.com/thumbnail?id=${id}&sz=w1200` : url;
   }
   
   return url;
@@ -48,11 +56,10 @@ export const branding = {
 export const uiAssets = {
   nongSiamAvatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=NongSiam&backgroundColor=ffd60a',
   kruSiamAvatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=KruSiam&backgroundColor=3a86ff',
-  placeholder: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  pattern: 'https://www.transparenttextures.com/patterns/black-paper.png'
+  placeholder: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1000',
 };
 
-// Province Images
+// Province Images - PASTE DRIVE LINKS HERE DIRECTLY
 export const provinceImages = autoResolve({
   Bangkok: 'https://drive.google.com/file/d/1NCZ95B4J2YaWecsBs52ElIQQ7bIU-wKq/view?usp=drive_link',
   Ayutthaya: 'https://drive.google.com/file/d/1uqQDXnM2zZzXLbGd3sFCYQOxTlA5bS9v/view?usp=drive_link',
@@ -69,6 +76,8 @@ export const provinceImages = autoResolve({
   Saraburi: 'https://drive.google.com/file/d/1XWw_O749F8yhGSyeqe-YW-ddUSBeO5pj/view?usp=drive_link',
   'Sing Buri': 'https://drive.google.com/file/d/1if8iIYF8wRfM4xwY_roWE02zcd1zf6D_/view?usp=drive_link',
   'Suphan Buri': 'https://drive.google.com/file/d/1PU1ZviulVcH0tNMwE9zQPvAWv7hQGhdU/view?usp=drive_link',
+  
+  // Northern Region
   'Chiang Mai': 'https://drive.google.com/file/d/15h1uiUW-hhxTLcQIeoXytAjPoARyOyRL/view?usp=drive_link',
   'Chiang Rai': 'https://drive.google.com/file/d/1c-ORvVcupNmV0djMNS1N_HdwlrXzK5Hq/view?usp=drive_link',
   'Kamphaeng Phet': 'https://drive.google.com/file/d/1nCIDBjWl3yOypbY_NUQcHL81tOQPhMOQ/view?usp=drive_link',
@@ -86,6 +95,8 @@ export const provinceImages = autoResolve({
   Tak: 'https://drive.google.com/file/d/17hdqIdaMChH7-iskglYLCnKoeb9KlHKL/view?usp=drive_link',
   'Uthai Thani': 'https://drive.google.com/file/d/1HlZTmS2p9apZJSiIhSEnfg2evPDN7CIH/view?usp=drive_link',
   Uttaradit: 'https://drive.google.com/file/d/1C6HsxoNTWjk2D0xQb55v2TFov1bZhbL4/view?usp=drive_link',
+
+  // Northeast Region
   'Amnat Charoen': 'https://drive.google.com/file/d/1ds503cs6Z-lzPno0-Qa7RjUFftmArGWd/view?usp=drive_link',
   'Bueng Kan': 'https://drive.google.com/file/d/1QvsVHPK3d1rKB6Ejlt-8-jsfwVm1qE2Y/view?usp=drive_link',
   Buriram: 'https://drive.google.com/file/d/1jFh1XnZIqwwYfKAj4FLhkGQd3SocDC_b/view?usp=drive_link',
@@ -106,6 +117,8 @@ export const provinceImages = autoResolve({
   'Ubon Ratchathani': 'https://drive.google.com/file/d/1D104x1ApvUqPR8L3lISoOjFNx4FD24ur/view?usp=drive_link',
   'Udon Thani': 'https://drive.google.com/file/d/1sKgmC3SVN0sQappPTd8Pu5cHBNe1JYxz/view?usp=drive_link',
   Yasothon: 'https://drive.google.com/file/d/1zKR41wYnpZUgTK5WvxBcYTdLEu6S0xPc/view?usp=drive_link',
+
+  // Southern Region
   Phuket: 'https://drive.google.com/file/d/1xNKuCX_4sqJpzD98da7fka3nx-fX6Tqn/view?usp=drive_link',
   Krabi: 'https://drive.google.com/file/d/1PNjEHewamZwu1hjwWEQRBucqu2GCx6j2/view?usp=drive_link',
   Chumphon: 'https://drive.google.com/file/d/1RyRAKRFCTZUcSEeOKCc1Nr6Wpzy6ogg8/view?usp=drive_link',
@@ -120,10 +133,14 @@ export const provinceImages = autoResolve({
   'Surat Thani': 'https://drive.google.com/file/d/1ySl6sX_ieuzaqoqzcY4xtAm2VPF1VdGB/view?usp=drive_link',
   Trang: 'https://drive.google.com/file/d/1W-j_UWygFSuJd-rtFOkAiD94VSq2UxST/view?usp=drive_link',
   Yala: 'https://drive.google.com/file/d/1NxOt0uBDNCmI7JlyqXYdPbWqslOOyzr5/view?usp=drive_link',
+
+  // Western Region
   Kanchanaburi: 'https://drive.google.com/file/d/10v_6b843l0CRL4zIFUUzxPXNMlj8qFu-/view?usp=drive_link',
   Phetchaburi: 'https://drive.google.com/file/d/1YEEC8nEHwnjGTh6a0ObuYi-EWklqIc8T/view?usp=drive_link',
   'Prachuap Khiri Khan': 'https://drive.google.com/file/d/1lBPKBC8jb2ATxPnz9q6RqUhZuudDY2mB/view?usp=drive_link',
   Ratchaburi: 'https://drive.google.com/file/d/1qXooOx3MgS48S8nmj7VmnW2s7Z1I4uBt/view?usp=drive_link',
+
+  // Eastern Region
   Chachoengsao: 'https://drive.google.com/file/d/13o70Ab2gv-o6kG0jbPMS49InQHAvlt2q/view?usp=drive_link',
   Chanthaburi: 'https://drive.google.com/file/d/1FVRQ-CL7dQDNdN4Vt5GKFGRiPYGy3QDW/view?usp=drive_link',
   Chonburi: 'https://drive.google.com/file/d/1SlJ016pS7Tdo6mH_EHWRs_1TyZ9PrVF3/view?usp=drive_link',
@@ -133,101 +150,114 @@ export const provinceImages = autoResolve({
   Trat: 'https://drive.google.com/file/d/16_idAVL22uLGt7kGsdI9KLOXiguVshTf/view?usp=drive_link',
 });
 
-// Attraction Images
+// Attraction Images - EXPANDED FOR ALL 77 PROVINCES
 export const attractionImages = autoResolve({
+  // Originals/Core
+  monJam: 'https://guide2thailand.com/wp-content/uploads/2020/01/Mon-Jam-Mon-Cham-Chiang-Mai-Thailand.jpg',
   roiEtTower: 'https://drive.google.com/file/d/1VXCyVqU0LT6nY4vm45fDV8sagoHtnQ0y/view?usp=drive_link',
-  grandPalace: 'https://images.unsplash.com/photo-1598971861713-54ad16a7e72e?q=80&w=1200',
-  mayaBay: 'https://images.unsplash.com/photo-1528127269322-539801943592?q=80&w=1200',
-  sukhothaiHistoricalPark: 'https://images.unsplash.com/photo-1564392132411-2919b3cb6014?q=80&w=1200',
-  whiteTemple: 'https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1200',
-  phanomRung: 'https://images.unsplash.com/photo-1596402184320-417d7178b2cd?q=80&w=1200',
-  doiInthanon: 'https://images.unsplash.com/photo-1558811352-5a0a3a411e75?q=80&w=1200',
-  jamesBondIsland: 'https://images.unsplash.com/photo-1516594798947-7b71231e51b6?q=80&w=1200',
-  watMahathat: 'https://images.unsplash.com/photo-1548115184-bc6544d06a58?q=80&w=1200',
-  watMuang: 'https://images.unsplash.com/photo-1542332213-31f87348057f?q=80&w=1200',
-  chaiNatBirdPark: 'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=1200',
-  phraPrangSamYod: 'https://images.unsplash.com/photo-1496333036655-dd25a9b853f8?q=80&w=1200',
-  sarikaFalls: 'https://images.unsplash.com/photo-1502134249126-9f3755a50d78?q=80&w=1200',
-  phraPathomChedi: 'https://images.unsplash.com/photo-1578301978018-3005759f48f7?q=80&w=1200',
-  kohKret: 'https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200',
-  dreamWorld: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  ancientCity: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  watChongLom: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  maeklongMarket: 'https://images.unsplash.com/photo-1565516334208-f719b0d6a2f4?q=80&w=1200',
-  watPhraPhutthabat: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  bangRachan: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  dragonMuseum: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  kamphaengPhetPark: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  lampangLuang: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  watHariphunchai: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  banRakThai: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  buengBoraphet: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  watPhmin: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  kwanPhayao: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  phaSornKaew: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  watThaLuang: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  phraPhutthaChinnarat: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  phraThatChaeHaeng: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  bhumibolDam: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  watThaSung: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  sirikitDam: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  putthaUtthayan: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  hinSamWan: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  paHinNgam: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  sirindhornMuseum: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  kaenNakhon: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  phuKradueng: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  phraThatNaDun: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  hoKaeo: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  phraThatPhanom: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  phimaiPark: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  shellFossil: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  salaKeoku: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  choengChum: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  phaMoIDaeng: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  elephantStudy: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  samPhanBok: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  redLotusSea: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  phrayaKankak: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  bigBuddhaPhuket: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  muKoChumphon: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  watPhraMahathatNS: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  watKhaoKong: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  centralMosque: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  thaleNoi: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  raksawarinHotSpring: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  kohLipe: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  samilaBeach: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  khaoSokPark: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  emeraldCave: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  betongTunnel: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  bridgeRiverKwai: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  khaoWang: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  khaoSamRoiYot: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  floatingMarket: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  watSothon: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  cathedralImmaculate: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  sanctuaryTruth: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  khaoYaiPrachin: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  kohSamet: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  pangSidaPark: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  kohChang: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
+  grandPalace: 'https://drive.google.com/file/d/1-5i6ihFmIndQOxaNK1pCwzO8vug4pSh8/view?usp=drive_link',
+  mayaBay: 'https://drive.google.com/file/d/18D_raBtfa0-JywY4MMyMZcpd2cAeWdtb/view?usp=drive_link',
+  sukhothaiHistoricalPark: 'https://drive.google.com/file/d/1Hnu3eOskSYf1cwMUBK1mlA36gquHs2Qw/view?usp=drive_link',
+  whiteTemple: 'https://drive.google.com/file/d/1Yydyxq-zMkno6N5u4m06JcTwokt9LcuP/view?usp=drive_link',
+  phanomRung: 'https://drive.google.com/file/d/1Qjurg7leAQlwGsUL2Aq3o1nVs5JOXTiV/view?usp=drive_link',
+  doiInthanon: 'https://drive.google.com/file/d/1E3ZSceTsCz4hklWuLmjdR62mrraf48V6/view?usp=drive_link',
+  jamesBondIsland: 'https://drive.google.com/file/d/1omoalr7D1S6gZBO-wrqzBnfFwCgi4Jy-/view?usp=drive_link',
+  erawanFalls: 'https://drive.google.com/file/d/13J62PM1s3Pa8n5Ms_K4zAZyI6nMBYXU-/view?usp=drive_link',
+  redLotusSea: 'https://drive.google.com/file/d/1ciUyuURMWZBH21COyVz8XDPyR-nHZPZs/view?usp=drive_link',
+  railayBeach: 'https://drive.google.com/file/d/1Y3rov3dBpfvjyM500rdPf3lJIiSM5AL2/view?usp=drive_link',
+
+  // Coverage for other 77 provinces
+  watMahathat: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/2025-02-03_Wat_Maha_That_%28Ayutthaya%29_%E0%B8%A7%E0%B8%B1%E0%B8%94%E0%B8%A1%E0%B8%AB%E0%B8%B2%E0%B8%98%E0%B8%B2%E0%B8%95%E0%B8%B8_%E0%B8%AD%E0%B8%A2%E0%B8%B8%E0%B8%98%E0%B8%A2%E0%B8%B2_-_img_10.jpg',
+  watMuang: 'https://osmuppercentral.go.th/files/com_travel/2018-10_8d460a3b0c1c986.jpg',
+  chaiNatBirdPark: 'https://thailandtravelmap.com/wp-content/uploads/2023/01/Chainat-Bird-Park-Chainat-e1673505479469.jpg',
+  phraPrangSamYod: 'https://static.wixstatic.com/media/a94972_c84a0d5d40084a4795f4c775934d2554~mv2.jpg/v1/fill/w_940,h_635,al_c,q_85,enc_avif,quality_auto/a94972_c84a0d5d40084a4795f4c775934d2554~mv2.jpg',
+  sarikaFalls: 'https://f.ptcdn.info/597/052/000/otg1jt6guHXqiZK5WYU-o.jpg',
+  phraPathomChedi: 'https://image-tc.galaxy.tf/wijpeg-4hyc48ze6ydjdm17ntxotvj3m/poi-attractions-detail-page_og-image.jpg',
+  kohKret: 'https://files.thailandtourismdirectory.go.th/assets/upload/2019/05/29/20190529d41d8cd98f00b204e9800998ecf8427e115112.jpg',
+  dreamWorld: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/16/f6/e3/05/caption.jpg?w=800&h=500&s=1',
+  ancientCity: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/%E0%B9%80%E0%B8%A1%E0%B8%B7%E0%B8%AD%E0%B8%87%E0%B9%82%E0%B8%9A%E0%B8%A3%E0%B8%B2%E0%B8%93_%E0%B8%AA%E0%B8%A1%E0%B8%B8%E0%B8%97%E0%B8%A3%E0%B8%9B%E0%B8%A3%E0%B8%B2%E0%B8%81%E0%B8%B2%E0%B8%A3_Ancient_City%2CSamutprakan_%28307%29.jpg/1023px-%E0%B9%80%E0%B8%A1%E0%B8%B7%E0%B8%AD%E0%B8%87%E0%B9%82%E0%B8%9A%E0%B8%A3%E0%B8%B2%E0%B8%93_%E0%B8%AA%E0%B8%A1%E0%B8%B8%E0%B8%97%E0%B8%A3%E0%B8%9B%E0%B8%A3%E0%B8%B2%E0%B8%81%E0%B8%B2%E0%B8%A3_Ancient_City%2CSamutprakan_%28307%29.jpg',
+  watChongLom: 'https://upload.wikimedia.org/wikipedia/commons/b/b3/%E0%B8%A7%E0%B8%B1%E0%B8%94%E0%B8%8A%E0%B9%88%E0%B8%AD%E0%B8%87%E0%B8%A5%E0%B8%A1%28%E0%B8%A7%E0%B8%B1%E0%B8%94%E0%B8%AA%E0%B8%B8%E0%B8%97%E0%B8%98%E0%B8%B4%E0%B8%A7%E0%B8%B2%E0%B8%95%E0%B8%A3%E0%B8%B2%E0%B8%A3%E0%B8%B2%E0%B8%A1%29_06.JPG',
+  maeklongMarket: 'https://umbrella-perfect.com/wp-content/uploads/2021/02/%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%A7%E0%B8%B1%E0%B8%95%E0%B8%B4%E0%B8%84%E0%B8%A7%E0%B8%B2%E0%B8%A1%E0%B9%80%E0%B8%9B%E0%B9%87%E0%B8%99%E0%B8%A1%E0%B8%B2%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B8%95%E0%B8%A5%E0%B8%B2%E0%B8%94%E0%B8%A3%E0%B9%88%E0%B8%A1%E0%B8%AB%E0%B8%B8%E0%B8%9A.jpg',
+  watPhraPhutthabat: 'https://s359.kapook.com/pagebuilder/000bb1f3-06b2-4042-9467-6628bd315af7.jpg',
+  bangRachan: 'https://upload.wikimedia.org/wikipedia/commons/7/74/Bang_Rachan_monument.png',
+  dragonMuseum: 'https://umbrella-perfect.com/wp-content/uploads/2021/02/%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%A7%E0%B8%B1%E0%B8%95%E0%B8%B4%E0%B8%84%E0%B8%A7%E0%B8%B2%E0%B8%A1%E0%B9%80%E0%B8%9B%E0%B9%87%E0%B8%99%E0%B8%A1%E0%B8%B2%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B8%95%E0%B8%A5%E0%B8%B2%E0%B8%94%E0%B8%A3%E0%B9%88%E0%B8%A1%E0%B8%AB%E0%B8%B8%E0%B8%9A.jpg',
+  kamphaengPhetPark: 'https://cbtthailand.dasta.or.th/upload-file-api/Resources/RelateAttraction/Images/RAT620066/1.jpeg',
+  lampangLuang: 'https://www.lampangluang-lp.go.th/filesAttach/gallery/1695033208.jpg',
+  watHariphunchai: 'https://www.lamphun.go.th/uploads/gallery/attractions/8/IMG_0056.jpg',
+  banRakThai: 'https://cms.dmpcdn.com/travel/2021/10/14/47290ad0-2ca9-11ec-bfd9-97090d4e24ba_original.jpg',
+  buengBoraphet: 'https://mychiangmaitour.com/wp-content/uploads/2018/07/bueng_boraphet01.jpg',
+  //watPhmin: 'https://travel.mthai.com/app/uploads/2017/12/1525331_438479209608270_1893672550_n.jpg',
+  watPhumin: 'https://www.lamphun.go.th/uploads/gallery/attractions/8/IMG_0056.jpg',
+  kwanPhayao: 'https://upload.wikimedia.org/wikipedia/commons/e/e5/Sunset_at_Kwan_Phayao_%E0%B8%81%E0%B8%A7%E0%B9%8A%E0%B8%B2%E0%B8%99%E0%B8%9E%E0%B8%B0%E0%B9%80%E0%B8%A2%E0%B8%B2_%2825-12-2021%29_img_05.jpg',
+  phaSornKaew: 'https://images.unsplash.com/photo-1547933261-8b39c03795b5?q=80&w=1000',
+  watThaLuang: 'https://images.unsplash.com/photo-1528127269322-539801943592?q=80&w=1000',
+  phraPhutthaChinnarat: 'https://images.unsplash.com/photo-1548115184-bc6544d06a58?q=80&w=1000',
+  phraThatChaeHaeng: 'https://images.unsplash.com/photo-1558811352-5a0a3a411e75?q=80&w=1000',
+  bhumibolDam: 'https://images.unsplash.com/photo-1502134249126-9f3755a50d78?q=80&w=1000',
+  watThaSung: 'https://images.unsplash.com/photo-1542332213-31f87348057f?q=80&w=1000',
+  sirikitDam: 'https://images.unsplash.com/photo-1578301978018-3005759f48f7?q=80&w=1000',
+  putthaUtthayan: 'https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1000',
+  hinSamWan: 'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=1000',
+  paHinNgam: 'https://images.unsplash.com/photo-1496333036655-dd25a9b853f8?q=80&w=1000',
+  sirindhornMuseum: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1000',
+  kaenNakhon: 'https://images.unsplash.com/photo-1565516334208-f719b0d6a2f4?q=80&w=1000',
+  phuKradueng: 'https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1000',
+  phraThatNaDun: 'https://images.unsplash.com/photo-1558213233-bfb65b5b4a1b?q=80&w=1000',
+  hoKaeo: 'https://images.unsplash.com/photo-1587372951924-f7610a5976e1?q=80&w=1000',
+  phraThatPhanom: 'https://images.unsplash.com/photo-1598453492331-955a188a6d44?q=80&w=1000',
+  phimaiPark: 'https://images.unsplash.com/photo-1516594798947-7b71231e51b6?q=80&w=1000',
+  shellFossil: 'https://images.unsplash.com/photo-1547933261-8b39c03795b5?q=80&w=1000',
+  salaKeoku: 'https://images.unsplash.com/photo-1528127269322-539801943592?q=80&w=1000',
+  choengChum: 'https://images.unsplash.com/photo-1548115184-bc6544d06a58?q=80&w=1000',
+  phaMoIDaeng: 'https://images.unsplash.com/photo-1558811352-5a0a3a411e75?q=80&w=1000',
+  elephantStudy: 'https://images.unsplash.com/photo-1502134249126-9f3755a50d78?q=80&w=1000',
+  samPhanBok: 'https://images.unsplash.com/photo-1542332213-31f87348057f?q=80&w=1000',
+  phrayaKankak: 'https://images.unsplash.com/photo-1578301978018-3005759f48f7?q=80&w=1000',
+  bigBuddhaPhuket: 'https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1000',
+  muKoChumphon: 'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=1000',
+  watPhraMahathatNS: 'https://images.unsplash.com/photo-1496333036655-dd25a9b853f8?q=80&w=1000',
+  watKhaoKong: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1000',
+  centralMosque: 'https://images.unsplash.com/photo-1565516334208-f719b0d6a2f4?q=80&w=1000',
+  thaleNoi: 'https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1000',
+  raksawarinHotSpring: 'https://images.unsplash.com/photo-1558213233-bfb65b5b4a1b?q=80&w=1000',
+  kohLipe: 'https://images.unsplash.com/photo-1587372951924-f7610a5976e1?q=80&w=1000',
+  samilaBeach: 'https://images.unsplash.com/photo-1598453492331-955a188a6d44?q=80&w=1000',
+  khaoSokPark: 'https://images.unsplash.com/photo-1516594798947-7b71231e51b6?q=80&w=1000',
+  emeraldCave: 'https://images.unsplash.com/photo-1547933261-8b39c03795b5?q=80&w=1000',
+  betongTunnel: 'https://images.unsplash.com/photo-1528127269322-539801943592?q=80&w=1000',
+  bridgeRiverKwai: 'https://images.unsplash.com/photo-1548115184-bc6544d06a58?q=80&w=1000',
+  khaoWang: 'https://images.unsplash.com/photo-1558811352-5a0a3a411e75?q=80&w=1000',
+  khaoSamRoiYot: 'https://images.unsplash.com/photo-1502134249126-9f3755a50d78?q=80&w=1000',
+  floatingMarket: 'https://images.unsplash.com/photo-1542332213-31f87348057f?q=80&w=1000',
+  watSothon: 'https://images.unsplash.com/photo-1578301978018-3005759f48f7?q=80&w=1000',
+  cathedralImmaculate: 'https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1000',
+  sanctuaryTruth: 'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=1000',
+  khaoYaiPrachin: 'https://images.unsplash.com/photo-1496333036655-dd25a9b853f8?q=80&w=1000',
+  kohSamet: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1000',
+  pangSidaPark: 'https://images.unsplash.com/photo-1565516334208-f719b0d6a2f4?q=80&w=1000',
+  kohChang: 'https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1000',
 });
 
 // Shop Images
 export const shopImages = autoResolve({
   jimThompsonHouseShop: 'https://images.unsplash.com/photo-1558811352-5a0a3a411e75?q=80&w=1200',
   chiangMaiNightBazaar: 'https://images.unsplash.com/photo-1547933261-8b39c03795b5?q=80&w=1200',
+  pranomThaiHerbal: 'https://images.unsplash.com/photo-1598453492331-955a188a6d44?q=80&w=1200',
+  otopCenter: 'https://images.unsplash.com/photo-1587372951924-f7610a5976e1?q=80&w=1200',
+  siamCeladon: 'https://images.unsplash.com/photo-1593495101977-119c9e883f3a?q=80&w=1200',
+  orTorKorMarket: 'https://images.unsplash.com/photo-1516594798947-7b71231e51b6?q=80&w=1200',
+  boSangUmbrellaMakingCentre: 'https://images.unsplash.com/photo-1589182373726-e4f62fa94222?q=80&w=1200',
+  koKretPottery: 'https://images.unsplash.com/photo-1558213233-bfb65b5b4a1b?q=80&w=1200',
 });
 
 // Learning Content Images
 export const learningImages = autoResolve({
-  silk: 'https://images.unsplash.com/photo-1582738411706-bfc8e691d1c2?q=80&w=1200',
-  ceramics: 'https://images.unsplash.com/photo-1565193998248-d500a72183b1?q=80&w=1200',
-  teak: 'https://images.unsplash.com/photo-1517705008128-361805f42e86?q=80&w=1200',
-  silverware: 'https://images.unsplash.com/photo-1588107931326-805175083f98?q=80&w=1200',
-  wickerwork: 'https://images.unsplash.com/photo-1594911772125-07fc7a2d8d9f?q=80&w=1200',
-  durian_chips: 'https://images.unsplash.com/photo-1593504049359-74330189a355?q=80&w=1200',
+  silk: 'https://drive.google.com/file/d/1ZO68bXSiFYY_v_5e-Eo_ftN4z-WFqeEX/view?usp=drive_link',
+  ceramics: 'https://drive.google.com/file/d/1YVAuyHh_I3yiAsPIxUJFP9sl_w4y-Fr1/view?usp=drive_link',
+  teak: 'https://i.pinimg.com/474x/0d/45/21/0d45217b938358fd2b5ee1ae79aa1371.jpg',
+  silverware: 'https://image.makewebcdn.com/makeweb/m_1920x0/eukao6Dro/DefaultData/1_4.jpg',
+  wickerwork: 'https://culture55520089.wordpress.com/wp-content/uploads/2015/03/k.jpg',
+  durian_chips: 'https://pornthipphuket.com/wp-content/uploads/2022/04/30-%E0%B8%97%E0%B8%B8%E0%B9%80%E0%B8%A3%E0%B8%B5%E0%B8%A2%E0%B8%99%E0%B8%97%E0%B8%AD%E0%B8%94-5.jpg',
 });
 
 // User Upload Placeholders
