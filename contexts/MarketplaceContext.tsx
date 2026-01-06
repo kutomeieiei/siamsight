@@ -25,19 +25,45 @@ export const MarketplaceProvider: React.FC<{ children: ReactNode }> = ({ childre
     const [shopToEdit, setShopToEdit] = useState<Shop | null>(null);
     const { user } = useAuth();
 
-    // Load initial shop data from localStorage or fallback to our "backend" config
+    // Sync hardcoded INITIAL_SHOPS with localStorage
     useEffect(() => {
         try {
-            const storedShops = localStorage.getItem(SHOPS_STORAGE_KEY);
-            if (storedShops) {
-                setShops(JSON.parse(storedShops));
+            const storedShopsStr = localStorage.getItem(SHOPS_STORAGE_KEY);
+            let finalShops: Shop[] = [];
+
+            if (storedShopsStr) {
+                const storedShops: Shop[] = JSON.parse(storedShopsStr);
+                const storedIds = new Set(storedShops.map(s => s.id));
+                
+                // Identify which hardcoded shops are missing from storage
+                const newInitialShops = INITIAL_SHOPS.filter(s => !storedIds.has(s.id));
+                
+                // Also update existing hardcoded shops in case descriptions/images changed
+                const updatedStoredShops = storedShops.map(s => {
+                    const hardcodedMatch = INITIAL_SHOPS.find(h => h.id === s.id);
+                    // Only update if it's a system shop (one that exists in INITIAL_SHOPS)
+                    return hardcodedMatch ? { ...hardcodedMatch, ...s, 
+                        // We prioritize hardcoded values for core info but keep user likeCounts if they existed
+                        nameEn: hardcodedMatch.nameEn,
+                        nameTh: hardcodedMatch.nameTh,
+                        descriptionEn: hardcodedMatch.descriptionEn,
+                        descriptionTh: hardcodedMatch.descriptionTh,
+                        imageUrl: hardcodedMatch.imageUrl,
+                        province: hardcodedMatch.province,
+                        tags: hardcodedMatch.tags,
+                        products: hardcodedMatch.products || s.products
+                    } : s;
+                });
+
+                finalShops = [...updatedStoredShops, ...newInitialShops];
             } else {
-                // Seed with initial data from marketplace_config.ts if localStorage is empty
-                setShops(INITIAL_SHOPS);
-                localStorage.setItem(SHOPS_STORAGE_KEY, JSON.stringify(INITIAL_SHOPS));
+                finalShops = INITIAL_SHOPS;
             }
+
+            setShops(finalShops);
+            localStorage.setItem(SHOPS_STORAGE_KEY, JSON.stringify(finalShops));
         } catch (error) {
-            console.error("Could not access localStorage for shops:", error);
+            console.error("Could not sync marketplace data:", error);
             setShops(INITIAL_SHOPS);
         }
     }, []);
