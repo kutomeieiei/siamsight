@@ -116,7 +116,6 @@ export const INTEREST_KEYS = [
 ] as const;
 
 export const FEATURED_ATTRACTIONS: FeaturedAttraction[] = [
-  // 77 LANDMARKS MAPPED TO EVERY PROVINCE
   { key: 'grandPalace', name: 'The Grand Palace', province: 'Bangkok', description: 'Official residence of the Kings of Siam.', imageUrl: attractionImages.grandPalace, lat: 13.749, lng: 100.492 },
   { key: 'watMahathat', name: 'Wat Mahathat', province: 'Ayutthaya', description: 'Ancient ruins famous for the Buddha head in tree roots.', imageUrl: attractionImages.watMahathat, lat: 14.357, lng: 100.567 },
   { key: 'watMuang', name: 'Wat Muang', province: 'Ang Thong', description: 'Home to the tallest gold Buddha statue in Thailand.', imageUrl: attractionImages.watMuang, lat: 14.591, lng: 100.418 },
@@ -132,8 +131,6 @@ export const FEATURED_ATTRACTIONS: FeaturedAttraction[] = [
   { key: 'watPhraPhutthabat', name: 'Wat Phra Phutthabat', province: 'Saraburi', description: 'Sacred temple housing the "Footprint of the Buddha".', imageUrl: attractionImages.watPhraPhutthabat, lat: 14.718, lng: 100.789 },
   { key: 'bangRachan', name: 'Bang Rachan Memorial', province: 'Sing Buri', description: 'Park honoring historic heroes of the Ayutthaya period.', imageUrl: attractionImages.bangRachan, lat: 14.802, lng: 100.315 },
   { key: 'dragonMuseum', name: 'Dragon Descendants Museum', province: 'Suphan Buri', description: 'Magnificent museum inside a giant dragon statue.', imageUrl: attractionImages.dragonMuseum, lat: 14.478, lng: 100.126 },
-
-  // North
   { key: 'doiInthanon', name: 'Doi Inthanon', province: 'Chiang Mai', description: 'Highest peak in Thailand with twin pagodas.', imageUrl: attractionImages.doiInthanon, lat: 18.588, lng: 98.487 },
   { key: 'whiteTemple', name: 'White Temple', province: 'Chiang Rai', description: 'Contemporary Buddhist art masterpiece.', imageUrl: attractionImages.whiteTemple, lat: 19.824, lng: 99.763 },
   { key: 'kamphaengPhetPark', name: 'Historical Park', province: 'Kamphaeng Phet', description: 'UNESCO ancient ruins and temples.', imageUrl: attractionImages.kamphaengPhetPark, lat: 16.485, lng: 99.522 },
@@ -151,8 +148,6 @@ export const FEATURED_ATTRACTIONS: FeaturedAttraction[] = [
   { key: 'bhumibolDam', name: 'Bhumibol Dam', province: 'Tak', description: 'Massive concrete dam with scenic reservoir views.', imageUrl: attractionImages.bhumibolDam, lat: 17.243, lng: 98.973 },
   { key: 'watThaSung', name: 'Wat Tha Sung', province: 'Uthai Thani', description: 'Dazzling crystal temple interior.', imageUrl: attractionImages.watThaSung, lat: 15.378, lng: 100.031 },
   { key: 'sirikitDam', name: 'Sirikit Dam', province: 'Uttaradit', description: 'Largest earth-filled dam in the kingdom.', imageUrl: attractionImages.sirikitDam, lat: 17.765, lng: 100.562 },
-
-  // Northeast
   { key: 'putthaUtthayan', name: 'Puttha Utthayan', province: 'Amnat Charoen', description: 'Park with a giant golden sitting Buddha.', imageUrl: attractionImages.putthaUtthayan, lat: 15.862, lng: 104.629 },
   { key: 'hinSamWan', name: 'Three Whale Rocks', province: 'Bueng Kan', description: 'Rocks looking like a whale family in the forest.', imageUrl: attractionImages.hinSamWan, lat: 18.355, lng: 103.655 },
   { key: 'phanomRung', name: 'Phanom Rung', province: 'Buriram', description: 'Khmer sanctuary atop an extinct volcano.', imageUrl: attractionImages.phanomRung, lat: 14.532, lng: 102.939 },
@@ -173,8 +168,6 @@ export const FEATURED_ATTRACTIONS: FeaturedAttraction[] = [
   { key: 'samPhanBok', name: 'Sam Phan Bok', province: 'Ubon Ratchathani', description: 'Grand Canyon of Thailand on the Mekong.', imageUrl: attractionImages.samPhanBok, lat: 15.802, lng: 105.353 },
   { key: 'redLotusSea', name: 'Red Lotus Sea', province: 'Udon Thani', description: 'Vast lake filled with millions of pink lotuses.', imageUrl: attractionImages.redLotusSea, lat: 17.183, lng: 103.050 },
   { key: 'phrayaKankak', name: 'Toad Museum', province: 'Yasothon', description: 'Unique museum in a giant toad statue.', imageUrl: attractionImages.phrayaKankak, lat: 15.792, lng: 104.141 },
-
-  // South
   { key: 'bigBuddhaPhuket', name: 'Big Buddha Phuket', province: 'Phuket', description: 'Iconic white marble statue atop a hill.', imageUrl: attractionImages.bigBuddhaPhuket, lat: 7.827, lng: 98.312 },
   { key: 'mayaBay', name: 'Maya Bay', province: 'Krabi', description: 'Crystal blue bay from Hollywood fame.', imageUrl: attractionImages.mayaBay, lat: 7.678, lng: 98.765 },
   { key: 'muKoChumphon', name: 'Marine Park', province: 'Chumphon', description: 'Pristine coral reefs and sandy beaches.', imageUrl: attractionImages.muKoChumphon, lat: 10.455, lng: 99.255 },
@@ -189,8 +182,6 @@ export const FEATURED_ATTRACTIONS: FeaturedAttraction[] = [
   { key: 'khaoSokPark', name: 'Khao Sok', province: 'Surat Thani', description: 'Ancient rainforest and emerald green lake.', imageUrl: attractionImages.khaoSokPark, lat: 8.912, lng: 98.522 },
   { key: 'emeraldCave', name: 'Emerald Cave', province: 'Trang', description: 'Secret beach hidden inside a limestone cave.', imageUrl: attractionImages.emeraldCave, lat: 7.372, lng: 99.292 },
   { key: 'betongTunnel', name: 'Betong Tunnel', province: 'Yala', description: 'Longest curved traffic tunnel in Thailand.', imageUrl: attractionImages.betongTunnel, lat: 5.772, lng: 101.112 },
-
-  // West & East
   { key: 'bridgeRiverKwai', name: 'River Kwai Bridge', province: 'Kanchanaburi', description: 'Historic WWII Death Railway memorial.', imageUrl: attractionImages.bridgeRiverKwai, lat: 14.041, lng: 99.503 },
   { key: 'khaoWang', name: 'Phra Nakhon Khiri', province: 'Phetchaburi', description: 'White royal palace complex atop a hill.', imageUrl: attractionImages.khaoWang, lat: 13.108, lng: 99.937 },
   { key: 'khaoSamRoiYot', name: 'National Park', province: 'Prachuap Khiri Khan', description: 'Limestone peaks and the Phraya Nakhon cave.', imageUrl: attractionImages.khaoSamRoiYot, lat: 12.185, lng: 99.982 },

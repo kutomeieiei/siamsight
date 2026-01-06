@@ -2,10 +2,6 @@
  * ==============================================================================
  * SIAM SIGHT: GLOBAL IMAGE CONFIGURATION
  * ==============================================================================
- * 
- * Direct, high-res image URLs.
- * 
- * IMPORTANT: Ensure the Google Drive file is set to "Anyone with the link can view".
  */
 
 /**
@@ -18,11 +14,13 @@ const resolveDriveUrl = (url: string): string => {
   
   // Handle Google Drive links
   if (url.includes('drive.google.com')) {
+    // Matches /d/{ID}/ or id={ID}
     const match = url.match(/\/d\/(.+?)([\/?]|$)/) || url.match(/id=(.+?)(&|$)/);
     const id = match ? match[1] : null;
     
-    // Using the 'd' endpoint on lh3 is standard for public drive files
-    return id ? `https://lh3.googleusercontent.com/d/${id}` : url;
+    // Using 'd' endpoint on lh3 is standard for public drive files
+    // Adding =s2000 ensures high resolution where possible
+    return id ? `https://lh3.googleusercontent.com/d/${id}=s2000` : url;
   }
   
   return url;
@@ -189,7 +187,6 @@ export const attractionImages = autoResolve({
   phaMoIDaeng: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
   elephantStudy: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
   samPhanBok: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
-  // FIX: Added missing redLotusSea image reference
   redLotusSea: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
   phrayaKankak: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
   bigBuddhaPhuket: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200',
