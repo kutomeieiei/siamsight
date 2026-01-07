@@ -123,18 +123,17 @@ export const INITIAL_SHOPS: Shop[] = [
     ]
   },
   {
-    id: 'thai-rung',
-    nameEn: 'Thai Rung',
-    nameTh: 'ร้านไทยรุ่ง',
+    id: '26',
+    nameEn: 'Board Game Everyday',
+    nameTh: 'บอร์ดเกม เอฟวี่เดย์',
     province: 'Khon Kaen',
-    descriptionEn: 'A reliable local store specializing in various tools and hardware for all your needs.',
-    descriptionTh: 'ร้านขายอุปกรณ์เครื่องมือและฮาร์ดแวร์ท้องถิ่นที่เชื่อถือได้ พร้อมบริการที่ครอบคลุมทุกความต้องการ',
-    imageUrl: 'https://scontent.fbkk12-5.fna.fbcdn.net/v/t39.30808-1/304756369_459990652853397_1886838849083454809_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=107&ccb=1-7&_nc_sid=2d3e12&_nc_eui2=AeE00x1bxNAD2QTYW0PRyYJ8M0DtnWFnEZAzQO2dYWcRkOj7dZJPAIqS2T9LN3yrau1V9UgVzRANJfKmv4A3Sba-&_nc_ohc=xCCxCms-Sf0Q7kNvwHAMPht&_nc_oc=AdkprZatd6GvLGg1gyM1PthNUMjwQKOol-e-HTkqe8PFdns1D1-NfvIyKn-0m1lops__KLESsWVByyyv10_dVZxE&_nc_zt=24&_nc_ht=scontent.fbkk12-5.fna&_nc_gid=409DunZ80jw-208fxUkLmw&oh=00_AfqQIks8buDvv09wTr0IQkYJ00rEgtF259duXSNmjGskSw&oe=69613BD2',
-    tags: ['Hardware', 'Tools'],
-    likeCount: 4,
+    descriptionEn: '',
+    descriptionTh: '',
+    imageUrl: 'https://lh3.googleusercontent.com/p/AF1QipOmJ-2_QnlySBFvHZFj010zKKmUCNGNm6rvWU8A=w408-h290-k-no',
+    tags: [],
+    likeCount: 9,
     contact: {
-      facebook: 'https://www.facebook.com/thairungkk/',
-      phone: '043-227-986'
+      phone: '089 604 0217'
     },
     products: [
     ]
@@ -220,19 +219,20 @@ export const INITIAL_SHOPS: Shop[] = [
     ]
   },
   {
-    id: '26',
-    nameEn: 'Board Game Everyday',
-    nameTh: 'บอร์ดเกม เอฟวี่เดย์',
+    id: 'thai-rung',
+    nameEn: 'Thai Rung',
+    nameTh: 'ร้านไทยรุ่ง',
     province: 'Khon Kaen',
-    descriptionEn: '',
-    descriptionTh: '',
-    imageUrl: 'https://lh3.googleusercontent.com/p/AF1QipOmJ-2_QnlySBFvHZFj010zKKmUCNGNm6rvWU8A=w408-h290-k-no',
-    tags: [],
-    likeCount: 9,
+    descriptionEn: 'A reliable local store specializing in various tools and hardware for all your needs.',
+    descriptionTh: 'ร้านขายอุปกรณ์เครื่องมือและฮาร์ดแวร์ท้องถิ่นที่เชื่อถือได้ พร้อมบริการที่ครอบคลุมทุกความต้องการ',
+    imageUrl: 'https://scontent.fbkk12-5.fna.fbcdn.net/v/t39.30808-1/304756369_459990652853397_1886838849083454809_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=107&ccb=1-7&_nc_sid=2d3e12&_nc_eui2=AeE00x1bxNAD2QTYW0PRyYJ8M0DtnWFnEZAzQO2dYWcRkOj7dZJPAIqS2T9LN3yrau1V9UgVzRANJfKmv4A3Sba-&_nc_ohc=xCCxCms-Sf0Q7kNvwHAMPht&_nc_oc=AdkprZatd6GvLGg1gyM1PthNUMjwQKOol-e-HTkqe8PFdns1D1-NfvIyKn-0m1lops__KLESsWVByyyv10_dVZxE&_nc_zt=24&_nc_ht=scontent.fbkk12-5.fna&_nc_gid=409DunZ80jw-208fxUkLmw&oh=00_AfqQIks8buDvv09wTr0IQkYJ00rEgtF259duXSNmjGskSw&oe=69613BD2',
+    tags: ['Hardware', 'Tools'],
+    likeCount: 4,
     contact: {
-      phone: '089 604 0217'
+      facebook: 'https://www.facebook.com/thairungkk/',
+      phone: '043-227-986'
     },
     products: [
     ]
-  }
+  },
 ];
