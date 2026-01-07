@@ -218,5 +218,21 @@ export const INITIAL_SHOPS: Shop[] = [
     },
     products: [
     ]
+  },
+  {
+    id: '26',
+    nameEn: 'Board Game Everyday',
+    nameTh: 'บอร์ดเกม เอฟวี่เดย์',
+    province: 'Khon Kaen',
+    descriptionEn: '',
+    descriptionTh: '',
+    imageUrl: 'https://lh3.googleusercontent.com/p/AF1QipOmJ-2_QnlySBFvHZFj010zKKmUCNGNm6rvWU8A=w408-h290-k-no',
+    tags: [],
+    likeCount: 9,
+    contact: {
+      phone: '089 604 0217'
+    },
+    products: [
+    ]
   }
 ];
