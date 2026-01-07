@@ -32,7 +32,10 @@ export const translations = {
         durian_chips: { title: 'Durian Chips', type: 'Food', province: 'Rayong', history: 'A modern local wisdom that transforms the King of Fruits into a crispy, sweet, and savory snack enjoyed worldwide.' }
       }
     },
-    community: { title: 'Traveler Community', subtitle: 'Share tips, ask questions, and connect with fellow explorers.', hubTitle: 'Community Hub', navigateMenu: 'Navigate Menu', from: 'from', allProvinces: 'All Thailand', selectHub: 'Select Hub', searchHub: 'Find a province...', placeholder: 'Share with the community...', placeholderProvince: 'Share with {{province}}...', noMessages: 'Be the first to post!', noMessagesProvince: 'No posts in {{province}} yet.', loginRequired: 'Please log in to join the community.' },
+    community: { 
+      title: 'Traveler Community', subtitle: 'Share tips, ask questions, and connect with fellow explorers.', hubTitle: 'Community Hub', navigateMenu: 'Navigate Menu', from: 'from', allProvinces: 'All Thailand', selectHub: 'Select Hub', searchHub: 'Find a province...', placeholder: 'Share with the community...', placeholderProvince: 'Share with {{province}}...', noMessages: 'Be the first to post!', noMessagesProvince: 'No posts in {{province}} yet.', loginRequired: 'Please log in to join the community.',
+      settings: 'Chat Settings', clearHistory: 'Clear History', clearHistoryConfirm: 'This will reset community messages to defaults. Continue?', showProvinceToggle: 'Show Provinces', showTimeToggle: 'Show Timestamps'
+    },
     marketplace: { title: 'Local Marketplace', subtitle: 'Support local artisans across Thailand.', searchPlaceholder: 'Search by province...', favorites: 'Favorites', noResultsMessage: 'No shops found.', merchantContact: 'Merchants: Contact us at siamsight@gmail.com', authModalTitle: 'Join the Community', authModalDesc: 'Log in to save favorites!', authModalLogin: 'Login', authModalCancel: 'Cancel', storeHeritage: 'Store Heritage', connectWithUs: 'Connect', officialFacebook: 'Facebook', callMerchant: 'Call Shop', authenticityCheck: 'Auth Check', certified: 'Certified', guidePrice: 'Price', lovedIt: 'Loved It', saveToFavorites: 'Save' },
     shopDetail: { backButton: 'Back', productsTitle: 'Our Products', noProducts: 'No items listed.' },
     account: { welcomePersonal: 'Welcome, {{username}}!', logoutButton: 'Log Out', loginTitle: 'Welcome Back', signupTitle: 'Create Account', usernameLabel: 'Username', passwordLabel: 'Password', askSignup: "New here?", askLogin: 'Returning?', signupLink: 'Sign up', loginLink: 'Log in', loginButton: 'Log In', signupButton: 'Sign Up', provinceLabel: 'Home Province', selectProvince: 'Select province', settings: 'Settings', customizeBranding: 'Branding', importLogo: 'Import Logo', resetDefault: 'Reset', authorizedExplorer: 'Authorized Explorer', siamIdentification: 'Identification', registerNew: 'Register' },
@@ -41,7 +44,7 @@ export const translations = {
     featuredAttractions: {
       names: {
         grandPalace: 'The Grand Palace', watMahathat: 'Wat Mahathat', watMuang: 'Wat Muang', chaiNatBirdPark: 'Chai Nat Bird Park', phraPrangSamYod: 'Phra Prang Sam Yod', sarikaFalls: 'Sarika Waterfall', phraPathomChedi: 'Phra Pathom Chedi', kohKret: 'Koh Kret', dreamWorld: 'Dream World', ancientCity: 'The Ancient City', watChongLom: 'Wat Chong Lom', maeklongMarket: 'Railway Market', watPhraPhutthabat: 'Wat Phra Phutthabat', bangRachan: 'Bang Rachan Memorial', dragonMuseum: 'Dragon Museum',
-        doiInthanon: 'Doi Inthanon', whiteTemple: 'White Temple', kamphaengPhetPark: 'Historical Park', lampangLuang: 'Lampang Luang', watHariphunchai: 'Wat Hariphunchai', banRakThai: 'Ban Rak Thai', buengBoraphet: 'Bueng Boraphet', watPhumin: 'Wat Phumin', kwanPhayao: 'Kwan Phayao', phaSornKaew: 'Pha Sorn Kaew', watThaLuang: 'Wat Tha Luang', phraPhutthaChinnarat: 'Wat Mahathat', phraThatChaeHaeng: 'Wat Phra That Chae Haeng', sukhothaiHistoricalPark: 'Historical Park', bhumibolDam: 'Bhumibol Dam', watThaSung: 'Wat Tha Sung', sirikitDam: 'Sirikit Dam',
+        doiInthanon: 'Doi Inthanon', whiteTemple: 'White Temple', kamphaengPhetPark: 'Historical Park', lampangLuang: 'Lampang Luang', watHariphunchai: 'Wat Hariphunchai', banRakThai: 'Ban Rak Thai', buengBoraphet: 'Bueng Boraphet', watPhmin: 'Wat Phumin', watPhumin: 'Wat Phumin', kwanPhayao: 'Kwan Phayao', phaSornKaew: 'Pha Sorn Kaew', watThaLuang: 'Wat Tha Luang', phraPhutthaChinnarat: 'Wat Mahathat', phraThatChaeHaeng: 'Wat Phra That Chae Haeng', sukhothaiHistoricalPark: 'Historical Park', bhumibolDam: 'Bhumibol Dam', watThaSung: 'Wat Tha Sung', sirikitDam: 'Sirikit Dam',
         putthaUtthayan: 'Puttha Utthayan', hinSamWan: 'Three Whale Rocks', phanomRung: 'Phanom Rung', paHinNgam: 'Pa Hin Ngam', sirindhornMuseum: 'Dinosaur Museum', kaenNakhon: 'Phra Mahathat Kaen Nakhon', phuKradueng: 'Phu Kradueng', phraThatNaDun: 'Phra That Na Dun', hoKaeo: 'Ho Kaeo Mukdahan', phraThatPhanom: 'Wat Phra That Phanom', phimaiPark: 'Phimai Park', shellFossil: 'Shell Fossil Museum', salaKeoku: 'Sala Keoku', roiEtTower: 'Roi Et Tower', choengChum: 'Phra That Choeng Chum', phaMoIDaeng: 'Pha Mo I Daeng', elephantStudy: 'Elephant Center', samPhanBok: 'Sam Phan Bok', redLotusSea: 'Red Lotus Sea', phrayaKankak: 'Toad Museum',
         bigBuddhaPhuket: 'Big Buddha Phuket', mayaBay: 'Maya Bay', muKoChumphon: 'Mu Ko Chumphon', watPhraMahathatNS: 'Wat Phra Mahathat', watKhaoKong: 'Wat Khao Kong', centralMosque: 'Pattani Central Mosque', jamesBondIsland: 'James Bond Island', thaleNoi: 'Thale Noi', raksawarinHotSpring: 'Hot Spring', kohLipe: 'Koh Lipe', samilaBeach: 'Samila Beach', khaoSokPark: 'Khao Sok Park', emeraldCave: 'Emerald Cave', betongTunnel: 'Betong Tunnel',
         bridgeRiverKwai: 'River Kwai Bridge', khaoWang: 'Khao Wang', khaoSamRoiYot: 'Khao Sam Roi Yot', floatingMarket: 'Floating Market', watSothon: 'Wat Sothon Wararam', cathedralImmaculate: 'Cathedral of Immaculate', sanctuaryTruth: 'Sanctuary of Truth', khaoYaiPrachin: 'Khao Yai Gateway', kohSamet: 'Koh Samet', pangSidaPark: 'Pang Sida Park', kohChang: 'Koh Chang'
@@ -69,6 +72,7 @@ export const translations = {
         watHariphunchai: 'The spiritual heart of Lamphun featuring a 46m tall golden pagoda.',
         banRakThai: 'A picturesque Chinese-Thai village in the misty mountains of Mae Hong Son.',
         buengBoraphet: 'The largest freshwater lake and swamp in Thailand.',
+        watPhmin: 'Architectural gem in Nan famous for the "Whispering Love" mural.',
         watPhumin: 'Architectural gem in Nan famous for the "Whispering Love" mural.',
         kwanPhayao: 'Vast semi-natural lake providing spectacular sunset views.',
         phaSornKaew: 'Breathtaking temple complex hidden in the mountains of Phetchabun.',
@@ -190,7 +194,10 @@ export const translations = {
         durian_chips: { title: 'ทุเรียนทอด', type: 'อาหาร', province: 'ระยอง', history: 'ภูมิปัญญาสมัยใหม่ที่เปลี่ยนราชาแห่งผลไม้ให้เป็นขนมขบเคี้ยวที่กรอบ อร่อย และมีชื่อเสียงไปทั่วโลก' }
       }
     },
-    community: { title: 'ชุมชนนักเดินทาง', subtitle: 'แบ่งปันเคล็ดลับ ถามคำถาม และเชื่อมต่อกับเพื่อนนักสำรวจ', hubTitle: 'ศูนย์กลางชุมชน', navigateMenu: 'เมนูนำทาง', from: 'จาก', allProvinces: 'ทั่วไทย', selectHub: 'เลือกห้อง', searchHub: 'ค้นหาจังหวัด...', placeholder: 'แบ่งปันกับชุมชน...', placeholderProvince: 'แบ่งปันกับชาว {{province}}...', noMessages: 'โพสต์เป็นคนแรกเลย!', noMessagesProvince: 'ยังไม่มีโพสต์ใน {{province}}', loginRequired: 'กรุณาเข้าสู่ระบบเพื่อเข้าร่วมชุมชน' },
+    community: { 
+      title: 'ชุมชนนักเดินทาง', subtitle: 'แบ่งปันเคล็ดลับ ถามคำถาม และเชื่อมต่อกับเพื่อนนักสำรวจ', hubTitle: 'ศูนย์กลางชุมชน', navigateMenu: 'เมนูนำทาง', from: 'จาก', allProvinces: 'ทั่วไทย', selectHub: 'เลือกห้อง', searchHub: 'ค้นหาจังหวัด...', placeholder: 'แบ่งปันกับชุมชน...', placeholderProvince: 'แบ่งปันกับชาว {{province}}...', noMessages: 'โพสต์เป็นคนแรกเลย!', noMessagesProvince: 'ยังไม่มีโพสต์ใน {{province}}', loginRequired: 'กรุณาเข้าสู่ระบบเพื่อเข้าร่วมชุมชน',
+      settings: 'ตั้งค่าการคุย', clearHistory: 'ล้างประวัติการคุย', clearHistoryConfirm: 'คุณต้องการล้างประวัติการคุยทั้งหมดและกลับสู่ค่าเริ่มต้นใช่หรือไม่?', showProvinceToggle: 'แสดงชื่อจังหวัด', showTimeToggle: 'แสดงเวลา'
+    },
     marketplace: { title: 'ตลาดสินค้าไทย', subtitle: 'สนับสนุนงานฝีมือท้องถิ่น', favorites: 'ถูกใจ', noResultsMessage: 'ไม่พบร้านค้า', merchantContact: 'ติดต่อ: siamsight@gmail.com', authModalTitle: 'เข้าร่วมสยามไซต์', authModalDesc: 'เข้าสู่ระบบเพื่อบันทึกร้านโปรด', authModalLogin: 'เข้าสู่ระบบ', authModalCancel: 'ยกเลิก', storeHeritage: 'มรดก', connectWithUs: 'ติดต่อ', officialFacebook: 'เฟซบุ๊ก', callMerchant: 'โทร', authenticityCheck: 'ตรวจสอบ', certified: 'ของแท้', guidePrice: 'ราคา', lovedIt: 'ถูกใจแล้ว', saveToFavorites: 'บันทึก' },
     shopDetail: { backButton: 'กลับ', productsTitle: 'สินค้า', noProducts: 'ไม่มีสินค้า' },
     account: { welcomePersonal: 'ยินดีต้อนรับ, {{username}}!', logoutButton: 'ออกจากระบบ', loginTitle: 'ยินดีต้อนรับกลับ', signupTitle: 'สมัครสมาชิก', usernameLabel: 'ชื่อผู้ใช้', passwordLabel: 'รหัสผ่าน', askSignup: "ยังไม่มีบัญชี?", askLogin: 'มีบัญชีแล้ว?', signupLink: 'สมัคร', loginLink: 'เข้าสู่ระบบ', loginButton: 'เข้าสู่ระบบ', signupButton: 'สมัครสมาชิก', provinceLabel: 'จังหวัด', selectProvince: 'เลือกจังหวัด', settings: 'ตั้งค่า', customizeBranding: 'แบรนด์', importLogo: 'นำเข้าโลโก้', resetDefault: 'รีเซ็ต', authorizedExplorer: 'นักสำรวจ', siamIdentification: 'ยืนยันตัวตน', registerNew: 'ลงทะเบียน' },
@@ -218,7 +225,7 @@ export const translations = {
         watChongLom: 'วัดสำคัญริมปากแม่น้ำท่าจีน มีสถาปัตยกรรมที่สวยงามและบรรยากาศที่เงียบสงบชมวิถีประมง',
         maeklongMarket: 'ตลาดที่เป็นเอกลักษณ์ที่สุดในโลกเพราะตั้งอยู่บนรางรถไฟสายแม่กลอง เป็นภาพที่ตื่นตาตื่นใจ',
         watPhraPhutthabat: 'สถานที่ประดิษฐานรอยพระพุทธบาทที่สำคัญที่สุดในไทย ค้นพบในสมัยพระเจ้าทรงธรรม',
-        bangRachan: 'อนุสรณ์สถานวีรชนชาวบ้านบางระจัน สร้างขึ้นเพื่อรำลึกถึงความกล้าหาญในการสู้รบกับผู้รุกราน',
+        bangRachan: 'อนุสาวรีย์บางระจัน สร้างขึ้นเพื่อรำลึกถึงความกล้าหาญในการสู้รบกับผู้รุกราน',
         dragonMuseum: 'โดดเด่นด้วยตัวอาคารรูปมังกรทองขนาดมหึมา ภายในจัดแสดงประวัติศาสตร์จีน-ไทย 5,000 ปี',
         doiInthanon: 'ยอดเขาที่สูงที่สุดในประเทศไทย มีอากาศเย็นตลอดปี พร้อมเส้นทางเดินศึกษาธรรมชาติที่งดงาม',
         whiteTemple: 'ผลงานศิลปะระดับโลกของอาจารย์เฉลิมชัย ผสมผสานศิลปะไทยร่วมสมัยได้อย่างวิจิตรบรรจง',
@@ -229,7 +236,7 @@ export const translations = {
         buengBoraphet: 'บึงน้ำจืดที่ใหญ่ที่สุดในไทย เป็นแหล่งอาศัยของนกน้ำนานาพันธุ์และพรรณพืชที่อุดมสมบูรณ์',
         watPhumin: 'วัดทรงจตุรมุขเพียงหนึ่งเดียวในไทย มีภาพจิตรกรรมฝาผนัง "ปู่ม่านย่าม่าน" หรือภาพกระซิบรัก',
         kwanPhayao: 'ทะเลสาบน้ำจืดขนาดใหญ่ที่เป็นหัวใจของจังหวัด เป็นจุดชมพระอาทิตย์ตกดินที่สวยงามที่สุด',
-        phaSornKaew: 'โดดเด่นด้วยพระพุทธเจ้า 5 พระองค์สีขาวสะอาดตา เจดีย์ประดับด้วยเบญจรงค์และหินสีกกว่า 5 ล้านชิ้น',
+        phaSornKaew: 'โดดเด่นด้วยพระพุทธเจ้า 5 พระองค์สีขาวสะอาดตา เจดีย์ประดับด้วยเบญจรงค์และหินสีกว่า 5 ล้านชิ้น',
         watThaLuang: 'ที่ประดิษฐาน "หลวงพ่อเพชร" พระพุทธรูปหล่อด้วยโลหะสมัยเชียงแสนที่มีพุทธลักษณะงดงาม',
         phraPhutthaChinnarat: 'ได้รับการยกย่องว่าเป็นพระพุทธรูปที่มีพุทธลักษณะงดงามที่สุดในประเทศไทย ด้วยสีทองอร่าม',
         phraThatChaeHaeng: 'พระธาตุคู่บ้านคู่เมืองจังหวัดแพร่และเป็นพระธาตุประจำปีเกิดปีเถาะ (กระต่าย)',

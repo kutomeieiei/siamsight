@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { useCommunity } from '../contexts/CommunityContext';
 import { useAuth } from '../contexts/AuthContext';
@@ -12,21 +11,24 @@ const CommunityMessageBubble: React.FC<{
   isOwn: boolean; 
   t: (k: string, r?: any) => string;
   showProvince?: boolean;
-}> = ({ message, isOwn, t, showProvince = false }) => {
+  displayPrefs: { showProvince: boolean; showTime: boolean };
+}> = ({ message, isOwn, t, showProvince = false, displayPrefs }) => {
   return (
     <div className={`flex flex-col mb-6 ${isOwn ? 'items-end' : 'items-start'}`}>
       <div className="flex items-center gap-3 mb-2 px-2">
         <span className={`text-[10px] md:text-xs font-black tracking-wide ${isOwn ? 'text-yellow-400' : 'text-yellow-500'}`}>
           {message.senderName}
-          {message.senderProvince && showProvince && (
+          {message.senderProvince && showProvince && displayPrefs.showProvince && (
             <span className="ml-2 opacity-50 font-black">
                • {t('community.from')} {t(`provinces.${message.senderProvince}`)}
             </span>
           )}
         </span>
-        <span className="text-[9px] text-slate-600 font-bold tracking-tight">
-          {message.timestamp && new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-        </span>
+        {displayPrefs.showTime && (
+          <span className="text-[9px] text-slate-600 font-bold tracking-tight">
+            {message.timestamp && new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+          </span>
+        )}
       </div>
       <div 
         className={`max-w-[85%] px-5 md:px-6 py-3 md:py-4 rounded-2xl shadow-2xl border-2 ${
@@ -46,18 +48,26 @@ interface CommunityViewProps {
 }
 
 const CommunityView: React.FC<CommunityViewProps> = ({ setActiveView }) => {
-  const { messages, sendMessage, isLoading } = useCommunity();
+  const { messages, sendMessage, clearMessages, isLoading } = useCommunity();
   const { user } = useAuth();
   const { t } = useTranslation();
   
   const [selectedHub, setSelectedHub] = useState<string>('all'); 
   const [hubSearchQuery, setHubSearchQuery] = useState<string>('');
   const [inputText, setInputText] = useState('');
-  // Set to true by default for "automatic" full screen
   const [isFullScreen, setIsFullScreen] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  
+  // Display Preferences state
+  const [displayPrefs, setDisplayPrefs] = useState({
+    showProvince: true,
+    showTime: true
+  });
+
   const scrollRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const settingsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const header = document.querySelector('header');
@@ -78,16 +88,19 @@ const CommunityView: React.FC<CommunityViewProps> = ({ setActiveView }) => {
     };
   }, [isFullScreen]);
 
-  // Click outside menu listener
+  // Click outside menu & settings listener
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setIsMenuOpen(false);
       }
+      if (settingsRef.current && !settingsRef.current.contains(event.target as Node)) {
+        setIsSettingsOpen(false);
+      }
     };
-    if (isMenuOpen) document.addEventListener('mousedown', handleClickOutside);
+    if (isMenuOpen || isSettingsOpen) document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [isMenuOpen]);
+  }, [isMenuOpen, isSettingsOpen]);
 
   const filteredMessages = useMemo(() => {
     if (selectedHub === 'all') return messages;
@@ -123,8 +136,14 @@ const CommunityView: React.FC<CommunityViewProps> = ({ setActiveView }) => {
     setInputText('');
   };
 
+  const handleClearHistory = () => {
+    if (window.confirm(t('community.clearHistoryConfirm'))) {
+      clearMessages();
+      setIsSettingsOpen(false);
+    }
+  };
+
   const handleNavigate = (view: View) => {
-    // When navigating away, restore normal scroll/view visibility
     setIsFullScreen(false);
     setIsMenuOpen(false);
     if (setActiveView) setActiveView(view);
@@ -142,6 +161,8 @@ const CommunityView: React.FC<CommunityViewProps> = ({ setActiveView }) => {
 
   return (
     <div className={`${isFullScreen ? 'fixed inset-0 z-[100] w-screen h-screen bg-slate-950 p-0 overflow-hidden flex flex-col' : 'flex flex-col h-[calc(100vh-220px)] max-w-2xl mx-auto bg-slate-900/60 rounded-3xl shadow-2xl overflow-hidden border-2 border-slate-800 animate-fade-in'}`}>
+      
+      {/* Header */}
       <div className={`p-6 md:p-8 border-b-2 border-slate-800 bg-slate-900 ${isFullScreen ? 'pt-10' : ''}`}>
         <div className="flex items-center justify-between mb-6">
             <div className="flex flex-col">
@@ -149,7 +170,18 @@ const CommunityView: React.FC<CommunityViewProps> = ({ setActiveView }) => {
               <p className="text-[9px] md:text-[10px] text-yellow-500 font-black tracking-tight">{selectedHub === 'all' ? t('community.allProvinces') : t(`provinces.${selectedHub}`)}</p>
             </div>
             
-            <div className="relative">
+            <div className="flex items-center gap-3">
+                {/* Settings Trigger */}
+                <button 
+                    onClick={() => setIsSettingsOpen(!isSettingsOpen)}
+                    className="p-2.5 md:p-3 bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white rounded-xl transition-all border-2 border-slate-700 active:scale-90"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                </button>
+
                 <button 
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
                     className="p-2.5 md:p-3 bg-slate-800 hover:bg-slate-700 text-yellow-500 hover:text-white rounded-xl transition-all border-2 border-slate-700 active:scale-90"
@@ -158,21 +190,70 @@ const CommunityView: React.FC<CommunityViewProps> = ({ setActiveView }) => {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
                     </svg>
                 </button>
-
-                {isMenuOpen && (
-                    <div ref={menuRef} className="absolute top-full right-0 mt-4 w-60 bg-slate-900 border-2 border-yellow-600 rounded-[2rem] shadow-[0_0_50px_rgba(234,179,8,0.3)] p-3 z-[110] animate-fade-in-up flex flex-col gap-1">
-                        <div className="px-4 py-2 border-b border-slate-800 mb-2">
-                             <p className="text-[9px] font-black text-yellow-500 tracking-tight">{t('community.navigateMenu')}</p>
-                        </div>
-                        <button onClick={() => handleNavigate(View.EXPLORE)} className="flex items-center w-full p-4 rounded-xl text-slate-300 hover:bg-slate-800 font-black tracking-tight text-sm text-left">{t('footer.explore')}</button>
-                        <button onClick={() => handleNavigate(View.ITINERARY)} className="flex items-center w-full p-4 rounded-xl text-slate-300 hover:bg-slate-800 font-black tracking-tight text-sm text-left">{t('footer.itinerary')}</button>
-                        <button onClick={() => handleNavigate(View.MARKETPLACE)} className="flex items-center w-full p-4 rounded-xl text-slate-300 hover:bg-slate-800 font-black tracking-tight text-sm text-left">{t('footer.marketplace')}</button>
-                        <button onClick={() => handleNavigate(View.CHAT)} className="flex items-center w-full p-4 rounded-xl text-slate-300 hover:bg-slate-800 font-black tracking-tight text-sm text-left">{t('footer.chat')}</button>
-                        <button onClick={() => handleNavigate(View.LEARNING)} className="flex items-center w-full p-4 rounded-xl text-slate-300 hover:bg-slate-800 font-black tracking-tight text-sm text-left">{t('footer.learning')}</button>
-                        <button onClick={() => handleNavigate(View.ACCOUNT)} className="flex items-center w-full p-4 rounded-xl text-slate-300 hover:bg-slate-800 font-black tracking-tight text-sm text-left">{t('footer.account')}</button>
-                    </div>
-                )}
             </div>
+
+            {/* Menu Dropdown */}
+            {isMenuOpen && (
+                <div ref={menuRef} className="absolute top-24 right-6 w-60 bg-slate-900 border-2 border-yellow-600 rounded-[2rem] shadow-[0_0_50px_rgba(234,179,8,0.3)] p-3 z-[110] animate-fade-in-up flex flex-col gap-1">
+                    <div className="px-4 py-2 border-b border-slate-800 mb-2">
+                         <p className="text-[9px] font-black text-yellow-500 tracking-tight">{t('community.navigateMenu')}</p>
+                    </div>
+                    <button onClick={() => handleNavigate(View.EXPLORE)} className="flex items-center w-full p-4 rounded-xl text-slate-300 hover:bg-slate-800 font-black tracking-tight text-sm text-left">{t('footer.explore')}</button>
+                    <button onClick={() => handleNavigate(View.ITINERARY)} className="flex items-center w-full p-4 rounded-xl text-slate-300 hover:bg-slate-800 font-black tracking-tight text-sm text-left">{t('footer.itinerary')}</button>
+                    <button onClick={() => handleNavigate(View.MARKETPLACE)} className="flex items-center w-full p-4 rounded-xl text-slate-300 hover:bg-slate-800 font-black tracking-tight text-sm text-left">{t('footer.marketplace')}</button>
+                    <button onClick={() => handleNavigate(View.CHAT)} className="flex items-center w-full p-4 rounded-xl text-slate-300 hover:bg-slate-800 font-black tracking-tight text-sm text-left">{t('footer.chat')}</button>
+                    <button onClick={() => handleNavigate(View.LEARNING)} className="flex items-center w-full p-4 rounded-xl text-slate-300 hover:bg-slate-800 font-black tracking-tight text-sm text-left">{t('footer.learning')}</button>
+                    <button onClick={() => handleNavigate(View.ACCOUNT)} className="flex items-center w-full p-4 rounded-xl text-slate-300 hover:bg-slate-800 font-black tracking-tight text-sm text-left">{t('footer.account')}</button>
+                </div>
+            )}
+
+            {/* Settings Overlay */}
+            {isSettingsOpen && (
+              <div className="fixed inset-0 z-[120] bg-slate-950/80 backdrop-blur-sm flex items-end justify-center p-0 animate-fade-in">
+                <div ref={settingsRef} className="bg-slate-900 border-t-4 border-yellow-600 w-full max-w-xl rounded-t-[3rem] p-8 pb-12 shadow-[0_-20px_60px_rgba(0,0,0,0.5)] animate-fade-in-up">
+                  <div className="flex items-center justify-between mb-10">
+                    <h3 className="text-2xl font-black text-white tracking-tighter">{t('community.settings')}</h3>
+                    <button onClick={() => setIsSettingsOpen(false)} className="p-2 bg-slate-800 rounded-full text-slate-400">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+
+                  <div className="space-y-6 mb-10">
+                    <div className="flex items-center justify-between p-4 bg-slate-800 rounded-2xl border-2 border-slate-700">
+                      <span className="font-black text-sm text-slate-200">{t('community.showProvinceToggle')}</span>
+                      <button 
+                        onClick={() => setDisplayPrefs(p => ({ ...p, showProvince: !p.showProvince }))}
+                        className={`w-14 h-8 rounded-full transition-all relative ${displayPrefs.showProvince ? 'bg-yellow-600' : 'bg-slate-700'}`}
+                      >
+                        <div className={`absolute top-1 w-6 h-6 rounded-full bg-white transition-all ${displayPrefs.showProvince ? 'left-7 shadow-lg' : 'left-1'}`}></div>
+                      </button>
+                    </div>
+
+                    <div className="flex items-center justify-between p-4 bg-slate-800 rounded-2xl border-2 border-slate-700">
+                      <span className="font-black text-sm text-slate-200">{t('community.showTimeToggle')}</span>
+                      <button 
+                        onClick={() => setDisplayPrefs(p => ({ ...p, showTime: !p.showTime }))}
+                        className={`w-14 h-8 rounded-full transition-all relative ${displayPrefs.showTime ? 'bg-yellow-600' : 'bg-slate-700'}`}
+                      >
+                        <div className={`absolute top-1 w-6 h-6 rounded-full bg-white transition-all ${displayPrefs.showTime ? 'left-7 shadow-lg' : 'left-1'}`}></div>
+                      </button>
+                    </div>
+                  </div>
+
+                  <button 
+                    onClick={handleClearHistory}
+                    className="w-full py-5 bg-red-950/30 border-2 border-red-900 text-red-500 font-black rounded-2xl hover:bg-red-900 hover:text-white transition-all tracking-tight text-sm flex items-center justify-center gap-3"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                    {t('community.clearHistory')}
+                  </button>
+                </div>
+              </div>
+            )}
         </div>
         
         <div>
@@ -247,6 +328,7 @@ const CommunityView: React.FC<CommunityViewProps> = ({ setActiveView }) => {
               isOwn={msg.senderName === currentUserName} 
               t={t}
               showProvince={selectedHub === 'all'}
+              displayPrefs={displayPrefs}
             />
           ))
         )}

@@ -1,11 +1,11 @@
-
-import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
 import { CommunityMessage } from '../types';
 import { useAuth } from './AuthContext';
+import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
 
 interface CommunityContextType {
   messages: CommunityMessage[];
   sendMessage: (text: string, province?: string) => void;
+  clearMessages: () => void;
   isLoading: boolean;
 }
 
@@ -50,7 +50,7 @@ const MOCK_MESSAGES: CommunityMessage[] = [
     id: 'm5',
     senderName: 'lewis johnson',
     senderType: 'personal',
-    senderProvince: 'foreigner',
+    senderProvince: 'Bangkok',
     text: 'Hey ,I’m looking forward to go to Phuwiang Museum because my kids really loves dinosaur , Anyone got any advice?',
     timestamp: Date.now() - 1000 * 60 * 60 * 12,
   }
@@ -98,8 +98,13 @@ export const CommunityProvider: React.FC<{ children: ReactNode }> = ({ children 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
   };
 
+  const clearMessages = () => {
+    setMessages(MOCK_MESSAGES);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(MOCK_MESSAGES));
+  };
+
   return (
-    <CommunityContext.Provider value={{ messages, sendMessage, isLoading }}>
+    <CommunityContext.Provider value={{ messages, sendMessage, clearMessages, isLoading }}>
       {children}
     </CommunityContext.Provider>
   );

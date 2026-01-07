@@ -154,5 +154,69 @@ export const INITIAL_SHOPS: Shop[] = [
     },
     products: [
     ]
+  },
+  {
+    id: '22',
+    nameEn: 'Porjai minimart',
+    nameTh: 'พอใจ มินิมาร์ท',
+    province: 'Khon Kaen',
+    descriptionEn: '',
+    descriptionTh: '',
+    imageUrl: 'https://lh3.googleusercontent.com/gps-cs-s/AG0ilSwkvl5jLfUD2C62KiHkmt-d81GNVHsmIYL95QoQLl01mPWR5ItScrt_WbXGKfA8QWxrP6wSFsjEENE3_PobIlClicHeoVEHhkgqhEdv_IK3_ygkyH2VM0baZXaZWxEY25b76PFD=w408-h723-k-no',
+    tags: [],
+    likeCount: 6,
+    contact: {
+      phone: '082 345 8109'
+    },
+    products: [
+    ]
+  },
+  {
+    id: '23',
+    nameEn: 'Ruang Charoen',
+    nameTh: 'เรืองเจริญ',
+    province: 'Khon Kaen',
+    descriptionEn: '',
+    descriptionTh: '',
+    imageUrl: 'https://lh3.googleusercontent.com/p/AF1QipNa4J5dCEXNilGioBz5ph_PypiCZBRrALa8zLJn=w426-h240-k-no',
+    tags: [],
+    likeCount: 7,
+    contact: {
+      phone: '084 791 4224'
+    },
+    products: [
+    ]
+  },
+  {
+    id: '24',
+    nameEn: 'Rattanaphan',
+    nameTh: 'รัตนภัณฑ์',
+    province: 'Khon Kaen',
+    descriptionEn: '',
+    descriptionTh: '',
+    imageUrl: 'https://lh3.googleusercontent.com/gps-cs-s/AG0ilSxr_0t9vJzDIkkYI_LaOhcixbz_Xx5PJAI8KFFXvZGa08_8vj_RQhEur5_KkWampmtL5qYlKrLFfwH1WIwNVCiR-o6rUIw7uGNp5XDKY3M-X_POWGqM5LL-F4D-0faMRCXU8r0=w408-h306-k-no',
+    tags: [],
+    likeCount: 4,
+    contact: {
+      phone: '043 237 087'
+    },
+    products: [
+    ]
+  },
+  {
+    id: '25',
+    nameEn: 'Ta Kiat',
+    nameTh: 'ตาเกียรติ',
+    province: 'Khon Kaen',
+    descriptionEn: '',
+    descriptionTh: '',
+    imageUrl: 'https://lh3.googleusercontent.com/gps-cs-s/AG0ilSy31QxYfE01PHFbZI1wxtJcbfpZB8EOL5F4RU9IFVlGSGdf4K3yc138qSBeodiHEqHPKFY3GLRC4Eqvw7xcIaO_yEG6Je0gMoNr61UdiV1_Yvn3GmVDSSYQl8ZSr9h_1Qmn3nP7=w408-h306-k-no',
+    tags: [],
+    likeCount: 5,
+    contact: {
+      phone: '089 604 0217'
+    },
+    products: [
+    ]
   }
 ];
